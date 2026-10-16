@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="it" data-fs="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Santuario di Custonaci · La visita raccontata — simulazione</title>
+<meta name="description" content="Simulazione della visita raccontata di una chiesa: soglia, racconto a due voci, cammino sulla pianta con i 360, opere, audioguida, accessibilità.">
+<meta name="theme-color" content="#101419">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.css">
+<style>
+/* ============ tokens ============ */
+:root{
+  --fondo:#101419; --fondo2:#151a22; --carta:#1b212b; --carta2:#232a36; --linea:#2d3542;
+  --pietra:#d9d0bd; --pietra2:#aaa296; --oro:#c9a15a; --oro2:#e4c67f; --blu:#1f3b63; --blu2:#2c5282; --candela:#f2c572;
+  --testo:#ece6d8; --muto:#a69e90; --ok:#5fb37a; --att:#e0a84a; --ko:#d0623b; --wa:#15803D;
+  --k:1; --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif; --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --fs-body:calc(17px * var(--k)); --r:14px; --nav-h:58px;
+}
+html[data-fs="2"]{--k:1.2} html[data-fs="3"]{--k:1.45}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fondo);color:var(--testo);font:400 var(--fs-body)/1.6 var(--sans);overflow-x:hidden}
+img,video{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;color:inherit}
+a{color:var(--oro2)}
+:focus-visible{outline:3px solid var(--candela);outline-offset:3px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.salta{position:absolute;left:8px;top:-60px;background:var(--oro);color:#111;padding:10px 14px;border-radius:8px;z-index:200;font-weight:700}
+.salta:focus{top:8px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1;margin:0;letter-spacing:.01em}
+h2{font-size:calc(2.2em);color:var(--pietra)}
+main>section{scroll-margin-top:calc(var(--top-h,58px) + 10px)} h3{font-size:1.35em;color:var(--pietra)}
+p{max-width:62ch;margin:0 0 1em}
+.cont{max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,32px)}
+.kicker{font:600 .72em/1.2 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--oro)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:12px 22px;border-radius:999px;border:1.5px solid var(--oro);background:transparent;color:var(--pietra);font-weight:600;text-decoration:none;transition:background .2s,color .2s,transform .15s}
+.btn:hover,.btn:focus-visible{background:var(--oro);color:#161616}
+.btn.pieno{background:var(--oro);color:#161616}.btn.pieno:hover{background:var(--oro2)}
+.btn.wa{border-color:var(--wa);background:var(--wa);color:#fff}
+.btn.sm{min-height:44px;padding:8px 16px;font-size:.92em}
+.btn.ghost{border-color:var(--linea);color:var(--testo)}.btn.ghost:hover{background:var(--carta2);color:var(--testo)}
+.btn[disabled]{opacity:.45;cursor:default}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:4px 12px;border-radius:999px;border:1px solid var(--linea);background:var(--carta);font-size:.84em;color:var(--pietra)}
+.chip.oro{border-color:var(--oro);color:var(--oro2)}
+.nota{font-size:.86em;color:var(--muto)}
+.prova{display:inline-block;font-size:.72em;letter-spacing:.08em;text-transform:uppercase;border:1px dashed var(--att);color:var(--att);border-radius:6px;padding:2px 8px;vertical-align:middle}
+.card{background:var(--carta);border:1px solid var(--linea);border-radius:var(--r);padding:clamp(16px,2.5vw,26px)}
+.vers{position:fixed;left:10px;bottom:calc(var(--nav-h) + 8px + env(safe-area-inset-bottom,0px));font-size:11px;color:var(--muto);z-index:5;opacity:.8;pointer-events:none}
+
+/* ============ barra alta ============ */
+.top{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:10px;padding:8px clamp(12px,2vw,24px);background:rgba(16,20,25,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--linea)}
+.top .marca{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--pietra);font-family:var(--serif);font-weight:700;font-size:1.15em;min-width:0}
+.top .marca .sig{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--oro);display:grid;place-items:center;font-size:.9em;color:var(--oro2);flex:none}
+.top .marca span.n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .sp{flex:1}
+.top select,.top .tb{min-height:40px;border-radius:999px;border:1px solid var(--linea);background:var(--carta);color:var(--testo);padding:4px 12px;font:600 .88em var(--sans)}
+.top .tb[aria-pressed=true]{background:var(--oro);color:#161616;border-color:var(--oro)}
+.seg{display:inline-flex;border:1px solid var(--linea);border-radius:999px;padding:2px;background:var(--carta)}
+.seg button{border:0;background:none;border-radius:999px;padding:6px 12px;min-height:36px;font-weight:600;font-size:.86em;color:var(--muto)}
+.seg button[aria-pressed=true]{background:var(--oro);color:#161616}
+
+/* ============ banner «sono qui» ============ */
+.qui-banner{display:none;background:var(--blu);color:#fff;padding:10px clamp(12px,2vw,24px);font-size:.95em}
+body.qui .qui-banner{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.qui-banner a{color:var(--candela)}
+
+/* ============ soglia ============ */
+.soglia{position:relative;height:260vh}
+.soglia .scena{position:sticky;top:var(--top-h,58px);height:calc(100vh - var(--top-h,58px));height:calc(100svh - var(--top-h,58px));overflow:hidden;background:#000}
+.soglia .pano{position:absolute;inset:0}
+.soglia .velo{position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,20,25,.15),rgba(16,20,25,.1) 55%,rgba(16,20,25,.9));pointer-events:none}
+.ante{position:absolute;inset:0;perspective:1400px;pointer-events:none}
+.anta{position:absolute;top:0;bottom:0;width:50.5%;background:#2a241c center/cover no-repeat;transform-origin:left center;box-shadow:inset 0 0 0 1px #0006;will-change:transform}
+.anta.sx{left:0;background-position:left center}.anta.dx{right:0;transform-origin:right center;background-position:right center}
+.anta::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0000,#0003)}
+.anta.dx::after{background:linear-gradient(270deg,#0000,#0003)}
+.soglia .titolo{position:absolute;left:0;right:0;bottom:calc(var(--nav-h) + 8vh);text-align:center;padding:0 16px;pointer-events:none}
+.soglia .titolo .kicker{color:var(--candela)}
+.inciso{font-family:var(--serif);font-weight:700;font-size:clamp(34px,7vw,88px);line-height:1;letter-spacing:.06em;text-transform:uppercase;color:var(--pietra);text-shadow:0 1px 0 rgba(255,255,255,.18),0 -1px 1px rgba(0,0,0,.8),0 10px 30px rgba(0,0,0,.6);margin:8px 0}
+.inciso .w{display:inline-block;white-space:nowrap}
+.inciso .w span{display:inline-block;will-change:transform,opacity}
+@media (max-width:600px){.inciso{letter-spacing:.03em;font-size:clamp(28px,9vw,44px)}}
+.soglia .claim{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.4vw,28px);color:var(--pietra2);margin:0 auto 20px;max-width:30em}
+.soglia .azioni{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;pointer-events:auto}
+.soglia .scorri{position:absolute;left:50%;bottom:calc(var(--nav-h) + 1.5vh);transform:translateX(-50%);color:var(--muto);font-size:.8em;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
+body.ridotto .soglia{height:auto}
+body.ridotto .soglia .scena{position:relative;height:88vh}
+
+/* ============ racconto ============ */
+.racconto{padding-top:clamp(40px,7vw,90px);padding-bottom:20px}
+.voce{display:flex;gap:14px;align-items:flex-start;margin:18px 0}
+.voce .av{flex:none;width:58px;height:58px;border-radius:50%;border:1.5px solid var(--oro);background:radial-gradient(circle at 35% 30%,#3b4a66,var(--blu));display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:1.4em;color:var(--oro2)}
+.voce .av.parla{animation:parla .5s infinite alternate}
+@keyframes parla{to{transform:scale(1.06)}}
+.fumetto{position:relative;background:var(--carta2);border:1px solid var(--linea);border-radius:18px;padding:12px 18px;font-family:var(--serif);font-style:italic;font-size:calc(1.25em);line-height:1.35;max-width:36em;color:var(--pietra)}
+.fumetto b{display:block;font:600 .62em/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--oro);font-style:normal;margin-bottom:4px}
+.fumetto::before{content:"";position:absolute;left:-9px;top:22px;width:16px;height:16px;background:var(--carta2);border-left:1px solid var(--linea);border-bottom:1px solid var(--linea);transform:rotate(45deg)}
+.capitoli{display:grid;gap:clamp(28px,5vw,60px);margin-top:30px}
+.cap{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);gap:clamp(18px,3vw,40px);align-items:start}
+.cap .n{font-family:var(--serif);font-size:clamp(60px,9vw,120px);line-height:.9;color:var(--oro);opacity:.35;font-weight:700}
+.cap h3{font-size:clamp(28px,3.4vw,42px);margin:4px 0 2px}
+.cap .sotto{font-family:var(--serif);font-style:italic;font-size:1.25em;color:var(--pietra2);margin-bottom:14px}
+.cap .chi{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--muto);font-size:.9em}
+.cap .chi .av{width:40px;height:40px;border-radius:50%;border:1px solid var(--oro);display:grid;place-items:center;font-family:var(--serif);font-weight:700;color:var(--oro2);background:var(--carta)}
+.cap .stato{font-size:.78em;color:var(--att)}
+.vid{position:relative;background:#000;border-radius:var(--r);overflow:hidden;border:1px solid var(--linea);aspect-ratio:9/16;max-height:78vh;margin:0 auto;width:min(100%,420px)}
+.vid video{width:100%;height:100%;object-fit:contain;background:#000}
+.vid video::cue{font:500 17px/1.3 var(--sans);background:rgba(16,20,25,.85);color:#fff}
+.vid .avvia{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,#0003,#000a);border:0;color:#fff}
+.vid .avvia span{display:inline-flex;align-items:center;gap:10px;background:var(--oro);color:#161616;border-radius:999px;padding:12px 22px;font-weight:700;min-height:54px}
+.vid .avvia small{display:block;margin-top:8px;color:var(--pietra2);font-size:.85em}
+.vid .pp{position:absolute;left:10px;top:10px;width:44px;height:44px;border-radius:50%;border:1px solid var(--oro);background:rgba(16,20,25,.7);display:grid;place-items:center}
+.vid .pp[hidden]{display:none}
+.vid .scop{position:absolute;right:14px;bottom:18%;width:64px;height:64px;border-radius:50%;border:2px solid var(--oro2);background:var(--oro);color:#161616;font:700 32px var(--serif);display:none;place-items:center;box-shadow:0 0 0 0 rgba(201,161,90,.6);animation:pulsa 1.3s infinite}
+.vid .scop.on{display:grid}
+@keyframes pulsa{70%{box-shadow:0 0 0 18px rgba(201,161,90,0)}100%{box-shadow:0 0 0 0 rgba(201,161,90,0)}}
+.vid .narr{position:absolute;left:10px;right:90px;bottom:14px;display:none}
+.vid .narr.on{display:block}
+.vid .narr .fumetto{font-size:1.05em;padding:8px 12px;background:rgba(27,33,43,.92)}
+.vid .barra{position:absolute;left:0;right:0;bottom:0;height:5px;background:#fff3}
+.vid .barra i{position:absolute;left:0;top:0;bottom:0;background:var(--oro);width:0}
+.vid .barra b{position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:var(--candela);transform:translate(-50%,-50%)}
+.scheda-scop{display:none;margin-top:12px;border-color:var(--oro)}
+.scheda-scop.on{display:block}
+.scheda-scop h4{font-family:var(--serif);font-size:1.4em;margin:0 0 6px;color:var(--pietra)}
+.quiz .opz{display:grid;gap:8px;margin:10px 0}
+.quiz .opz button{text-align:left;border:1px solid var(--linea);background:var(--carta2);border-radius:10px;padding:10px 14px;min-height:50px}
+.quiz .opz button.ok{border-color:var(--ok);background:#1c3a2a}.quiz .opz button.ko{border-color:var(--ko);background:#3a221c}
+.cap details{border:1px solid var(--linea);border-radius:10px;background:var(--carta);margin-top:12px}
+.cap summary{cursor:pointer;padding:10px 14px;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px}
+.cap summary::before{content:"+";font-family:var(--serif);font-size:1.4em;width:26px;height:26px;border:1px solid var(--oro);border-radius:50%;display:grid;place-items:center;color:var(--oro2)}
+.cap details[open] summary::before{content:"–"}
+.cap details .in{padding:0 14px 14px;color:var(--pietra)}
+.trascr{white-space:pre-wrap}
+.facile{margin-top:8px}
+
+/* ============ cammino ============ */
+.cammino{position:relative;padding-top:clamp(30px,5vw,60px);padding-bottom:20px}
+.cammino .testa{margin-bottom:14px}
+.cammino .runway{position:relative}
+.palco{display:grid;grid-template-columns:minmax(260px,.9fr) minmax(0,1.6fr);gap:16px;align-items:start}
+/* desktop con lo scroll che cammina: il palco resta fermo e deve stare tutto nello schermo */
+body.scorre .palco{position:sticky;top:var(--top-h,58px);height:calc(100vh - var(--top-h,58px) - var(--nav-h) - 14px);grid-template-rows:minmax(0,1fr);align-items:start}
+body.scorre .pianta-box{display:inline-block;max-width:100%;max-height:100%;vertical-align:top}
+body.scorre .pianta-box img,body.scorre .pianta-box .schema{max-height:calc(100vh - var(--top-h,58px) - var(--nav-h) - 14px);width:auto;max-width:100%}
+body.scorre .stage{grid-template-rows:auto minmax(0,1fr) auto;height:100%;min-height:0}
+body.scorre .pano-box{aspect-ratio:auto;height:min(42vh,56.25vw)}
+body.scorre .cassetto{overflow:auto;min-height:0}
+.pianta-box{position:relative;background:var(--carta);border:1px solid var(--linea);border-radius:var(--r);overflow:hidden;user-select:none}
+.pianta-box img{width:100%;height:auto;display:block;filter:sepia(.25) contrast(1.05) brightness(.95)}
+.pianta-box .schema{width:100%;height:auto;display:block;background:#efe8d8}
+.pianta-box svg.sopra{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pin{position:absolute;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;border:2px solid var(--oro);background:var(--carta);color:var(--pietra);font:700 15px var(--sans);display:grid;place-items:center;text-decoration:none;z-index:2;padding:0}
+.pin.dev{width:36px;height:36px;font-size:12px;border-style:dashed}
+.pin[hidden]{display:none}
+.pin.attiva{background:var(--oro);color:#161616;box-shadow:0 0 0 6px rgba(201,161,90,.25)}
+.pin.vista{border-color:var(--ok)}
+.pin.acc{outline:2px solid var(--ok);outline-offset:2px}
+.punto{position:absolute;width:16px;height:16px;border-radius:50%;background:var(--candela);transform:translate(-50%,-50%);z-index:3;box-shadow:0 0 12px var(--candela);pointer-events:none}
+.cono{position:absolute;width:140px;height:140px;transform:translate(-50%,-100%);transform-origin:50% 100%;z-index:1;pointer-events:none;background:conic-gradient(from -22deg at 50% 100%,rgba(242,197,114,.45) 0 44deg,transparent 44deg);clip-path:polygon(50% 100%,0 0,100% 0);opacity:.85}
+.pianta-box .leg{position:absolute;left:8px;bottom:8px;display:flex;gap:6px;flex-wrap:wrap;z-index:4}
+.pianta-box .leg .chip{min-height:38px;font-size:.78em;background:rgba(27,33,43,.92)}
+.stage{display:grid;gap:12px;min-width:0}
+.pano-box{position:relative;background:#000;border-radius:var(--r);overflow:hidden;border:1px solid var(--linea);aspect-ratio:16/9;width:100%}
+body.qui .pano-box{aspect-ratio:16/10}
+#pano{position:absolute;inset:0}
+.pano-box .piatta{position:absolute;inset:0;display:none;background:#000 center/cover}
+.pano-box .piatta.on{display:block}
+.pano-box .piatta p{position:absolute;left:12px;bottom:12px;background:rgba(16,20,25,.8);padding:6px 10px;border-radius:8px;font-size:.85em;margin:0}
+.pano-box .hud{position:absolute;left:10px;top:10px;right:10px;display:flex;gap:8px;align-items:flex-start;pointer-events:none;z-index:5}
+.hud>*{pointer-events:auto}
+.hud .tag{background:rgba(16,20,25,.75);border:1px solid var(--linea);border-radius:999px;padding:6px 12px;font-size:.84em;color:var(--pietra)}
+.hud .sp{flex:1}
+.frecce{position:absolute;right:10px;bottom:10px;display:grid;grid-template-columns:repeat(3,40px);grid-template-rows:repeat(2,40px);gap:4px;z-index:5}
+.frecce button{width:40px;height:40px;border-radius:8px;border:1px solid var(--linea);background:rgba(16,20,25,.75);color:var(--pietra);font-size:18px;display:grid;place-items:center;padding:0}
+.frecce .su{grid-column:2}.frecce .sx{grid-column:1;grid-row:2}.frecce .giu{grid-column:2;grid-row:2}.frecce .dx{grid-column:3;grid-row:2}
+.guida-badge{position:absolute;left:50%;top:12px;transform:translateX(-50%);background:var(--blu);border:1px solid var(--blu2);border-radius:999px;padding:6px 14px;font-size:.84em;display:none;z-index:6}
+.guida-badge.on{display:block}
+/* hotspot opera (cornice) */
+.pnlm-hotspot-base.opera-hs{width:0;height:0;cursor:pointer}
+.opera-hs .cornice{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120px;height:140px;border:1.5px solid rgba(228,198,127,.55);border-radius:6px;transition:border-color .3s,box-shadow .3s,transform .3s}
+.opera-hs .cornice::before{content:"";position:absolute;inset:-5px;border:1px solid rgba(228,198,127,.25);border-radius:8px}
+.opera-hs.viva .cornice{border-color:var(--oro2);box-shadow:0 0 24px rgba(228,198,127,.45),inset 0 0 20px rgba(228,198,127,.12);transform:translate(-50%,-50%) scale(1.03)}
+.opera-hs .lab{position:absolute;left:50%;top:calc(50% + 78px);transform:translateX(-50%);white-space:nowrap;background:rgba(16,20,25,.85);border:1px solid var(--oro);border-radius:999px;padding:5px 12px;font:600 13px var(--sans);color:var(--pietra);opacity:0;transition:opacity .3s;display:flex;gap:8px;align-items:center}
+.opera-hs .lab em{font-style:normal;color:var(--oro2);font-weight:500}
+.opera-hs.viva .lab,.opera-hs:hover .lab,.opera-hs:focus-visible .lab{opacity:1}
+.cassetto{background:var(--carta);border:1px solid var(--linea);border-radius:var(--r);padding:16px 18px}
+.cassetto .riga{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.cassetto h3{font-size:1.6em}
+.cassetto .ord{font:600 .76em var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--oro)}
+.cassetto .testo{color:var(--pietra);margin:8px 0 10px}
+.cassetto .azioni{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+.cassetto .opere-qui{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cassetto .opere-qui button{border:1px solid var(--oro);background:transparent;color:var(--pietra);border-radius:999px;padding:6px 12px;min-height:40px;font-size:.9em}
+.cassetto .dev{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cassetto .dev .btn{border-style:dashed}
+.cassetto .verso{font-family:var(--serif);font-style:italic;font-size:1.15em;color:var(--pietra2);margin-top:10px}
+.cassetto .alt{font-size:.86em;color:var(--muto);margin-top:8px}
+.cassetto .alt summary{cursor:pointer;color:var(--pietra2);min-height:36px;display:flex;align-items:center;gap:6px;list-style:none}
+.cassetto .alt summary::before{content:'›';display:inline-block;transition:transform .2s;font-size:1.2em}
+.cassetto .alt[open] summary::before{transform:rotate(90deg)}
+.cassetto .alt summary::-webkit-details-marker{display:none}
+.cassetto .alt p{margin:4px 0 0}
+@media (min-width:901px){.cassetto .alt summary{pointer-events:none}.cassetto .alt summary::before{display:none}.cassetto .alt p{margin-top:0}}
+body.qui .cassetto .btn.ascolta-btn{min-height:64px;font-size:1.1em;width:100%}
+.nav-scene{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:10px}
+.nav-scene .pos{color:var(--muto);font-size:.86em}
+.elenco-scene{display:flex;gap:6px;overflow:auto;padding:6px 0;scrollbar-width:thin}
+.elenco-scene button{flex:none;border:1px solid var(--linea);background:var(--carta);color:var(--pietra);border-radius:999px;padding:6px 12px;min-height:40px;font-size:.86em}
+.elenco-scene button[aria-current=true]{background:var(--oro);color:#161616;border-color:var(--oro)}
+.elenco-scene button.dev{border-style:dashed}
+
+/* ============ opere ============ */
+.opere{padding-top:clamp(40px,7vw,90px);padding-bottom:10px}
+.pellicola{display:flex;gap:16px;overflow-x:auto;padding:12px 4px 18px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.opera-card{flex:0 0 min(78vw,300px);scroll-snap-align:start;background:var(--carta);border:1px solid var(--linea);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.opera-card .quadro{position:relative;aspect-ratio:4/5;background:linear-gradient(160deg,#2a3242,#161b23);display:grid;place-items:center;overflow:hidden}
+.opera-card .quadro img{width:100%;height:100%;object-fit:cover}
+.opera-card .quadro .corn{position:absolute;inset:14px;border:1.5px solid rgba(228,198,127,.55);border-radius:4px}
+.opera-card .quadro .corn::before{content:"";position:absolute;inset:-5px;border:1px solid rgba(228,198,127,.25)}
+.opera-card .quadro .t{font-family:var(--serif);font-size:1.4em;color:var(--pietra);text-align:center;padding:20px}
+.opera-card .in{padding:14px 16px 16px;display:grid;gap:6px}
+.opera-card h3{font-size:1.25em}
+.opera-card .meta{font-size:.86em;color:var(--muto)}
+.opera-card .meta .studio{color:var(--att)}
+.opera-card .az{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.stella{color:var(--oro2)}
+
+/* pannello opera (livello 2 e 3) */
+.op-panel{position:fixed;inset:0;z-index:80;background:rgba(10,12,16,.92);display:none;overflow:auto}
+.op-panel.on{display:block}
+.op-panel .inner{min-height:100%;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:0}
+.op-panel .foto{position:relative;background:#000;display:grid;place-items:center;min-height:50vh}
+.op-panel .foto img{max-height:100vh;width:100%;object-fit:contain}
+.op-panel .foto .nofoto{padding:30px;text-align:center;color:var(--muto);max-width:30em}
+.op-panel .det{position:absolute;width:30px;height:30px;border-radius:50%;border:2px solid var(--oro2);background:rgba(201,161,90,.35);transform:translate(-50%,-50%);padding:0;animation:pulsa 1.6s infinite}
+.op-panel .det b{position:absolute;left:36px;top:50%;transform:translateY(-50%);white-space:nowrap;background:rgba(16,20,25,.9);border:1px solid var(--oro);border-radius:999px;padding:3px 10px;font:600 12px var(--sans);color:var(--pietra)}
+.op-panel .det-pop{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(27,33,43,.96);border:1px solid var(--oro);border-radius:12px;padding:12px 16px;display:none}
+.op-panel .det-pop.on{display:block}
+.op-panel .scheda{padding:clamp(18px,3vw,32px);display:grid;gap:12px;align-content:start;background:var(--carta)}
+.op-panel .scheda h2{font-size:clamp(26px,3vw,40px)}
+.op-panel .chiudi{position:fixed;right:12px;top:12px;width:48px;height:48px;border-radius:50%;border:1px solid var(--oro);background:rgba(16,20,25,.85);color:var(--pietra);font-size:22px;z-index:81}
+.op-panel dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:.95em}
+.op-panel dt{color:var(--muto)}.op-panel dd{margin:0;color:var(--pietra)}
+.op-panel .studio{color:var(--att)}
+.op-panel .anche{display:flex;gap:8px;flex-wrap:wrap}
+.op-panel .prima-dopo{display:none}
+
+/* ============ ascolta ============ */
+.ascolta{padding-top:clamp(40px,7vw,90px);padding-bottom:10px}
+.tracce{display:grid;gap:8px;margin-top:14px}
+.traccia{display:flex;align-items:center;gap:12px;background:var(--carta);border:1px solid var(--linea);border-radius:12px;padding:10px 14px}
+.traccia .play{width:44px;height:44px;border-radius:50%;border:1px solid var(--oro);background:transparent;color:var(--oro2);display:grid;place-items:center;flex:none;padding:0}
+.traccia .t{flex:1;min-width:0}
+.traccia .t b{display:block;font-weight:600;color:var(--pietra)}
+.traccia .t small{color:var(--muto)}
+.traccia .d{color:var(--muto);font-variant-numeric:tabular-nums}
+.traccia.in-corso{border-color:var(--oro)}
+.ascolta .due{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.ascolta .due .card h3{margin-bottom:8px}
+.lingue-audio{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+
+/* ============ senza barriere ============ */
+.barriere{padding-top:clamp(40px,7vw,90px);padding-bottom:10px}
+.barriere ul{list-style:none;padding:0;margin:14px 0;display:grid;gap:8px}
+.barriere li{display:flex;gap:12px;align-items:flex-start;background:var(--carta);border:1px solid var(--linea);border-radius:12px;padding:12px 14px}
+.barriere li .ic{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--oro);display:grid;place-items:center;color:var(--oro2)}
+.tre{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--linea);border-radius:999px;padding:4px 12px;font-size:.86em}
+.tre i{width:10px;height:10px;border-radius:50%;background:var(--muto)}
+.tre.si i{background:var(--ok)}.tre.no i{background:var(--ko)}
+
+/* ============ info ============ */
+.info{padding-top:clamp(40px,7vw,90px);padding-bottom:calc(var(--nav-h) + 60px)}
+.info .griglia{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px}
+.info dl{margin:0;display:grid;gap:4px}.info dt{color:var(--muto);font-size:.84em}.info dd{margin:0 0 8px;color:var(--pietra)}
+.prosegui{display:grid;gap:10px;margin-top:10px}
+.prosegui a{display:block;text-decoration:none;color:inherit;background:var(--carta2);border:1px solid var(--linea);border-radius:12px;padding:12px 14px}
+.prosegui a b{display:block;color:var(--pietra)}
+.prosegui a small{color:var(--muto)}
+.avviso-funzioni{background:#2a2410;border:1px solid var(--att);color:var(--candela);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+.pass{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.pass .t{width:34px;height:34px;border-radius:50%;border:1px solid var(--linea);display:grid;place-items:center;font-size:.8em;color:var(--muto)}
+.pass .t.on{border-color:var(--oro);color:var(--oro2);background:#2a2410;transform:rotate(-8deg)}
+
+/* ============ lettore persistente + nav ============ */
+.lettore{position:fixed;left:0;right:0;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px));z-index:70;background:rgba(27,33,43,.97);border-top:1px solid var(--oro);padding:8px clamp(12px,2vw,24px);display:none;gap:10px;align-items:center}
+.lettore.on{display:flex}
+.lettore .pp{width:48px;height:48px;border-radius:50%;border:1px solid var(--oro);background:var(--oro);color:#161616;display:grid;place-items:center;flex:none;padding:0;font-size:18px}
+.lettore .ib{width:44px;height:44px;border-radius:50%;border:1px solid var(--linea);background:transparent;color:var(--pietra);display:grid;place-items:center;flex:none;padding:0;font-size:.8em}
+.lettore .t{flex:1;min-width:0}
+.lettore .t b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;color:var(--pietra)}
+.lettore .t small{color:var(--muto)}
+.lettore .prog{height:4px;background:#fff2;border-radius:2px;margin-top:6px;position:relative;cursor:pointer}
+.lettore .prog i{position:absolute;left:0;top:0;bottom:0;background:var(--oro);border-radius:2px;width:0}
+.testo-sheet{position:fixed;left:0;right:0;bottom:calc(var(--nav-h) + 70px);max-height:45vh;overflow:auto;background:var(--carta);border-top:1px solid var(--oro);padding:14px clamp(12px,2vw,24px);z-index:69;display:none}
+.testo-sheet.on{display:block}
+.nav{position:fixed;left:0;right:0;bottom:0;height:calc(var(--nav-h) + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);z-index:71;background:rgba(16,20,25,.96);border-top:1px solid var(--linea);display:flex;justify-content:space-around;align-items:stretch;padding-bottom:env(safe-area-inset-bottom)}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex:1;text-decoration:none;color:var(--muto);font-size:.72em;letter-spacing:.04em;min-width:0}
+.nav a i{font-style:normal;font-size:1.3em;line-height:1}
+.nav a.attiva{color:var(--oro2)}
+.nav a.attiva i{color:var(--oro2)}
+
+/* ============ mobile ============ */
+@media (max-width:959px){
+  .palco{grid-template-columns:1fr;position:static}
+  .stage{display:contents}
+  .pano-box{order:1}.cassetto{order:2}.elenco-scene{order:3}.pianta-box{order:4;width:min(100%,360px);justify-self:center}
+  body.qui .cassetto{order:1}body.qui .pano-box{order:2}
+  .top{gap:6px}.top .marca span.n{display:none}.seg button{padding:5px 9px;font-size:.8em;white-space:nowrap}.top select{padding:4px 8px;font-size:.8em;max-width:110px}
+  .cap{grid-template-columns:1fr}
+  .ascolta .due{grid-template-columns:1fr}
+  .op-panel .inner{grid-template-columns:1fr}
+  .op-panel .foto{min-height:56vh}
+  .cono{width:100px;height:100px}
+  .frecce{display:none}
+  .top .marca span.n{max-width:34vw}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:700px){.vers{display:none}}
+</style>
+</head>
+<body>
+<a class="salta" href="#cammino">Vai al cammino</a>
+<div class="vers">chiesa · sim2 · Santuario di Custonaci · panorami e riprese vere · testi da validare</div>
+
+<header class="top" id="top">
+  <a class="marca" href="#soglia" id="marca"><span class="sig">S</span><span class="n" id="marcaNome">Santuario di Custonaci</span></a>
+  <div class="sp"></div>
+  <select id="lingua" aria-label="Lingua"></select>
+  <div class="seg" role="group" aria-label="Modalità" id="segModo"><button data-modo="visita" aria-pressed="true">Visita</button><button data-modo="classe" aria-pressed="false">In classe</button></div>
+  <button class="tb" id="fsBtn" aria-label="Dimensione del testo" title="Dimensione del testo">Aa</button>
+</header>
+<div class="qui-banner" id="quiBanner"></div>
+
+<main>
+<!-- ================= SOGLIA ================= -->
+<section class="soglia" id="soglia" aria-label="La soglia">
+  <div class="scena">
+    <div class="pano" id="heroPano"></div>
+    <div class="velo"></div>
+    <div class="ante" aria-hidden="true"><div class="anta sx" id="antaSx"></div><div class="anta dx" id="antaDx"></div></div>
+    <div class="titolo">
+      <div class="kicker" id="sogliaKicker">Custonaci · la visita raccontata</div>
+      <h1 class="inciso" id="titoloInciso">Santuario di Custonaci</h1>
+      <p class="claim" id="claim"></p>
+      <div class="azioni" id="sogliaAzioni"></div>
+    </div>
+    <div class="scorri" id="scorri">scorri per entrare</div>
+  </div>
+</section>
+
+<!-- ================= RACCONTO ================= -->
+<section class="racconto cont" id="racconto" aria-labelledby="hRacconto">
+  <div class="kicker" id="kRacconto">Atto I</div>
+  <h2 id="hRacconto">Il racconto</h2>
+  <div class="voce"><div class="av" id="voceAv">S</div><div class="fumetto" id="voceSaluto"></div></div>
+  <p class="nota" id="narrNota"></p>
+  <div class="capitoli" id="capitoli"></div>
+  <div class="pass" id="pass"></div>
+</section>
+
+<!-- ================= CAMMINO ================= -->
+<section class="cammino cont" id="cammino" aria-labelledby="hCammino">
+  <div class="testa">
+    <div class="kicker" id="kCammino">Atto II</div>
+    <h2 id="hCammino">Il cammino</h2>
+    <p class="nota" id="camminoNota"></p>
+  </div>
+  <div class="runway" id="runway">
+    <div class="palco" id="palco">
+      <div class="pianta-box" id="piantaBox">
+        <img id="piantaImg" alt="" decoding="async">
+        <svg class="sopra" id="piantaSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div id="pins"></div>
+        <div class="cono" id="cono" hidden></div>
+        <div class="punto" id="punto" hidden></div>
+        <div class="leg" id="piantaLeg"></div>
+      </div>
+      <div class="stage">
+        <div class="pano-box" id="panoBox">
+          <div id="pano" tabindex="0" role="application" aria-label="Panorama a 360 gradi della scena"></div>
+          <div class="piatta" id="piatta"><p></p></div>
+          <div class="hud"><span class="tag" id="panoTag"></span><span class="sp"></span><span class="tag" id="panoHint" hidden></span></div>
+          <div class="guida-badge" id="guidaBadge"></div>
+          <div class="frecce" aria-label="Gira il panorama" id="frecce">
+            <button class="su" data-d="su" aria-label="Guarda in alto">▲</button>
+            <button class="sx" data-d="sx" aria-label="Gira a sinistra">◀</button>
+            <button class="giu" data-d="giu" aria-label="Guarda in basso">▼</button>
+            <button class="dx" data-d="dx" aria-label="Gira a destra">▶</button>
+          </div>
+        </div>
+        <div class="cassetto" id="cassetto"></div>
+        <div class="elenco-scene" id="elencoScene" role="tablist" aria-label="Scene"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OPERE ================= -->
+<section class="opere cont" id="opere" aria-labelledby="hOpere">
+  <div class="kicker" id="kOpere">Atto III</div>
+  <h2 id="hOpere">Le opere</h2>
+  <p class="nota" id="opereNota"></p>
+  <div class="pellicola" id="pellicola"></div>
+</section>
+
+<!-- ================= ASCOLTA ================= -->
+<section class="ascolta cont" id="ascolta" aria-labelledby="hAscolta">
+  <div class="kicker" id="kAscolta">Audioguida</div>
+  <h2 id="hAscolta">Ascolta</h2>
+  <p class="nota" id="ascoltaNota"></p>
+  <div class="tracce" id="tracce"></div>
+  <div class="due">
+    <div class="card" id="guidaCard"></div>
+    <div class="card" id="scaricaCard"></div>
+  </div>
+</section>
+
+<!-- ================= SENZA BARRIERE ================= -->
+<section class="barriere cont" id="barriere" aria-labelledby="hBarriere" hidden>
+  <div class="kicker" id="kBarriere">Per tutti</div>
+  <h2 id="hBarriere">Visita senza barriere</h2>
+  <p class="nota" id="barriereNota"></p>
+  <ul id="barriereLista"></ul>
+</section>
+
+<!-- ================= INFO ================= -->
+<section class="info cont" id="info" aria-labelledby="hInfo">
+  <div class="kicker" id="kInfo">Prima di venire</div>
+  <h2 id="hInfo">Informazioni</h2>
+  <div class="griglia" id="infoGriglia"></div>
+  <div class="card" style="margin-top:14px" id="proseguiCard"></div>
+  <p class="nota" style="margin-top:20px" id="credito"></p>
+</section>
+</main>
+
+<!-- pannello opera -->
+<div class="op-panel" id="opPanel" role="dialog" aria-modal="true" aria-labelledby="opTitolo">
+  <button class="chiudi" id="opChiudi" aria-label="Chiudi">✕</button>
+  <div class="inner"><div class="foto" id="opFoto"></div><div class="scheda" id="opScheda"></div></div>
+</div>
+
+<!-- lettore persistente -->
+<div class="testo-sheet" id="testoSheet"></div>
+<div class="lettore" id="lettore" aria-label="Lettore audio">
+  <button class="pp" id="lPP" aria-label="Riproduci">▶</button>
+  <button class="ib" id="lMeno" aria-label="Indietro di 15 secondi">−15</button>
+  <div class="t"><b id="lTit"></b><small id="lSub"></small><div class="prog" id="lProg"><i id="lFill"></i></div></div>
+  <button class="ib" id="lTesto" aria-pressed="false" aria-label="Mostra il testo">Aa</button>
+  <button class="ib" id="lChiudi" aria-label="Chiudi il lettore">✕</button>
+</div>
+<nav class="nav" id="nav" aria-label="Sezioni">
+  <a href="#racconto" data-s="racconto"><i>📖</i><span>Racconto</span></a>
+  <a href="#cammino" data-s="cammino"><i>🗺</i><span>Cammino</span></a>
+  <a href="#opere" data-s="opere"><i>🖼</i><span>Opere</span></a>
+  <a href="#ascolta" data-s="ascolta"><i>🎧</i><span>Ascolta</span></a>
+  <a href="#info" data-s="info"><i>ℹ️</i><span>Info</span></a>
+</nav>
+<audio id="audio" preload="none"></audio>
+
+<script src="dati/santuario.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script>
+/* =====================================================================
+   CHIESA · simulazione 1 — Esplora Trapani di Alessandro Milia
+   Dati: CHIESA (dati/santuario-demo.js). Librerie: Pannellum (360), GSAP (scroll).
+   ===================================================================== */
+(function(){
+'use strict';
+var D=CHIESA, L=D.luogo;
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
+function mmss(s){s=Math.round(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function slugify(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+var RIDOTTO=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var MOBILE=matchMedia('(max-width: 959px)').matches;
+var GS=typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined';
+if(GS)gsap.registerPlugin(ScrollTrigger);
+var qs=new URLSearchParams(location.search);
+var QUI=qs.get('qui')||null, OPERA_URL=qs.get('opera')||null, ARTEFATTO=!!window.__ARTEFATTO;
+if(RIDOTTO)document.body.classList.add('ridotto');
+if(MOBILE)document.body.classList.add('mobile');
+if(QUI)document.body.classList.add('qui');
+
+/* ---------- lingue: interfaccia (dizionario a chiavi italiane) ---------- */
+var T={
+ en:{'Visita':'Visit','In classe':'In class','Vai al cammino':'Skip to the walk','scorri per entrare':'scroll to enter','Entra':'Enter','Visita guidata':'Guided visit','Sono qui':'I am here','Atto I':'Act I','Il racconto':'The story','Atto II':'Act II','Il cammino':'The walk','Atto III':'Act III','Le opere':'The works','Audioguida':'Audio guide','Ascolta':'Listen','Per tutti':'For everyone','Visita senza barriere':'A visit without barriers','Prima di venire':'Before you come','Informazioni':'Information','Racconto':'Story','Cammino':'Walk','Opere':'Works','Info':'Info','Guarda il racconto':'Watch the story','Ascolta il racconto':'Listen to the story','Riproduci':'Play','Pausa':'Pause','Continua il racconto':'Continue the story','Scoperta':'Discovery','testo di prova · da validare':'draft text · to be validated','Trascrizione':'Transcript','Testo facile':'Easy text','Prosegui verso':'Continue towards','In questa scena vedi':'In this scene you see','Deviazione':'Side way','Torno al cammino':'Back to the walk','Scena':'Scene','di':'of','Descrizione di ciò che vedi':'Description of what you see','Cosa hai davanti':'What is in front of you','ascolta':'listen','in studio':'under study','capolavoro':'masterpiece','La vedi anche in':'You can also see it from','Dov’è':'Where it is','Guardala nel 360':'Look at it in 360','Apri la scheda':'Open the card','Tocca un dettaglio':'Tap a detail','Foto ad alta risoluzione non ancora caricata':'High-resolution photo not loaded yet','Seconda voce':'Second voice','La guida':'The guide','Il custode':'The custodian','Durata totale':'Total length','Avvia la visita guidata':'Start the guided visit','Dopo il primo tocco la visita avanza da sola, scena per scena, e il panorama gira verso ciò di cui si parla. Tocca il panorama per riprendere il controllo.':'After the first tap the visit goes on by itself, scene by scene, and the panorama turns towards what is being described. Tap the panorama to take back control.','Visita guidata in corso':'Guided visit in progress','Esci dalla visita guidata':'Leave the guided visit','Scarica la visita':'Download the visit','Dentro una chiesa la rete spesso manca: scarica audio e panorami adesso, poi funzionano anche senza segnale.':'Inside a church there is often no signal: download audio and panoramas now, then they work offline too.','circa':'about','Disponibile quando la pagina è online (http), non aprendo il file dal computer.':'Available when the page is online (http), not when the file is opened from the computer.','Scaricato':'Downloaded','Scarico':'Downloading','file non scaricati':'files not downloaded','Gradino all’ingresso':'Step at the entrance','Rampa':'Ramp','Bagno accessibile':'Accessible toilet','Sedute lungo il percorso':'Seats along the way','Dal parcheggio':'From the car park','Percorso senza barriere sulla pianta':'Step-free route on the plan','Audiodescrizione':'Audio description','Trascrizioni di tutti gli audio':'Transcripts of all audio','Sottotitoli nei video':'Subtitles in the videos','Lettura facile':'Easy reading','accessibilità verificata':'accessibility verified','accessibilità non verificata':'accessibility not verified','dati di prova, da rilevare sul posto':'test data, to be surveyed on site','sì':'yes','no':'no','Orari delle celebrazioni':'Times of services','Durante le funzioni la visita è sospesa':'During services the visit is suspended','Orari di visita':'Visiting hours','Festa patronale':'Patronal feast','Epoca':'Period','Come arrivare':'How to get there','Contatti':'Contacts','Scrivi su WhatsApp':'Write on WhatsApp','Prosegui la visita':'Continue your visit','Produzione':'Production','mostra il percorso':'show the route','nascondi il percorso':'hide the route','Pianta non disponibile: schema del cammino disegnato dall’ordine delle scene':'Plan not available: walk diagram drawn from the order of the scenes','Sei nel santuario':'You are in the sanctuary','Vedi il racconto':'See the story','Vista piatta: il 360 non si è caricato':'Flat view: the 360 did not load','Trascina per guardarti intorno':'Drag to look around','Precedente':'Previous','Successiva':'Next','Capitolo':'Chapter','Quiz':'Quiz','Esatto!':'Correct!','Non proprio… riprova':'Not quite… try again','Timbri':'Stamps','capitoli ascoltati':'chapters heard','contenuti in italiano':'content in Italian','Chiudi':'Close','Testo':'Text','a voce':'spoken','minuti':'minutes'},
+ fr:{'Visita':'Visite','In classe':'En classe','Vai al cammino':'Aller au parcours','scorri per entrare':'faites défiler pour entrer','Entra':'Entrer','Visita guidata':'Visite guidée','Sono qui':'Je suis ici','Atto I':'Acte I','Il racconto':'Le récit','Atto II':'Acte II','Il cammino':'Le parcours','Atto III':'Acte III','Le opere':'Les œuvres','Audioguida':'Audioguide','Ascolta':'Écouter','Per tutti':'Pour tous','Visita senza barriere':'Visite sans barrières','Prima di venire':'Avant de venir','Informazioni':'Informations','Racconto':'Récit','Cammino':'Parcours','Opere':'Œuvres','Info':'Infos','Guarda il racconto':'Voir le récit','Ascolta il racconto':'Écouter le récit','Riproduci':'Lire','Pausa':'Pause','Continua il racconto':'Continuer le récit','Scoperta':'Découverte','testo di prova · da validare':'texte provisoire · à valider','Trascrizione':'Transcription','Testo facile':'Texte facile','Prosegui verso':'Continuez vers','In questa scena vedi':'Dans cette scène vous voyez','Deviazione':'Détour','Torno al cammino':'Retour au parcours','Scena':'Scène','di':'sur','Descrizione di ciò che vedi':'Description de ce que vous voyez','Cosa hai davanti':'Ce qui est devant vous','ascolta':'écouter','in studio':'à l’étude','capolavoro':'chef-d’œuvre','La vedi anche in':'Visible aussi depuis','Dov’è':'Où elle est','Guardala nel 360':'La voir en 360','Apri la scheda':'Ouvrir la fiche','Tocca un dettaglio':'Touchez un détail','Foto ad alta risoluzione non ancora caricata':'Photo haute résolution pas encore chargée','Seconda voce':'Deuxième voix','La guida':'La guide','Il custode':'Le gardien','Durata totale':'Durée totale','Avvia la visita guidata':'Lancer la visite guidée','Visita guidata in corso':'Visite guidée en cours','Esci dalla visita guidata':'Quitter la visite guidée','Scarica la visita':'Télécharger la visite','circa':'environ','Scaricato':'Téléchargé','Scarico':'Téléchargement','Orari delle celebrazioni':'Horaires des offices','Durante le funzioni la visita è sospesa':'Pendant les offices la visite est suspendue','Orari di visita':'Horaires de visite','Festa patronale':'Fête patronale','Epoca':'Époque','Come arrivare':'Comment venir','Contatti':'Contacts','Scrivi su WhatsApp':'Écrire sur WhatsApp','Prosegui la visita':'Poursuivez la visite','Produzione':'Production','Sei nel santuario':'Vous êtes dans le sanctuaire','Vedi il racconto':'Voir le récit','Precedente':'Précédente','Successiva':'Suivante','Capitolo':'Chapitre','Chiudi':'Fermer','Testo':'Texte','contenuti in italiano':'contenus en italien','Timbri':'Tampons','capitoli ascoltati':'chapitres écoutés'},
+ es:{'Visita':'Visita','In classe':'En clase','Vai al cammino':'Ir al recorrido','scorri per entrare':'desliza para entrar','Entra':'Entra','Visita guidata':'Visita guiada','Sono qui':'Estoy aquí','Atto I':'Acto I','Il racconto':'El relato','Atto II':'Acto II','Il cammino':'El recorrido','Atto III':'Acto III','Le opere':'Las obras','Audioguida':'Audioguía','Ascolta':'Escucha','Per tutti':'Para todos','Visita senza barriere':'Visita sin barreras','Prima di venire':'Antes de venir','Informazioni':'Información','Racconto':'Relato','Cammino':'Recorrido','Opere':'Obras','Info':'Info','Guarda il racconto':'Ver el relato','Ascolta il racconto':'Escuchar el relato','Riproduci':'Reproducir','Pausa':'Pausa','Continua il racconto':'Continuar el relato','Scoperta':'Descubrimiento','testo di prova · da validare':'texto provisional · por validar','Trascrizione':'Transcripción','Testo facile':'Texto fácil','Prosegui verso':'Sigue hacia','In questa scena vedi':'En esta escena ves','Deviazione':'Desvío','Torno al cammino':'Vuelvo al recorrido','Scena':'Escena','di':'de','Descrizione di ciò che vedi':'Descripción de lo que ves','Cosa hai davanti':'Lo que tienes delante','ascolta':'escucha','in studio':'en estudio','capolavoro':'obra maestra','La vedi anche in':'También la ves desde','Dov’è':'Dónde está','Guardala nel 360':'Mírala en 360','Apri la scheda':'Abrir la ficha','Tocca un dettaglio':'Toca un detalle','Foto ad alta risoluzione non ancora caricata':'Foto en alta resolución aún no cargada','Seconda voce':'Segunda voz','La guida':'La guía','Il custode':'El custodio','Durata totale':'Duración total','Avvia la visita guidata':'Iniciar la visita guiada','Visita guidata in corso':'Visita guiada en curso','Esci dalla visita guidata':'Salir de la visita guiada','Scarica la visita':'Descargar la visita','circa':'unos','Scaricato':'Descargado','Scarico':'Descargando','Orari delle celebrazioni':'Horarios de las celebraciones','Durante le funzioni la visita è sospesa':'Durante las celebraciones la visita se suspende','Orari di visita':'Horario de visita','Festa patronale':'Fiesta patronal','Epoca':'Época','Come arrivare':'Cómo llegar','Contatti':'Contactos','Scrivi su WhatsApp':'Escribe por WhatsApp','Prosegui la visita':'Continúa la visita','Produzione':'Producción','Sei nel santuario':'Estás en el santuario','Vedi il racconto':'Ver el relato','Precedente':'Anterior','Successiva':'Siguiente','Capitolo':'Capítulo','Chiudi':'Cerrar','Testo':'Texto','contenuti in italiano':'contenidos en italiano','Timbri':'Sellos','capitoli ascoltati':'capítulos escuchados'}
+};
+var LINGUE=[['it','Italiano'],['en','English'],['fr','Français'],['es','Español']];
+var S={lang:(qs.get('lang')||ls('esplora_lang')||(navigator.language||'it').slice(0,2)).toLowerCase(),fs:+(ls('chiesa_fs')||1),modo:ls('chiesa_modo')||'visita',timbri:JSON.parse(ls('chiesa_timbri_'+L.slug)||'{}')};
+if(!LINGUE.some(function(l){return l[0]===S.lang;}))S.lang='it';
+function t(k){return (S.lang!=='it'&&T[S.lang]&&T[S.lang][k])||k;}
+/* contenuti: campo tradotto con ripiego sull'italiano */
+function tr(tipo,id,campo,it){var b=D.tr&&D.tr[S.lang];if(!b)return it;var o=tipo==='luogo'?b.luogo:(b[tipo]&&b[tipo][id]);return (o&&o[campo]!=null)?o[campo]:it;}
+var TRIT=function(){return S.lang!=='it'&&!(D.tr&&D.tr[S.lang]);}; /* lingua senza contenuti → avviso */
+function save(){ls('esplora_lang',S.lang);ls('chiesa_fs',S.fs);ls('chiesa_modo',S.modo);ls('chiesa_timbri_'+L.slug,JSON.stringify(S.timbri));}
+
+/* ---------- scene, opere ---------- */
+var SC=D.scene.slice().sort(function(a,b){return a.ordine-b.ordine;});
+var MAIN=SC.filter(function(s){return s.ordine<100;});
+var byId={};SC.forEach(function(s){byId[s.id]=s;});
+var bySlug={};SC.forEach(function(s){bySlug[s.slug]=s;});
+var OP=D.opere.filter(function(o){return o.stato==='verificata';}); /* solo le verificate vanno al pubblico */
+function opereInScena(id){var r=[];OP.forEach(function(o){o.scene.forEach(function(p){if(p.scena===id)r.push({o:o,p:p});});});return r;}
+function scenaPrincipale(o){var p=o.scene.filter(function(x){return x.principale;})[0]||o.scene[0];return byId[p.scena];}
+function narr(id){return D.narratori.filter(function(n){return n.id===id;})[0];}
+
+/* ---------- media: panorami con doppio host e ripiego ---------- */
+var blobCache={};
+function urlPano(s,i){return L.media_base[i]+s.file;}
+function risolviPano(s){
+  if(blobCache[s.id])return blobCache[s.id];
+  blobCache[s.id]=new Promise(function(ok,ko){
+    var i=0;(function tenta(){
+      if(i>=L.media_base.length)return ko(new Error('pano'));
+      var u=urlPano(s,i++);
+      fetch(u,{mode:'cors'}).then(function(r){if(!r.ok)throw 0;return r.blob();}).then(function(b){ok(URL.createObjectURL(b));}).catch(tenta);
+    })();
+  });
+  return blobCache[s.id];
+}
+
+/* ====================================================================
+   TESTATA, LINGUA, TESTO, MODO
+   ==================================================================== */
+function applicaStatici(){
+  document.documentElement.lang=S.lang;document.documentElement.dataset.fs=S.fs;
+  document.querySelector('.salta').textContent=t('Vai al cammino');
+  $('marcaNome').textContent=L.nome;$('voceAv').textContent=L.voce.sigla;document.querySelector('.top .sig').textContent=L.voce.sigla;
+  $('sogliaKicker').textContent=L.comune+' · '+(S.lang==='it'?'la visita raccontata':t('Il racconto').toLowerCase());
+  $('claim').textContent=tr('luogo',0,'claim',L.claim);
+  $('scorri').textContent=t('scorri per entrare');
+  $('kRacconto').textContent=t('Atto I');$('hRacconto').textContent=t('Il racconto');
+  $('kCammino').textContent=t('Atto II');$('hCammino').textContent=t('Il cammino');
+  $('kOpere').textContent=t('Atto III');$('hOpere').textContent=t('Le opere');
+  $('kAscolta').textContent=t('Audioguida');$('hAscolta').textContent=t('Ascolta');
+  $('kBarriere').textContent=t('Per tutti');$('hBarriere').textContent=t('Visita senza barriere');
+  $('kInfo').textContent=t('Prima di venire');$('hInfo').textContent=t('Informazioni');
+  var nav=$('nav').querySelectorAll('a span');['Racconto','Cammino','Opere','Ascolta','Info'].forEach(function(k,i){nav[i].textContent=t(k);});
+  $('segModo').querySelectorAll('button').forEach(function(b){b.textContent=t(b.dataset.modo==='visita'?'Visita':'In classe');b.setAttribute('aria-pressed',b.dataset.modo===S.modo);});
+  $('lMeno').setAttribute('aria-label',S.lang==='it'?'Indietro di 15 secondi':'Back 15 seconds');$('lTesto').textContent=t('Testo').slice(0,2);$('lTesto').setAttribute('aria-label',t('Testo'));
+  $('opChiudi').setAttribute('aria-label',t('Chiudi'));$('lChiudi').setAttribute('aria-label',t('Chiudi'));
+  /* titolo inciso: lettere separate per l'animazione */
+  var tit=L.nome.replace(/^Santuario di /,'');$('titoloInciso').innerHTML=tit.split(' ').map(function(w){return '<span class="w">'+w.split('').map(function(c){return '<span>'+esc(c)+'</span>';}).join('')+'</span>';}).join(' ');
+  $('titoloInciso').setAttribute('aria-label',L.nome);
+  var az=$('sogliaAzioni');az.innerHTML='<a class="btn pieno" href="#racconto">'+t('Entra')+'</a><button class="btn" id="btnGuidaSoglia">'+t('Visita guidata')+'</button><button class="btn ghost" id="btnQui">'+t('Sono qui')+'</button>';
+  $('btnQui').onclick=function(){impostaQui(MAIN[0].slug);};
+  $('btnGuidaSoglia').onclick=function(){location.hash='#cammino';setTimeout(function(){Guida.avvia();},400);};
+  /* lingue */
+  var sel=$('lingua');sel.innerHTML=LINGUE.map(function(l){return '<option value="'+l[0]+'"'+(l[0]===S.lang?' selected':'')+'>'+l[1]+(l[0]!=='it'&&!(D.tr&&D.tr[l[0]])?' · IT':'')+'</option>';}).join('');
+  sel.onchange=function(){S.lang=sel.value;save();renderTutto();};
+  /* banner «sono qui» */
+  if(QUI){var s=bySlug[QUI];$('quiBanner').innerHTML='<b>'+t('Sei nel santuario')+'</b> · '+(s?esc(tr('scene',s.id,'titolo',s.titolo)):'')+' <span class="sp" style="flex:1"></span><a href="#racconto" id="btnEsciQui">'+t('Vedi il racconto')+' ›</a>';$('btnEsciQui').onclick=function(e){e.preventDefault();esciQui();};}
+  $('credito').innerHTML=t('Produzione')+': <a href="https://www.esploratrapani.it" rel="noopener">Esplora Trapani</a> · <span class="prova">'+(S.lang==='it'?'riprese 360 e drone di Alessandro Milia · testi da fonti pubbliche, da validare con il parroco · voci sintetiche di prova':'360 and drone footage by Alessandro Milia · texts from public sources, to be validated with the parish priest · synthetic test voices')+'</span>';
+}
+$('fsBtn').onclick=function(){S.fs=S.fs%3+1;save();document.documentElement.dataset.fs=S.fs;if(GS)ScrollTrigger.refresh();};
+$('segModo').querySelectorAll('button').forEach(function(b){b.onclick=function(){S.modo=b.dataset.modo;save();applicaStatici();renderRacconto();};});
+
+/* ====================================================================
+   SOGLIA (ingresso 2): facciata del 360 come ante che si aprono
+   ==================================================================== */
+function altFade(host){ /* l'immagine di dissolvenza di Pannellum nasce senza alt: la mettiamo vuota (decorativa) */
+  new MutationObserver(function(){host.querySelectorAll('img:not([alt])').forEach(function(i){i.setAttribute('alt','');});}).observe(host,{childList:true,subtree:true});
+}
+var heroV=null;
+function soglia(){
+  if(QUI){$('soglia').hidden=true;return;}
+  var s0=MAIN[0], s2=MAIN[Math.min(2,MAIN.length-1)];
+  var ante=[$('antaSx'),$('antaDx')];
+  function apri(){ /* animazione delle ante allo scroll */
+    if(!GS||RIDOTTO){ante.forEach(function(a){a.style.display='none';});return;}
+    var tl=gsap.timeline({scrollTrigger:{trigger:'#soglia',start:'top top',end:'bottom bottom',scrub:.6}});
+    tl.to('#antaSx',{rotateY:-105,duration:1,ease:'power2.inOut'},0).to('#antaDx',{rotateY:105,duration:1,ease:'power2.inOut'},0)
+      .to('#scorri',{opacity:0,duration:.2},0);
+    gsap.from('#titoloInciso .w span',{opacity:0,y:26,stagger:.045,duration:.9,ease:'power3.out',delay:.2});
+    gsap.from('#claim, #sogliaAzioni',{opacity:0,y:14,duration:.8,ease:'power2.out',delay:1});
+  }
+  if(!window.pannellum||!L.foto_portale&&!s0){apri();return;}
+  var host=$('heroPano');altFade(host);
+  risolviPano(s0).then(function(u0){
+    heroV=pannellum.viewer(host,{default:{firstScene:'facciata',autoLoad:true,showControls:false,mouseZoom:false,draggable:false,keyboardZoom:false,compass:false,friction:.6,sceneFadeDuration:1200},scenes:{facciata:{type:'equirectangular',panorama:u0,yaw:L.yaw_facciata||0,pitch:(L.pitch_facciata!=null?L.pitch_facciata:4),hfov:80}}});
+    heroV.on('load',function once(){
+      heroV.off('load',once);
+      try{var img=heroV.getRenderer().render((L.pitch_facciata!=null?L.pitch_facciata:4)*Math.PI/180,(L.yaw_facciata||0)*Math.PI/180,80*Math.PI/180,{returnImage:true});
+        ante.forEach(function(a){a.style.backgroundImage='url('+img+')';a.style.backgroundSize=(host.clientWidth)+'px '+(host.clientHeight)+'px';});}catch(e){}
+      apri();
+      /* dietro le ante: la navata, con una rotazione lentissima finché la soglia è in vista */
+      risolviPano(s2).then(function(u2){heroV.addScene('dietro',{type:'equirectangular',panorama:u2,yaw:0,pitch:2,hfov:90,autoRotate:RIDOTTO?0:-1.2,autoRotateInactivityDelay:1000});heroV.loadScene('dietro');});
+    });
+    heroV.on('error',apri);
+  }).catch(function(){apri();$('heroPano').style.background='radial-gradient(circle at 50% 40%,#2c3a52,#0d1016)';});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!heroV)return;try{heroV[e.isIntersecting?'startAutoRotate':'stopAutoRotate'](RIDOTTO?0:-1.2);}catch(x){}});},{threshold:.05});
+  io.observe($('soglia'));
+}
+
+/* ====================================================================
+   RACCONTO (Atto I): capitoli con il video dei narratori e le scoperte
+   ==================================================================== */
+var Vplayers={};
+function renderRacconto(){
+  if(QUI){$('racconto').hidden=true;return;}
+  $('voceSaluto').innerHTML='<b>'+esc(L.voce.nome)+' · '+esc(L.voce.ruolo)+'</b>'+esc(tr('luogo',0,'voce.saluto',L.voce.saluto));
+  $('narrNota').innerHTML=D.narratori.map(function(n){return '<span class="chip oro">'+esc(n.nome)+' · '+esc(n.ruolo)+'</span>';}).join(' ')+' <span class="prova">'+(S.lang==='it'?'narratori di prova':'test narrators')+'</span>';
+  var h='';
+  D.capitoli.forEach(function(c){
+    var n=c.narratore?narr(c.narratore):null;
+    var chi=n?('<div class="av">'+esc(n.sigla)+'</div><span>'+esc(n.nome)+' · '+esc(n.ruolo)+'</span>'):('<div class="av">'+esc(D.narratori[0].sigla)+esc(D.narratori[1].sigla)+'</div><span>'+D.narratori.map(function(x){return esc(x.nome);}).join(' & ')+'</span>');
+    h+='<article class="cap" id="cap-'+c.id+'" aria-labelledby="hcap-'+c.id+'">'+
+      '<div><div class="n">'+c.n+'</div><h3 id="hcap-'+c.id+'">'+esc(tr('capitoli',c.id,'titolo',c.titolo))+'</h3><div class="sotto">'+esc(tr('capitoli',c.id,'sottotitolo',c.sottotitolo))+'</div>'+
+      '<div class="voce"><div class="av">'+esc(L.voce.sigla)+'</div><div class="fumetto"><b>'+esc(L.voce.nome)+'</b>'+esc(tr('capitoli',c.id,'voce_luogo',c.voce_luogo))+'</div></div>'+
+      '<p>'+esc(tr('capitoli',c.id,'breve',c.breve))+'</p>'+
+      '<div class="chi">'+chi+(c.stato_testo==='da_validare'?'<span class="stato">· '+t('testo di prova · da validare')+'</span>':'')+'</div>'+
+      '<div class="card scheda-scop" id="scop-'+c.id+'"></div>'+
+      (c.trascrizione?'<details><summary>'+t('Trascrizione')+'</summary><div class="in trascr">'+esc(c.trascrizione)+(S.lang!=='it'?' <span class="chip">'+t('contenuti in italiano')+'</span>':'')+'</div></details>':'')+
+      (c.n===1&&L.lettura_facile?'<details class="facile"><summary>'+t('Testo facile')+'</summary><div class="in">'+esc(tr('luogo',0,'lettura_facile',L.lettura_facile))+'</div></details>':'')+
+      '</div>'+
+      '<div class="vid" id="vid-'+c.id+'">'+
+        '<video playsinline preload="metadata" poster="'+esc(c.poster)+'" aria-label="'+esc(c.titolo)+'"><source src="'+esc(c.video)+'" type="video/mp4">'+(c.sottotitoli?'<track kind="subtitles" srclang="it" label="Italiano" src="'+esc(c.sottotitoli)+'">':'')+'</video>'+
+        '<button class="avvia"><span>▶ '+t('Guarda il racconto')+'</span><small>'+mmss(c.durata)+(c.sottotitoli?' · '+t('Sottotitoli nei video').toLowerCase():'')+'</small></button>'+
+        '<button class="pp" hidden aria-label="'+t('Pausa')+'">❚❚</button>'+
+        '<button class="scop" aria-label="'+t('Scoperta')+'">?</button>'+
+        '<div class="narr"><div class="fumetto"><b>'+esc(L.voce.nome)+'</b><span></span></div></div>'+
+        '<div class="barra"><i></i></div>'+
+      '</div></article>';
+  });
+  $('capitoli').innerHTML=h;
+  D.capitoli.forEach(bindCapitolo);
+  renderPass();
+  if(GS&&!RIDOTTO)gsap.utils.toArray('.cap').forEach(function(el){gsap.from(el,{opacity:0,y:40,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',once:true}});});
+}
+function bindCapitolo(c){
+  var box=$('vid-'+c.id),v=box.querySelector('video'),avvia=box.querySelector('.avvia'),pp=box.querySelector('.pp'),scop=box.querySelector('.scop'),narrB=box.querySelector('.narr'),fill=box.querySelector('.barra i'),barra=box.querySelector('.barra');
+  var P={attesa:false,fatta:false};Vplayers[c.id]=P;
+  if(c.scoperta&&c.durata){var b=document.createElement('b');b.style.left=(c.scoperta.t/c.durata*100)+'%';barra.appendChild(b);}
+  function play(){var p=v.play();if(p&&p.catch)p.catch(function(){});pp.textContent='❚❚';pp.setAttribute('aria-label',t('Pausa'));}
+  avvia.onclick=function(){avvia.remove();pp.hidden=false;Lettore.pausa();play();};
+  pp.onclick=function(){if(P.attesa)return;if(v.paused)play();else{v.pause();pp.textContent='▶';pp.setAttribute('aria-label',t('Riproduci'));}};
+  v.addEventListener('timeupdate',function(){
+    if(v.duration)fill.style.width=(v.currentTime/v.duration*100)+'%';
+    if(c.scoperta&&!P.fatta&&!P.attesa&&v.currentTime>=c.scoperta.t){v.pause();P.attesa=true;narrB.querySelector('span').textContent=c.scoperta.narr;narrB.classList.add('on');scop.classList.add('on');}
+  });
+  v.addEventListener('ended',function(){timbra('cap:'+c.id);if(S.modo==='classe'&&c.quiz)quiz(c);});
+  scop.onclick=function(){
+    if(!P.attesa)return;scop.classList.remove('on');narrB.classList.remove('on');
+    var card=$('scop-'+c.id);card.innerHTML='<div class="kicker">'+t('Scoperta')+'</div><h4>'+esc(c.scoperta.tit)+'</h4><p>'+esc(c.scoperta.txt)+'</p>'+(c.stato_testo==='da_validare'?'<span class="prova">'+t('testo di prova · da validare')+'</span> ':'')+'<button class="btn sm pieno" style="margin-top:8px">'+t('Continua il racconto')+' ›</button>';
+    card.classList.add('on');card.querySelector('button').onclick=function(){card.classList.remove('on');P.attesa=false;P.fatta=true;play();box.scrollIntoView({block:'center',behavior:RIDOTTO?'auto':'smooth'});};
+    card.scrollIntoView({block:'nearest',behavior:RIDOTTO?'auto':'smooth'});
+  };
+}
+function quiz(c){
+  var q=c.quiz,card=$('scop-'+c.id);
+  card.innerHTML='<div class="kicker">'+t('Quiz')+'</div><h4>'+esc(q.d)+'</h4><div class="quiz"><div class="opz">'+q.o.map(function(o,k){return '<button data-k="'+k+'">'+(k+1)+'. '+esc(o)+'</button>';}).join('')+'</div><p class="fb" aria-live="assertive"></p></div>';
+  card.classList.add('on');
+  card.querySelectorAll('.opz button').forEach(function(b){b.onclick=function(){var k=+b.dataset.k;if(k===q.ok){b.className='ok';card.querySelector('.fb').textContent=t('Esatto!');timbra('quiz:'+c.id);}else{b.className='ko';card.querySelector('.fb').textContent=t('Non proprio… riprova');}};});
+}
+function timbra(k){S.timbri[k]=1;save();renderPass();}
+function renderPass(){
+  var n=D.capitoli.filter(function(c){return S.timbri['cap:'+c.id];}).length;
+  $('pass').innerHTML='<span class="nota">'+t('Timbri')+': '+n+' / '+D.capitoli.length+' '+t('capitoli ascoltati')+'</span> '+D.capitoli.map(function(c){return '<span class="t'+(S.timbri['cap:'+c.id]?' on':'')+'" title="'+esc(c.titolo)+'">'+c.n+'</span>';}).join('');
+}
+
+/* ====================================================================
+   CAMMINO (Atto II): pianta + 360 + cassetto, scroll che cammina
+   ==================================================================== */
+var V=null, attiva=null, inDeviazione=false, hsLoop=0, piantaAuto=false, percorsoOn=false;
+function posScena(s){return s.pos||[50,50];}
+function schemaAuto(){ /* senza pianta: lo schema del cammino dall'ordine delle scene */
+  piantaAuto=true;var n=MAIN.length;
+  MAIN.forEach(function(s,i){s.pos=[50,82-i*(72/Math.max(1,n-1))];});
+  var lati={};SC.filter(function(s){return s.ordine>=100;}).forEach(function(s){var p=byId[s.da]||MAIN[MAIN.length-1];var serie=Math.floor(s.ordine/100);lati[serie]=lati[serie]||(Object.keys(lati).length%2?82:18);s.pos=[lati[serie],posScena(p)[1]-(s.ordine%100)*6];});
+  var img=$('piantaImg');img.hidden=true;
+  var sv=document.createElementNS('http://www.w3.org/2000/svg','svg');sv.setAttribute('viewBox','0 0 100 130');sv.setAttribute('class','schema');var cap=t('Pianta non disponibile: schema del cammino disegnato dall\u2019ordine delle scene').split(': ');sv.innerHTML='<rect width="100" height="130" fill="#efe8d8"/><text x="50" y="121" font-size="3.2" text-anchor="middle" fill="#6b645a" font-family="sans-serif">'+esc(cap[0])+'</text><text x="50" y="126" font-size="3.2" text-anchor="middle" fill="#6b645a" font-family="sans-serif">'+esc(cap[1]||'')+'</text>';
+  $('piantaBox').insertBefore(sv,img);
+}
+function disegnaPianta(){
+  var box=$('piantaBox'),img=$('piantaImg');
+  function pronto(){renderPins();}
+  if(!L.site_plan){schemaAuto();pronto();return;}
+  img.alt=(S.lang==='it'?'Pianta del santuario':'Plan of the sanctuary');img.onload=pronto;img.onerror=function(){img.onerror=null;schemaAuto();pronto();};img.src=L.site_plan;
+  if(img.complete&&img.naturalWidth)pronto();
+}
+function H(){ /* rapporto altezza/larghezza della pianta in percentuale: serve ai pin */ return 1; }
+function renderPins(){
+  var pins=$('pins'),svg=$('piantaSvg');pins.innerHTML='';
+  SC.forEach(function(s){var p=posScena(s);var b=document.createElement('button');b.className='pin'+(s.ordine>=100?' dev':'');b.style.left=p[0]+'%';b.style.top=p[1]+'%';b.textContent=s.ordine>=100?s.ordine:(s.ordine+1);b.setAttribute('aria-label',t('Scena')+' '+esc(tr('scene',s.id,'titolo',s.titolo)));b.dataset.id=s.id;b.onclick=function(){vai(s,true);};pins.appendChild(b);});
+  var filo='<polyline points="'+MAIN.map(function(s){return posScena(s).join(',');}).join(' ')+'" fill="none" stroke="#c9a15a" stroke-width="2.5" stroke-dasharray="1 2" vector-effect="non-scaling-stroke" stroke-linecap="round"/>';
+  SC.filter(function(s){return s.ordine>=100;}).forEach(function(s){var p=byId[s.da];if(p)filo+='<line data-dev="'+s.id+'" x1="'+posScena(p)[0]+'" y1="'+posScena(p)[1]+'" x2="'+posScena(s)[0]+'" y2="'+posScena(s)[1]+'" stroke="#c9a15a" stroke-width="1.5" stroke-dasharray="2 3" vector-effect="non-scaling-stroke" opacity=".8"/>';});
+  var A=L.accessibilita;
+  if(A&&A.percorso_accessibile&&A.percorso_accessibile.length>1)filo+='<polyline id="filoAcc" points="'+A.percorso_accessibile.map(function(p){return p.join(',');}).join(' ')+'" fill="none" stroke="#5fb37a" stroke-width="5" vector-effect="non-scaling-stroke" stroke-linecap="round" opacity="'+(percorsoOn?.9:0)+'"/>';
+  svg.innerHTML=filo;
+  var leg=$('piantaLeg');leg.innerHTML='';
+  if(A&&A.percorso_accessibile){var bt=document.createElement('button');bt.className='chip';bt.id='btnPercorso';bt.setAttribute('aria-pressed',percorsoOn);bt.innerHTML='♿ '+t(percorsoOn?'nascondi il percorso':'mostra il percorso');bt.onclick=function(){percorsoOn=!percorsoOn;renderPins();};leg.appendChild(bt);}
+  if(piantaAuto){var c=document.createElement('span');c.className='chip';c.textContent=S.lang==='it'?'schema automatico':'auto diagram';leg.appendChild(c);}
+  aggiornaPins();
+}
+function aggiornaPins(){
+  var ramo=attiva?(attiva.ordine>=100?Math.floor(attiva.ordine/100):null):null;
+  $('pins').querySelectorAll('.pin').forEach(function(b){var s=byId[b.dataset.id];b.classList.toggle('attiva',attiva&&s.id===attiva.id);b.classList.toggle('vista',!!S.timbri['sc:'+s.id]);
+    if(s.ordine>=100){var mostra=attiva&&(s.da===attiva.id||Math.floor(s.ordine/100)===ramo);b.hidden=!mostra;}});
+  $('piantaSvg').querySelectorAll('line[data-dev]').forEach(function(l){var s=byId[+l.dataset.dev];var mostra=attiva&&(s.da===attiva.id||Math.floor(s.ordine/100)===ramo);l.style.opacity=mostra?'.8':'0';});
+  if(attiva){var p=posScena(attiva);var c=$('cono');c.hidden=false;c.style.left=p[0]+'%';c.style.top=p[1]+'%';if(!QUI){var pt=$('punto');if(pt.hidden){pt.hidden=false;pt.style.left=p[0]+'%';pt.style.top=p[1]+'%';}}}
+}
+function creaViewer(s,u){
+  var cfg={default:{firstScene:'s'+s.id,sceneFadeDuration:900,autoLoad:true,showControls:false,compass:false,friction:.65,hfov:90,minHfov:25,keyboardZoom:true,mouseZoom:true,doubleClickZoom:false,touchPanSpeedCoeffFactor:1},scenes:{}};
+  cfg.scenes['s'+s.id]=cfgScena(s,u);
+  V=pannellum.viewer('pano',cfg);
+  V.on('load',function(){$('panoHint').hidden=false;$('panoHint').textContent=t('Trascina per guardarti intorno');setTimeout(function(){$('panoHint').hidden=true;},3500);montaHotspot();});
+  V.on('error',function(){piatta(attiva);});
+  V.on('touchstart',function(){Guida.libera();});V.on('mousedown',function(){Guida.libera();});
+  $('pano').addEventListener('keydown',function(e){if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].indexOf(e.key)>=0)Guida.libera();});
+  if(!hsLoop)hsLoop=requestAnimationFrame(tick);
+  altFade($('pano'));
+}
+function cfgScena(s,u){
+  var hs=opereInScena(s.id).map(function(x){return {pitch:x.p.pitch,yaw:x.p.yaw,cssClass:'opera-hs',id:'op'+x.o.id,createTooltipFunc:creaCornice,createTooltipArgs:x};});
+  return {type:'equirectangular',panorama:u,yaw:s.yaw_avanti||0,pitch:s.pitch_avanti||0,hfov:90,hotSpots:hs,title:''};
+}
+function creaCornice(div,x){
+  div.setAttribute('tabindex','0');div.setAttribute('role','button');
+  var o=x.o;div.setAttribute('aria-label',tr('opere',o.id,'titolo',o.titolo)+(o.audio?' · '+t('ascolta')+' '+mmss(o.durata):''));
+  div.dataset.yaw=x.p.yaw;div.dataset.pitch=x.p.pitch;div.dataset.op=o.id;
+  div.innerHTML='<div class="cornice"></div><div class="lab">'+esc(tr('opere',o.id,'titolo',o.titolo))+(o.audio?'<em>▶ '+t('ascolta')+' '+mmss(o.durata)+'</em>':'')+'</div>';
+  div.addEventListener('click',function(e){e.stopPropagation();apriOpera(o,true);});
+  div.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();apriOpera(o,true);}});
+}
+function montaHotspot(){ /* dimensione della cornice in proporzione all'ampiezza dell'opera */
+  document.querySelectorAll('.opera-hs').forEach(function(d){var o=OP.filter(function(z){return z.id===+d.dataset.op;})[0];if(!o)return;var w=$('pano').clientWidth,hf=V?V.getHfov():90;var px=Math.max(60,Math.min(w*.6,(o.ampiezza||40)/hf*w*.55));var c=d.querySelector('.cornice');if(c){c.style.width=px+'px';c.style.height=(px*1.15)+'px';}var l=d.querySelector('.lab');if(l)l.style.top='calc(50% + '+(px*1.15/2+10)+'px)';});
+}
+function tick(){ /* la cornice si accende quando entra al centro dello sguardo; il cono segue lo sguardo */
+  hsLoop=requestAnimationFrame(tick);
+  if(!V||!attiva)return;
+  var yaw=V.getYaw(),pitch=V.getPitch();
+  document.querySelectorAll('.opera-hs').forEach(function(d){var dy=((+d.dataset.yaw-yaw)%360+540)%360-180,dp=+d.dataset.pitch-pitch;var dist=Math.sqrt(dy*dy+dp*dp);d.classList.toggle('viva',dist<16);});
+  var c=$('cono');if(!c.hidden)c.style.transform='translate(-50%,-100%) rotate('+(yaw+(attiva.yaw_nord_pianta||0))+'deg)';
+}
+function piatta(s){var p=$('piatta');p.classList.add('on');p.style.backgroundImage='url('+urlPano(s,L.media_base.length-1)+')';p.querySelector('p').textContent=t('Vista piatta: il 360 non si è caricato');}
+var sceneCaricate={};
+function vai(s,daUtente){
+  if(!s||(attiva&&attiva.id===s.id&&V))return;
+  attiva=s;inDeviazione=s.ordine>=100;
+  $('panoTag').textContent=(inDeviazione?t('Deviazione')+' · ':'')+tr('scene',s.id,'titolo',s.titolo);
+  renderCassetto(s);aggiornaPins();renderElenco();
+  if(daUtente&&!QUI&&GS&&!RIDOTTO&&!MOBILE&&!inDeviazione&&ST){var i=MAIN.indexOf(s);if(i>=0){var p=(i+.5)/MAIN.length;var y=ST.start+(ST.end-ST.start)*p;if(Math.abs(window.scrollY-y)>40)window.scrollTo({top:y,behavior:'instant'});}}
+  $('piatta').classList.remove('on');
+  risolviPano(s).then(function(u){
+    if(!V){creaViewer(s,u);}
+    else{if(!sceneCaricate[s.id]){V.addScene('s'+s.id,cfgScena(s,u));}V.loadScene('s'+s.id,s.pitch_avanti||0,s.yaw_avanti||0,90);}
+    sceneCaricate[s.id]=1;
+  }).catch(function(){piatta(s);});
+  if(daUtente)Guida.libera();
+}
+function renderCassetto(s){
+  var ops=opereInScena(s.id),k=MAIN.indexOf(s),tit=tr('scene',s.id,'titolo',s.titolo),testo=tr('scene',s.id,'testo',s.testo),verso=tr('scene',s.id,'verso',s.verso),alt=tr('scene',s.id,'descrizione_scena',s.descrizione_scena);
+  var h='<div class="riga"><span class="ord">'+(inDeviazione?t('Deviazione')+' '+s.ordine:t('Scena')+' '+(k+1)+' '+t('di')+' '+MAIN.length)+'</span></div><h3>'+esc(tit)+'</h3>';
+  h+='<div class="azioni">';
+  if(s.audio)h+='<button class="btn pieno ascolta-btn" data-tr="s'+s.id+'">▶ '+t('Ascolta il racconto')+' · '+mmss(s.durata)+'</button>';
+  if(s.audiodescrizione)h+='<button class="btn ghost" data-tr="ad'+s.id+'">'+t('Descrizione di ciò che vedi')+' · '+mmss(s.audiodescrizione_durata)+'</button>';
+  h+='</div>';
+  if(testo)h+='<p class="testo">'+esc(testo)+'</p>';
+  if(alt)h+='<details class="alt"'+(MOBILE?'':' open')+'><summary>'+t('Cosa hai davanti')+'</summary><p>'+esc(alt)+'</p></details>';
+  var visti={};ops=ops.filter(function(x){if(visti[x.o.id])return false;visti[x.o.id]=1;return true;});
+  if(ops.length)h+='<div class="opere-qui"><span class="nota" style="width:100%">'+t('In questa scena vedi')+'</span>'+ops.map(function(x){return '<button data-op="'+x.o.id+'">'+(x.o.capolavoro?'<span class="stella">★</span> ':'')+esc(tr('opere',x.o.id,'titolo',x.o.titolo))+'</button>';}).join('')+'</div>';
+  if(s.deviazioni&&s.deviazioni.length)h+='<div class="dev">'+s.deviazioni.map(function(d){var ds=byId[d.a];return ds?'<button class="btn sm" data-dev="'+ds.id+'">↳ '+esc(tr('scene',ds.id,'titolo',ds.titolo))+'</button>':'';}).join('')+'</div>';
+  if(inDeviazione){var p=byId[s.da]||MAIN[MAIN.length-1];h+='<div class="dev"><button class="btn sm pieno" data-dev="'+p.id+'">↩ '+t('Torno al cammino')+'</button></div>';}
+  if(verso)h+='<div class="verso">'+t('Prosegui verso').replace(' verso','')+': '+esc(verso)+'</div>';
+  if(!inDeviazione)h+='<div class="nav-scene"><button class="btn sm ghost" id="scPrev"'+(k<=0?' disabled':'')+'>‹ '+t('Precedente')+'</button><span class="pos">'+(k+1)+' / '+MAIN.length+'</span><button class="btn sm ghost" id="scNext"'+(k>=MAIN.length-1?' disabled':'')+'>'+t('Successiva')+' ›</button></div>';
+  var c=$('cassetto');c.innerHTML=h;
+  c.querySelectorAll('[data-tr]').forEach(function(b){b.onclick=function(){var id=b.dataset.tr;Lettore.suona(id==='ad'+s.id?{id:id,titolo:t('Descrizione di ciò che vedi')+' · '+tit,sub:t('Il custode'),src:s.audiodescrizione,durata:s.audiodescrizione_durata,testo:tr('scene',s.id,'audiodescrizione_testo',s.audiodescrizione_testo)||alt}:{id:id,titolo:tit,sub:t('La guida'),src:s.audio,durata:s.durata,testo:tr('scene',s.id,'trascrizione',s.trascrizione)||testo,fine:function(){timbra('sc:'+s.id);aggiornaPins();}});};});
+  c.querySelectorAll('[data-op]').forEach(function(b){b.onclick=function(){var o=OP.filter(function(z){return z.id===+b.dataset.op;})[0];guardaOpera(o,s);};});
+  c.querySelectorAll('[data-dev]').forEach(function(b){b.onclick=function(){vai(byId[+b.dataset.dev],true);};});
+  if($('scPrev'))$('scPrev').onclick=function(){vai(MAIN[k-1],true);};
+  if($('scNext'))$('scNext').onclick=function(){vai(MAIN[k+1],true);};
+}
+function renderElenco(){
+  $('elencoScene').innerHTML=SC.map(function(s){return '<button role="tab" aria-current="'+(attiva&&s.id===attiva.id)+'" class="'+(s.ordine>=100?'dev':'')+'" data-id="'+s.id+'">'+(s.ordine>=100?'↳ ':'')+esc(tr('scene',s.id,'titolo',s.titolo))+'</button>';}).join('');
+  $('elencoScene').querySelectorAll('button').forEach(function(b){b.onclick=function(){vai(byId[+b.dataset.id],true);};});
+}
+$('frecce').querySelectorAll('button').forEach(function(b){b.onclick=function(){if(!V)return;Guida.libera();var d=b.dataset.d;if(d==='sx')V.setYaw(V.getYaw()-25,400);if(d==='dx')V.setYaw(V.getYaw()+25,400);if(d==='su')V.setPitch(Math.min(60,V.getPitch()+15),400);if(d==='giu')V.setPitch(Math.max(-60,V.getPitch()-15),400);};});
+/* lo scroll che cammina (solo desktop, senza «riduci movimento», non dal QR) */
+var ST=null;
+function scrollCammino(){
+  if(ST)return;
+  if(QUI||RIDOTTO||MOBILE||!GS){$('runway').style.height='';return;}
+  document.body.classList.add('scorre');
+  var topH=$('top').offsetHeight+8;document.documentElement.style.setProperty('--top-h',topH+'px');
+  $('runway').style.height=(MAIN.length*70)+'vh';
+  var ultimo=-1;
+  ST=ScrollTrigger.create({trigger:'#runway',start:'top '+topH+'px',end:'bottom bottom',onUpdate:function(self){
+    var p=self.progress,n=MAIN.length,i=Math.min(n-1,Math.floor(p*n));
+    /* il punto cammina lungo il filo */
+    var f=p*(n-1),a=Math.floor(f),b=Math.min(n-1,a+1),k=f-a,pa=posScena(MAIN[a]),pb=posScena(MAIN[b]);
+    var pt=$('punto');pt.hidden=false;pt.style.left=(pa[0]+(pb[0]-pa[0])*k)+'%';pt.style.top=(pa[1]+(pb[1]-pa[1])*k)+'%';
+    if(i!==ultimo){ultimo=i;if(!inDeviazione||true)vai(MAIN[i],false);}
+  }});
+}
+
+/* ====================================================================
+   OPERE (Atto III): pellicola, zoom nel 360, foto piana con i dettagli
+   ==================================================================== */
+function renderOpere(){
+  var pell=$('pellicola');
+  $('opereNota').textContent=S.lang==='it'?'Nel 360 le opere hanno una cornice che si accende quando le guardi: toccala per avvicinarti. Qui sotto, tutte le opere verificate.':'In the 360 the works have a frame that lights up when you look at them: tap it to get closer. Below, all the verified works.';
+  pell.innerHTML=OP.map(function(o){var sp=scenaPrincipale(o);var meta=(o.autore?esc(o.autore):'<span class="studio">'+t('in studio')+'</span>')+' · '+(o.datazione?esc(o.datazione):'<span class="studio">'+t('in studio')+'</span>');
+    return '<article class="opera-card" id="opc-'+o.id+'"><div class="quadro">'+(o.foto_hd?'<img src="'+esc(o.foto_hd)+'" alt="'+esc(o.titolo)+'" loading="lazy">':'<div class="t">'+esc(tr('opere',o.id,'titolo',o.titolo))+'</div>')+'<div class="corn"></div></div>'+
+      '<div class="in"><h3>'+(o.capolavoro?'<span class="stella" title="'+t('capolavoro')+'">★</span> ':'')+esc(tr('opere',o.id,'titolo',o.titolo))+'</h3><div class="meta">'+esc(o.tipo)+' · '+meta+'</div>'+
+      '<div class="az"><button class="btn sm" data-vedi="'+o.id+'">'+t('Guardala nel 360')+'</button><button class="btn sm ghost" data-apri="'+o.id+'">'+t('Apri la scheda')+'</button></div>'+
+      (sp?'<div class="nota">'+t('Dov’è')+': '+esc(tr('scene',sp.id,'titolo',sp.titolo))+'</div>':'')+'</div></article>';}).join('');
+  pell.querySelectorAll('[data-vedi]').forEach(function(b){b.onclick=function(){var o=OP.filter(function(z){return z.id===+b.dataset.vedi;})[0];guardaOpera(o);};});
+  pell.querySelectorAll('[data-apri]').forEach(function(b){b.onclick=function(){var o=OP.filter(function(z){return z.id===+b.dataset.apri;})[0];apriOpera(o,false);};});
+}
+function guardaOpera(o,s){ /* livello 1: la scena giusta, il panorama ruota verso l'opera */
+  var sc=s||scenaPrincipale(o),p=o.scene.filter(function(x){return x.scena===sc.id;})[0]||o.scene[0];
+  var fai=function(){if(V){try{V.lookAt(p.pitch,p.yaw,70,900);}catch(e){}}};
+  if(!attiva||attiva.id!==sc.id){vai(sc,true);var n=0;(function att(){if(V&&sceneCaricate[sc.id]&&attiva.id===sc.id){setTimeout(fai,950);}else if(n++<60)setTimeout(att,100);})();}else fai();
+  $('cammino').scrollIntoView({behavior:RIDOTTO?'auto':'smooth',block:'start'});
+  if(ST&&!QUI&&!MOBILE){var i=MAIN.indexOf(sc);if(i>=0)window.scrollTo({top:ST.start+(ST.end-ST.start)*((i+.5)/MAIN.length),behavior:'instant'});}
+}
+function apriOpera(o,zoom){ /* livello 2 e 3: zoom nel 360, poi la foto piana con i dettagli, la scheda accanto */
+  var p=o.scene.filter(function(x){return x.principale;})[0]||o.scene[0];
+  var dopo=function(){
+    var f=$('opFoto'),sch=$('opScheda');
+    f.innerHTML=o.foto_hd?'<img src="'+esc(o.foto_hd)+'" alt="'+esc(o.titolo)+'">'+(o.dettagli||[]).map(function(d,i){return '<button class="det" style="left:'+d.x+'%;top:'+d.y+'%" data-i="'+i+'" aria-label="'+esc(d.tit)+'"><b>'+esc(d.tit)+'</b></button>';}).join('')+'<div class="det-pop" id="detPop"></div>':'<div class="nofoto"><div class="opera-card" style="margin:0 auto 14px;flex:none"><div class="quadro" style="aspect-ratio:4/5;width:220px"><div class="t">'+esc(tr('opere',o.id,'titolo',o.titolo))+'</div><div class="corn"></div></div></div>'+t('Foto ad alta risoluzione non ancora caricata')+'</div>';
+    var meta='<dl><dt>'+esc(S.lang==='it'?'Tipo':'Type')+'</dt><dd>'+esc(o.tipo)+'</dd><dt>'+esc(S.lang==='it'?'Autore':'Author')+'</dt><dd>'+(o.autore?esc(o.autore):'<span class="studio">'+t('in studio')+'</span>')+'</dd><dt>'+esc(S.lang==='it'?'Data':'Date')+'</dt><dd>'+(o.datazione?esc(o.datazione):'<span class="studio">'+t('in studio')+'</span>')+'</dd></dl>';
+    var anche=o.scene.map(function(x){var s=byId[x.scena];return s?'<button class="btn sm ghost" data-sc="'+s.id+'" data-yaw="'+x.yaw+'" data-pitch="'+x.pitch+'">'+esc(tr('scene',s.id,'titolo',s.titolo))+'</button>':'';}).join('');
+    sch.innerHTML='<div class="kicker">'+(o.capolavoro?'★ '+t('capolavoro'):esc(o.tipo))+'</div><h2 id="opTitolo">'+esc(tr('opere',o.id,'titolo',o.titolo))+'</h2>'+meta+'<p>'+esc(tr('opere',o.id,'breve',o.breve))+'</p>'+(o.curiosita?'<p class="nota">'+esc(tr('opere',o.id,'curiosita',o.curiosita))+'</p>':'')+
+      (o.fonte_attribuzione?'<p class="nota"><a href="'+esc(o.fonte_attribuzione)+'" rel="noopener" target="_blank">'+(S.lang==='it'?'Fonte dell’attribuzione':'Source of the attribution')+' ↗</a></p>':'')+
+      '<div class="azioni" style="display:flex;gap:8px;flex-wrap:wrap">'+(o.audio?'<button class="btn pieno" data-a="1">▶ '+t('ascolta')+' · '+t('La guida')+' · '+mmss(o.durata)+'</button>':'')+(o.audio_voce2?'<button class="btn" data-a="2">▶ '+t('Seconda voce')+' · '+t('Il custode')+' · '+mmss(o.durata_voce2)+'</button>':'')+'</div>'+
+      (o.dettagli&&o.dettagli.length&&o.foto_hd?'<p class="nota">'+t('Tocca un dettaglio')+'</p>':'')+
+      '<div><div class="kicker" style="margin-bottom:6px">'+t('La vedi anche in')+'</div><div class="anche">'+anche+'</div></div>';
+    sch.querySelectorAll('[data-a]').forEach(function(b){b.onclick=function(){var v2=b.dataset.a==='2';Lettore.suona({id:'o'+o.id+(v2?'b':''),titolo:tr('opere',o.id,'titolo',o.titolo),sub:v2?t('Il custode'):t('La guida'),src:v2?o.audio_voce2:o.audio,durata:v2?o.durata_voce2:o.durata,testo:v2?(tr('opere',o.id,'trascrizione_voce2',o.trascrizione_voce2)||null):(tr('opere',o.id,'trascrizione',o.trascrizione)||tr('opere',o.id,'breve',o.breve))});};});
+    sch.querySelectorAll('[data-sc]').forEach(function(b){b.onclick=function(){chiudiOpera();guardaOpera(o,byId[+b.dataset.sc]);};});
+    f.querySelectorAll('.det').forEach(function(b){b.onclick=function(){var d=o.dettagli[+b.dataset.i];var pop=$('detPop');pop.innerHTML='<b>'+esc(d.tit)+'</b><p style="margin:4px 0 0">'+esc(d.txt)+'</p>';pop.classList.add('on');};});
+    var pan=$('opPanel');pan.classList.add('on');$('opChiudi').focus();
+    if(GS&&!RIDOTTO){gsap.fromTo('#opFoto img,#opFoto .nofoto',{opacity:0,scale:1.08},{opacity:1,scale:1,duration:.9,ease:'power2.out'});gsap.from('#opScheda > *',{opacity:0,y:16,stagger:.06,duration:.5,ease:'power2.out'});}
+  };
+  if(zoom&&V&&attiva&&o.scene.some(function(x){return x.scena===attiva.id;})){var q=o.scene.filter(function(x){return x.scena===attiva.id;})[0];try{V.lookAt(q.pitch,q.yaw,Math.max(30,o.ampiezza||40),900);}catch(e){}setTimeout(dopo,RIDOTTO?0:950);}
+  else dopo();
+}
+function chiudiOpera(){$('opPanel').classList.remove('on');if(V){try{V.setHfov(90,600);}catch(e){}}}
+$('opChiudi').onclick=chiudiOpera;
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('opPanel').classList.contains('on'))chiudiOpera();});
+
+/* ====================================================================
+   LETTORE persistente + VISITA GUIDATA + SCARICA LA VISITA
+   ==================================================================== */
+var A=$('audio');
+var Lettore={cur:null,
+  suona:function(trk){
+    if(this.cur&&this.cur.id===trk.id){if(A.paused)A.play();else A.pause();this.ui();return;}
+    this.cur=trk;A.src=trk.src;A.currentTime=0;var p=A.play();if(p&&p.catch)p.catch(function(){});
+    $('lettore').classList.add('on');$('lTit').textContent=trk.titolo;$('lSub').textContent=(trk.sub||'')+' · '+mmss(trk.durata);$('lTesto').hidden=!trk.testo;
+    document.querySelectorAll('video').forEach(function(v){if(!v.paused)v.pause();});
+    this.ui();this.sheet(false);
+  },
+  pausa:function(){if(!A.paused)A.pause();this.ui();},
+  chiudi:function(){A.pause();A.removeAttribute('src');A.load();this.cur=null;$('lettore').classList.remove('on');this.sheet(false);Guida.ferma();this.ui();},
+  ui:function(){var on=!!this.cur&&!A.paused;$('lPP').textContent=on?'❚❚':'▶';$('lPP').setAttribute('aria-label',on?t('Pausa'):t('Riproduci'));document.querySelectorAll('.traccia').forEach(function(x){x.classList.toggle('in-corso',!!Lettore.cur&&x.dataset.id===Lettore.cur.id);});},
+  sheet:function(on){var s=$('testoSheet');if(on&&this.cur&&this.cur.testo){s.innerHTML='<div class="kicker">'+t('Trascrizione')+'</div><p class="trascr">'+esc(this.cur.testo)+'</p>';s.classList.add('on');$('lTesto').setAttribute('aria-pressed','true');}else{s.classList.remove('on');$('lTesto').setAttribute('aria-pressed','false');}}
+};
+$('lPP').onclick=function(){if(!Lettore.cur)return;if(A.paused)A.play();else A.pause();Lettore.ui();};
+$('lMeno').onclick=function(){A.currentTime=Math.max(0,A.currentTime-15);};
+$('lChiudi').onclick=function(){Lettore.chiudi();};
+$('lTesto').onclick=function(){Lettore.sheet(!$('testoSheet').classList.contains('on'));};
+$('lProg').onclick=function(e){if(A.duration){var r=this.getBoundingClientRect();A.currentTime=(e.clientX-r.left)/r.width*A.duration;}};
+A.addEventListener('timeupdate',function(){if(A.duration)$('lFill').style.width=(A.currentTime/A.duration*100)+'%';});
+A.addEventListener('play',function(){Lettore.ui();});A.addEventListener('pause',function(){Lettore.ui();});
+A.addEventListener('ended',function(){var c=Lettore.cur;Lettore.ui();if(c&&c.fine)c.fine();if(Guida.on)Guida.prossima();});
+
+var Guida={on:false,i:-1,lista:[],
+  avvia:function(){this.lista=SC.filter(function(s){return s.audio;});if(!this.lista.length)return;this.on=true;this.i=-1;$('guidaBadge').classList.add('on');$('guidaBadge').textContent=t('Visita guidata in corso');this.prossima();renderGuidaCard();},
+  prossima:function(){this.i++;if(this.i>=this.lista.length){this.ferma();return;}var s=this.lista[this.i];var self=this;vai(s,false);
+    /* il panorama gira piano verso l'opera di cui si parla */
+    var ops=opereInScena(s.id);var n=0;(function att(){if(V&&sceneCaricate[s.id]&&attiva&&attiva.id===s.id){if(ops.length){try{V.lookAt(ops[0].p.pitch,ops[0].p.yaw,80,Math.max(3000,(s.durata||8)*700));}catch(e){}}else{try{V.setYaw(V.getYaw()+60,Math.max(3000,(s.durata||8)*900));}catch(e){}}}else if(n++<60)setTimeout(att,100);})();
+    Lettore.suona({id:'s'+s.id,titolo:tr('scene',s.id,'titolo',s.titolo),sub:t('Visita guidata')+' · '+t('La guida'),src:s.audio,durata:s.durata,testo:tr('scene',s.id,'trascrizione',s.trascrizione)||tr('scene',s.id,'testo',s.testo),fine:function(){timbra('sc:'+s.id);aggiornaPins();}});
+    if(ST&&!MOBILE&&!QUI){var k=MAIN.indexOf(s);if(k>=0)window.scrollTo({top:ST.start+(ST.end-ST.start)*((k+.5)/MAIN.length),behavior:'instant'});}},
+  libera:function(){if(!this.on)return;this.on=false;$('guidaBadge').classList.remove('on');renderGuidaCard();},
+  ferma:function(){this.on=false;this.i=-1;$('guidaBadge').classList.remove('on');renderGuidaCard();}
+};
+function renderAscolta(){
+  var tr_=[];SC.forEach(function(s){if(s.audio)tr_.push({id:'s'+s.id,titolo:tr('scene',s.id,'titolo',s.titolo),sub:t('Scena')+' · '+t('La guida'),src:s.audio,durata:s.durata,testo:tr('scene',s.id,'testo',s.testo)});if(s.audiodescrizione)tr_.push({id:'ad'+s.id,titolo:t('Descrizione di ciò che vedi')+' · '+tr('scene',s.id,'titolo',s.titolo),sub:t('Audiodescrizione')+' · '+t('Il custode'),src:s.audiodescrizione,durata:s.audiodescrizione_durata,testo:tr('scene',s.id,'descrizione_scena',s.descrizione_scena)});});
+  OP.forEach(function(o){if(o.audio)tr_.push({id:'o'+o.id,titolo:tr('opere',o.id,'titolo',o.titolo),sub:(S.lang==='it'?'Opera':'Work')+' · '+t('La guida'),src:o.audio,durata:o.durata,testo:tr('opere',o.id,'breve',o.breve)});if(o.audio_voce2)tr_.push({id:'o'+o.id+'b',titolo:tr('opere',o.id,'titolo',o.titolo),sub:t('Seconda voce')+' · '+t('Il custode'),src:o.audio_voce2,durata:o.durata_voce2,testo:null});});
+  var tot=tr_.reduce(function(a,x){return a+(x.durata||0);},0);
+  $('ascoltaNota').innerHTML=(S.lang==='it'?'Nessun audio parte da solo: il primo suono nasce da un tocco. Il lettore resta in basso mentre scorri.':'No audio starts by itself: the first sound comes from a tap. The player stays at the bottom while you scroll.')+' <b>'+t('Durata totale')+': '+mmss(tot)+'</b> · <span class="lingue-audio"><span class="chip">IT</span></span>';
+  $('tracce').innerHTML=tr_.map(function(x){return '<div class="traccia" data-id="'+x.id+'"><button class="play" aria-label="'+t('Riproduci')+': '+esc(x.titolo)+'">▶</button><div class="t"><b>'+esc(x.titolo)+'</b><small>'+esc(x.sub)+'</small></div><span class="d">'+mmss(x.durata)+'</span></div>';}).join('');
+  $('tracce').querySelectorAll('.traccia').forEach(function(el,i){el.querySelector('.play').onclick=function(){Lettore.suona(tr_[i]);};});
+  renderGuidaCard();renderScarica();
+}
+function renderGuidaCard(){
+  var c=$('guidaCard');c.innerHTML='<h3>'+t('Visita guidata')+'</h3><p>'+t('Dopo il primo tocco la visita avanza da sola, scena per scena, e il panorama gira verso ciò di cui si parla. Tocca il panorama per riprendere il controllo.')+'</p>'+(Guida.on?'<button class="btn" id="btnGuidaStop">■ '+t('Esci dalla visita guidata')+'</button>':'<button class="btn pieno" id="btnGuida">▶ '+t('Avvia la visita guidata')+'</button>');
+  if($('btnGuida'))$('btnGuida').onclick=function(){$('cammino').scrollIntoView({behavior:RIDOTTO?'auto':'smooth'});setTimeout(function(){Guida.avvia();},300);};
+  if($('btnGuidaStop'))$('btnGuidaStop').onclick=function(){Guida.ferma();Lettore.pausa();};
+}
+function listaScarico(){
+  var u=[];D.capitoli.forEach(function(c){if(c.video)u.push(c.video);if(c.poster)u.push(c.poster);if(c.sottotitoli)u.push(c.sottotitoli);});
+  SC.forEach(function(s){if(s.audio)u.push(s.audio);if(s.audiodescrizione)u.push(s.audiodescrizione);u.push(urlPano(s,0));});
+  OP.forEach(function(o){if(o.audio)u.push(o.audio);if(o.audio_voce2)u.push(o.audio_voce2);if(o.foto_hd)u.push(o.foto_hd);});
+  if(L.site_plan)u.push(L.site_plan);
+  return u;
+}
+function renderScarica(){
+  var c=$('scaricaCard'),mb=Math.round(3+SC.length*(D.peso.panorama_mb||2.5));
+  var ok=!ARTEFATTO&&(location.protocol==='http:'||location.protocol==='https:');
+  c.innerHTML='<h3>'+t('Scarica la visita')+'</h3><p>'+t('Dentro una chiesa la rete spesso manca: scarica audio e panorami adesso, poi funzionano anche senza segnale.')+'</p>'+(ok&&'serviceWorker' in navigator?'<button class="btn pieno" id="btnScarica">⤓ '+t('Scarica la visita')+' · '+t('circa')+' '+mb+' MB</button><p class="nota" id="scaricaStato"></p>':'<p class="nota">'+(ARTEFATTO?(S.lang==='it'?'Non disponibile in questa anteprima: funziona sulla pagina pubblicata su esploratrapani.it.':'Not available in this preview: it works on the page published on esploratrapani.it.'):t('Disponibile quando la pagina è online (http), non aprendo il file dal computer.'))+'</p>');
+  if($('btnScarica'))$('btnScarica').onclick=scarica;
+}
+function scarica(){
+  var st=$('scaricaStato');st.textContent=t('Scarico')+'…';
+  navigator.serviceWorker.register('sw.js').then(function(r){return navigator.serviceWorker.ready;}).then(function(r){
+    var ch=new MessageChannel();ch.port1.onmessage=function(e){var d=e.data||{};st.textContent=t('Scaricato')+': '+d.ok+' / '+d.tot+(d.ko?' · '+d.ko+' '+t('file non scaricati'):'');};
+    (r.active||navigator.serviceWorker.controller).postMessage({tipo:'scarica',urls:listaScarico()},[ch.port2]);
+  }).catch(function(){st.textContent='SW: '+(S.lang==='it'?'non disponibile':'not available');});
+}
+
+/* ====================================================================
+   SENZA BARRIERE (a comparsa) e INFO
+   ==================================================================== */
+function renderBarriere(){
+  var Ac=L.accessibilita||{},righe=[];
+  function r(ic,tit,val){righe.push('<li><span class="ic">'+ic+'</span><div><b>'+tit+'</b>'+(val?'<div class="nota">'+val+'</div>':'')+'</div></li>');}
+  var haTrascr=SC.some(function(s){return s.audio&&s.testo;})||D.capitoli.some(function(c){return c.trascrizione;});
+  if(haTrascr)r('¶',t('Trascrizioni di tutti gli audio'),S.lang==='it'?'sotto ogni video e nel lettore (tasto Aa)':'under each video and in the player (Aa button)');
+  if(D.capitoli.some(function(c){return c.sottotitoli;}))r('CC',t('Sottotitoli nei video'),'IT');
+  if(SC.some(function(s){return s.descrizione_scena;}))r('◉',t('Cosa hai davanti'),S.lang==='it'?'ogni scena 360 ha una descrizione testuale letta dallo screen reader':'every 360 scene has a text description read by the screen reader');
+  if(SC.some(function(s){return s.audiodescrizione;}))r('♪',t('Audiodescrizione'),SC.filter(function(s){return s.audiodescrizione;}).map(function(s){return esc(tr('scene',s.id,'titolo',s.titolo));}).join(', '));
+  if(L.lettura_facile)r('Aa',t('Lettura facile'),S.lang==='it'?'nel capitolo 1':'in chapter 1');
+  if(Ac.gradino_ingresso_cm!=null)r('⌐',t('Gradino all’ingresso'),Ac.gradino_ingresso_cm+' cm');
+  if(Ac.rampa!=null)r('↗',t('Rampa'),'<span class="tre '+(Ac.rampa?'si':'no')+'"><i></i>'+t(Ac.rampa?'sì':'no')+'</span>');
+  if(Ac.bagno_accessibile!=null)r('wc',t('Bagno accessibile'),'<span class="tre '+(Ac.bagno_accessibile?'si':'no')+'"><i></i>'+t(Ac.bagno_accessibile?'sì':'no')+'</span>');
+  if(Ac.sedute!=null)r('⌂',t('Sedute lungo il percorso'),'<span class="tre '+(Ac.sedute?'si':'no')+'"><i></i>'+t(Ac.sedute?'sì':'no')+'</span>');
+  if(Ac.metri_da_parcheggio!=null)r('P',t('Dal parcheggio'),Ac.metri_da_parcheggio+' m');
+  if(Ac.percorso_accessibile)r('♿',t('Percorso senza barriere sulla pianta'),'<button class="btn sm ghost" id="btnAcc2">'+t('mostra il percorso')+'</button>');
+  if(!righe.length){$('barriere').hidden=true;return;}
+  $('barriere').hidden=false;
+  $('barriereNota').innerHTML='<span class="tre '+(Ac.verificata?'si':'')+'"><i></i>'+t(Ac.verificata?'accessibilità verificata':'accessibilità non verificata')+'</span> <span class="prova">'+t('dati di prova, da rilevare sul posto')+'</span>'+(Ac.nota?'<br>'+esc(tr('luogo',0,'accessibilita.nota',Ac.nota)):'');
+  $('barriereLista').innerHTML=righe.join('');
+  if($('btnAcc2'))$('btnAcc2').onclick=function(){percorsoOn=true;renderPins();$('cammino').scrollIntoView({behavior:RIDOTTO?'auto':'smooth'});};
+}
+function renderInfo(){
+  var g=$('infoGriglia'),h='';
+  h+='<div class="card"><dl>';
+  if(L.orari_celebrazioni)h+='<dt>'+t('Orari delle celebrazioni')+'</dt><dd>'+esc(tr('luogo',0,'orari_celebrazioni',L.orari_celebrazioni))+' <span class="prova">'+(S.lang==='it'?'prova':'test')+'</span><br><span class="nota">'+t('Durante le funzioni la visita è sospesa')+'</span></dd>';
+  if(L.orari_visita)h+='<dt>'+t('Orari di visita')+'</dt><dd>'+esc(tr('luogo',0,'orari_visita',L.orari_visita))+'</dd>';
+  if(L.festa_patronale)h+='<dt>'+t('Festa patronale')+'</dt><dd>'+esc(L.festa_patronale)+'</dd>';
+  if(L.epoca_costruzione)h+='<dt>'+t('Epoca')+'</dt><dd>'+esc(L.epoca_costruzione)+'</dd>';
+  h+='</dl></div>';
+  h+='<div class="card"><dl>'+(L.come_arrivare?'<dt>'+t('Come arrivare')+'</dt><dd>'+esc(tr('luogo',0,'come_arrivare',L.come_arrivare))+'</dd>':'')+'<dt>'+t('Contatti')+'</dt><dd>'+(L.contatti&&L.contatti.whatsapp?'<a class="btn wa sm" href="https://wa.me/39'+esc(L.contatti.whatsapp)+'?text='+encodeURIComponent(L.nome)+'" rel="noopener">'+t('Scrivi su WhatsApp')+'</a>':'')+'</dd></dl></div>';
+  g.innerHTML=h;
+  var p=$('proseguiCard');
+  if(L.prosegui&&L.prosegui.length){p.hidden=false;p.innerHTML='<h3>'+t('Prosegui la visita')+'</h3><div class="prosegui">'+L.prosegui.map(function(x){return '<a href="'+esc(x.url)+'" rel="noopener"><b>'+esc(x.nome)+'</b><small>'+esc(x.dist)+' · '+esc(x.desc)+'</small></a>';}).join('')+'</div>';}else p.hidden=true;
+  if(L.sostieni_url){var s=document.createElement('div');s.className='card';s.style.marginTop='14px';s.innerHTML='<h3>'+(S.lang==='it'?'Sostieni il restauro':'Support the restoration')+'</h3><p>'+esc(L.sostieni_obiettivo||'')+'</p><a class="btn" href="'+esc(L.sostieni_url)+'" rel="noopener">→</a>';p.after(s);}
+}
+
+/* ====================================================================
+   NAV (ancore attive), avvio
+   ==================================================================== */
+var sio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var id=e.target.id;$('nav').querySelectorAll('a').forEach(function(a){a.classList.toggle('attiva',a.dataset.s===id);});});},{rootMargin:'-35% 0px -55% 0px'});
+['racconto','cammino','opere','ascolta','info'].forEach(function(id){sio.observe($(id));});
+function renderTutto(){applicaStatici();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();if(attiva){renderCassetto(attiva);renderElenco();renderPins();$('panoTag').textContent=tr('scene',attiva.id,'titolo',attiva.titolo);}if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);}
+function notaCammino(){
+  $('camminoNota').textContent=QUI?(S.lang==='it'?'Sei sul posto: ascolta, guarda le opere di questa scena e prosegui con i pulsanti.':'You are on site: listen, look at the works in this scene and go on with the buttons.'):(MOBILE||RIDOTTO?(S.lang==='it'?'Tocca i punti sulla pianta o le frecce: il panorama cambia scena. Le cornici dorate nel 360 sono le opere.':'Tap the points on the plan or the arrows: the panorama changes scene. The golden frames in the 360 are the works.'):(S.lang==='it'?'Scorri: il punto cammina lungo la navata e il panorama cambia scena. Il cono sulla pianta segue il tuo sguardo. Le cornici dorate nel 360 sono le opere.':'Scroll: the point walks along the nave and the panorama changes scene. The cone on the plan follows your gaze. The golden frames in the 360 are the works.'));
+}
+/* ingresso «sono qui» senza ricaricare la pagina (il QR usa ?qui=, il bottone usa questo) */
+function impostaQui(slug){
+  QUI=slug||MAIN[0].slug;document.body.classList.add('qui');$('soglia').hidden=true;$('racconto').hidden=true;
+  if(ST){ST.kill();ST=null;}document.body.classList.remove('scorre');$('runway').style.height='';$('punto').hidden=true;
+  Lettore.pausa();applicaStatici();notaCammino();var s=bySlug[QUI]||MAIN[0];attiva=null;vai(s,false);
+  if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);
+  $('cammino').scrollIntoView({behavior:'instant',block:'start'});
+}
+function esciQui(){
+  QUI=null;document.body.classList.remove('qui');$('soglia').hidden=false;$('racconto').hidden=false;$('quiBanner').innerHTML='';
+  applicaStatici();notaCammino();if(!heroV)soglia();renderRacconto();scrollCammino();if(attiva){renderCassetto(attiva);}
+  if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function avvio(){
+  document.documentElement.style.setProperty('--top-h',$('top').offsetHeight+'px');
+  applicaStatici();soglia();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();
+  notaCammino();
+  disegnaPianta();
+  var prima=QUI&&bySlug[QUI]?bySlug[QUI]:MAIN[0];
+  if(OPERA_URL){var o=OP.filter(function(z){return z.slug===OPERA_URL;})[0];if(o){prima=scenaPrincipale(o);}}
+  renderElenco();vai(prima,false);
+  scrollCammino();
+  if(QUI){setTimeout(function(){$('cammino').scrollIntoView({behavior:'instant'});},50);}
+  if(OPERA_URL){var o2=OP.filter(function(z){return z.slug===OPERA_URL;})[0];if(o2){setTimeout(function(){$('cammino').scrollIntoView({behavior:'auto'});guardaOpera(o2);setTimeout(function(){apriOpera(o2,false);},1200);},300);}}
+  window.addEventListener('resize',function(){montaHotspot();if(V)V.resize();});
+  if(GS)setTimeout(function(){ScrollTrigger.refresh();},300);
+}
+window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',avvio);else avvio();
+})();
+</script>
+</body>
+</html>

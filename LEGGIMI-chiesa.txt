@@ -1,0 +1,52 @@
+CHIESA · SIMULAZIONE 2 — la visita raccontata (Santuario di Custonaci) · Esplora Trapani, 16 ottobre 2026
+
+COS'È: una pagina sola che mette insieme i tre pezzi della tavola di regia: lo storytelling di «Attenti a quei due»
+(la chiesa parla in prima persona, i reel dei capitoli con le scoperte «?», visita/in classe con quiz, i timbri), la pianta
+con i punti 360 (pianta + Pannellum + cassetto, cono di visuale, deviazioni a centinaia), le opere a tre livelli (cornice che
+si accende nel 360 → zoom → foto piana con i dettagli e la scheda), audioguida con lettore persistente, visita guidata,
+«Scarica la visita», accessibilità a comparsa, informazioni. GSAP per la soglia e lo scroll, Pannellum per il 360.
+
+FILE: chiesa-sim1.html · sw.js (cache offline) · dati/santuario.js (i dati, specchio delle tabelle dell'Atlante) · pano/ (21 panorami
+4096×2048 + la pianta dal drone, 24 MB) · media/ (i 4 reel 720p, le voci, l'audiodescrizione, i sottotitoli: 30 MB) · reel-social/
+(i 4 reel a 1080×1920 per Instagram, non servono alla pagina). Vanno caricati TUTTI insieme, nella stessa cartella, ad esempio
+esploratrapani.it/landing/chiese-sim/.
+
+COME SI APRE: meglio dal sito (https): così funziona «Scarica la visita». Aprendo il file in locale col doppio clic la pagina gira
+lo stesso (i panorami sono in pano/, locali). Se un panorama manca in pano/, la pagina prova il bucket B2 Santuario-Madonna-Custonaci
+(prima via media.esploratrapani.it poi via f003.backblazeb2.com); se non si carica compare la «vista piatta» con l'avviso.
+
+I DUE INGRESSI: chiesa-sim1.html (da casa: soglia + racconto + cammino) · chiesa-sim1.html?qui=altare (dal QR in cappella: audio per
+primo, «sei qui», niente soglia). Slug dei punti: dal-cielo, ingresso, navata, verso-altare, crociera, presbiterio, altare; deviazioni
+cantoria, rosone, tetto (100-102), museo, museo-2, museo-dipinti, museo-tesoro, museo-vara (200-204), porta-laterale (300), battistero,
+altari-laterali, crocifisso (400-402). Un'opera: ?opera=madonna-custonaci. Lingua: ?lang=en (EN con i contenuti tradotti; FR ed ES
+solo interfaccia).
+
+COSA È VERO: i 18 panorami interni del 7 nov 2025 (Downloads\360\Santuario Madonna di Custonaci: 9 erano nel DB, 9 sono nuovi —
+coro, cantoria, rosone, tetto, i 5 ambienti del Museo Arte e Fede, porta laterale, altari laterali, Crocifisso); i 3 panorami del drone
+dell'11 mag 2026 (album Google Foto «Santuario Madonna Custonaci 360»: 0078, 0080, 0081); la pianta vera (la planimetria con le fasi 1575–1851, 1900 e 1968,
+facciata in basso, ripulita dai numeri scritti a mano: i punti li numera la pagina); i 4 reel, montati con le inquadrature dei video DJI Avata 360 già convertiti (0079, 0082, 0046,
+0466 sbarco, 0473 fuochi) e con movimenti di camera dentro i panorami; i testi, presi dal dossier «Custonaci · materiali» (fonti:
+parrocchia cittadicustonaci.it, censimento santuari 2023, catalogo beni culturali, italia.it): orari delle messe, contatti, festa,
+come arrivare, cronologia, quadro, opere.
+COSA È DA VALIDARE O DI PROVA: i testi dei capitoli e delle scene (stato_testo 'da_validare': vanno letti dal parroco); i due
+narratori (Paola e Riccardo sono voci sintetiche Piper); la posizione dei pin sulla pianta (i 5 ambienti del Museo Arte e Fede li ho messi
+nell'ala destra del «doppio transetto» chiuso nel 1900: da confermare); l'abbinamento destra/sinistra delle navate laterali (battistero e
+porta laterale a sinistra, Crocifisso in fondo a destra, come dicono le fonti); la posizione dei 5 dettagli sul quadro; l'accessibilità
+(nessuna misura sul posto); gli orari di apertura (non pubblicati). L'opera «Mons. Rizzo» resta «proposta» e «Il trasporto a Erice»
+resta «da_completare»: non compaiono, come deciso. L'affresco dell'Approdo ha autore da verificare → «in studio».
+
+ATTENZIONE, IL DB VA CORRETTO: nel DB (poi 39) l'abbinamento file↔scena era sbagliato di uno (842 è l'ingresso visto da dentro, non
+il sagrato; 847 è il coro con la tribuna, non il presbiterio; 848 sono gli altari laterali, non l'altare maggiore; 857 è la cantoria,
+non gli ex voto). La mappa giusta è in dati/santuario.js (campo file di ogni scena).
+
+ARTEFATTO (anteprima su claude.ai): costruisci_artefatto.py produce artefatto/ (index.html senza involucro, CSS di Pannellum e dati
+incorporati, sottotitoli incorporati come tracce blob perché gli artefatti non servono .vtt, panorami veri in pano/, quadro segnaposto
+perché la foto vera sta sul sito). Nell'anteprima «Scarica la visita» e gli ingressi ?qui=/?opera=/?lang= non esistono: si usa il
+bottone «Sono qui». Test: test/test-artefatto.js.
+
+TESTATO (test/test.js, Chromium headless con WebGL): vedi il numero di controlli stampato dalla suite; zero errori JS, axe A/AA.
+NON TESTATO: telefoni veri, Safari, i video H.264 nel browser di test (lì copie webm), il service worker su Aruba. Da provare in chiesa.
+
+PER RIFARE I MEDIA: ../reale/testi.py (i testi) → genera_voci.py (voci Piper, frase per frase) → monta_reel.py (i 4 reel: clip in
+clip/, panorami in pano/ e drone/) → pagina/assembla_media.py (porta tutto in media/ e scrive le durate in dati/santuario.js).
+Il numero WhatsApp delle info è il 3490627997.
