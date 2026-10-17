@@ -12,6 +12,7 @@
    ============================================================ */
 var CHIESA = {
   versione: 'sim2',
+  versione_dati: '20261017c',   /* deve essere uguale a VERSIONE_PAGINA in chiesa-sim1.html: se no la pagina avvisa */
   luogo: {
     id: 39, slug: 'santuario-madonna-custonaci',
     nome: 'Santuario di Maria SS. di Custonaci',

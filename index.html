@@ -1753,7 +1753,19 @@ function esciQui(){
   if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);
   window.scrollTo({top:0,behavior:'instant'});
 }
+/* controllo di coerenza: pagina e file dati devono essere della stessa versione (errore tipico: caricata la pagina ma non la cartella dati) */
+function controllaFile(){
+  if(ARTEFATTO)return;var manca=[];
+  if(D.versione_dati!==VERSIONE_PAGINA)manca.push('dati/santuario.js'+(D.versione_dati?' (sul server c’è la versione '+D.versione_dati+', serve la '+VERSIONE_PAGINA+')':' (sul server c’è una versione vecchia)'));
+  if(!window.KB)manca.push('dati/kb.js (manca)');
+  if(!manca.length)return;
+  var b=document.createElement('div');b.id='avvisoFile';b.setAttribute('role','alert');
+  b.style.cssText='background:#7a1d12;color:#fff;padding:12px max(16px,env(safe-area-inset-left,0px));font:600 15px/1.45 var(--sans);border-bottom:2px solid #ffb3a3';
+  b.innerHTML='⚠ Aggiornamento incompleto: la pagina è nuova ma sul server mancano o sono vecchi questi file: <b>'+manca.map(esc).join(' · ')+'</b>. Caricali nella cartella <b>dati</b> accanto a chiesa-sim1.html, poi ricarica.';
+  var top=$('top');top.parentNode.insertBefore(b,top.nextSibling);
+}
 function avvio(){
+  controllaFile();
   document.documentElement.style.setProperty('--top-h',$('top').offsetHeight+'px');
   applicaStatici();soglia();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();Festa.render();Dove.render();Sostieni.render();Rete.controlla();Rete.render();renderCarte();Live.carica();
   notaCammino();
