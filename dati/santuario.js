@@ -54,6 +54,14 @@ var CHIESA = {
       eccezioni: {}   /* es. '2026-12-24': { apertura: ['09:00-12:00','22:00-01:00'], messe: ['23:30'], nota: 'Messa della notte' } */
     },
     contatti: { whatsapp: '3490627997', telefono: '0923 971113', mail: 'info@santuariocustonaci.it' },
+    /* «Chiedi alla chiesa»: risponde ASK Trapani solo con i testi di questa pagina (dati/kb.js → kb/<slug>.json sul server) */
+    chiedi: {
+      api: 'https://ask-trapani-api-production.up.railway.app/chiesa/chiedi',
+      suggerite: {
+        it: ['Chi ha dipinto il quadro?', 'Perché il quadro andava a Erice?', 'Dove è arrivata la nave?', 'Cos’è la vara?', 'C’è la messa oggi?', 'Come si arriva in auto?'],
+        en: ['Who painted the Madonna?', 'Why was the painting carried to Erice?', 'Where did the ship land?', 'What is the vara?', 'Is there Mass today?', 'How do I get here by car?']
+      }
+    },
     come_arrivare: 'Piazza Santuario 1, in cima al paese. Da Trapani (18 km): SP20 Trapani–Bonagia, poi SP18 Bonagia–Custonaci. Da Palermo (90 km): A29 uscita Castellammare del Golfo, SS187, poi SP16 «Asse dei Marmi». Bus AST Trapani–Custonaci dal capolinea alla stazione di Trapani. Parcheggio multipiano comunale vicino al santuario; bus turistici in via Dante Alighieri (500 m).',
     sostieni_url: null, sostieni_obiettivo: null,
     prosegui: [

@@ -344,6 +344,35 @@ body.qui .cassetto .btn.ascolta-btn{min-height:64px;font-size:1.1em;width:100%}
 .avviso-messa .azioni{display:flex;gap:8px;flex-wrap:wrap} .avviso-messa .btn{flex:1 1 180px;justify-content:center}
 body.silenzio #lettore .l-silenzio{display:inline}
 .l-silenzio{display:none;font:600 .75em var(--sans);color:var(--oro);margin-left:6px}
+.chiedi-fab{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom,0px));z-index:68;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--oro);background:rgba(27,33,43,.96);color:var(--candela);border-radius:999px;padding:10px 16px 10px 12px;font:600 .9em var(--sans);box-shadow:0 8px 24px #0008;cursor:pointer}
+.chiedi-fab b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--oro);color:#1b1408;font:700 15px var(--serif,serif)}
+.lettore.on ~ .chiedi-fab{bottom:calc(var(--nav-h) + 84px + env(safe-area-inset-bottom,0px))}
+body.chiedi-on .chiedi-fab{display:none}
+.chiedi{position:fixed;inset:0;z-index:96;display:none;background:rgba(6,9,13,.55)}
+.chiedi.on{display:block}
+.chiedi .foglio{position:absolute;left:0;right:0;bottom:0;max-height:min(88vh,760px);height:88vh;display:flex;flex-direction:column;background:var(--carta);border-top:1px solid var(--oro);border-radius:18px 18px 0 0;box-shadow:0 -12px 40px #000a;padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (min-width:760px){.chiedi .foglio{left:auto;right:24px;bottom:24px;width:440px;height:min(80vh,680px);border:1px solid var(--oro);border-radius:18px}}
+.chiedi header{display:flex;align-items:center;gap:12px;padding:14px 16px 10px;border-bottom:1px solid var(--linea)}
+.chiedi header .sigla{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--oro);color:#1b1408;font:700 18px var(--serif,serif);flex:none}
+.chiedi header h3{margin:0;font-size:1.08em} .chiedi header p{margin:0;font-size:.8em;color:var(--muto)}
+.chiedi header button{margin-left:auto;background:none;border:0;color:var(--pietra);font-size:22px;cursor:pointer;padding:4px 8px}
+.chiedi .flusso{flex:1;overflow:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;overscroll-behavior:contain}
+.chiedi .bolla{max-width:88%;padding:10px 14px;border-radius:16px;line-height:1.45;font-size:.95em}
+.chiedi .bolla.io{align-self:flex-end;background:var(--blu);color:#fff;border-bottom-right-radius:4px}
+.chiedi .bolla.lei{align-self:flex-start;background:rgba(201,162,74,.10);border:1px solid rgba(201,162,74,.35);border-bottom-left-radius:4px}
+.chiedi .bolla.lei.attesa{color:var(--muto);font-style:italic}
+.chiedi .fonti{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chiedi .fonti button,.chiedi .fonti a{font:600 .78em var(--sans);border:1px solid var(--oro);background:transparent;color:var(--candela);border-radius:999px;padding:5px 10px;cursor:pointer;text-decoration:none}
+.chiedi .estratto{margin-top:8px;padding-left:10px;border-left:2px solid var(--oro)} .chiedi .estratto b{display:block;font-size:.85em}
+.chiedi .segno{display:block;margin-top:6px;font-size:.72em;color:var(--muto)}
+.chiedi .proposte{display:flex;gap:8px;overflow-x:auto;padding:4px 16px 10px;scrollbar-width:none} .chiedi .proposte::-webkit-scrollbar{display:none}
+.chiedi .proposte button{flex:none;border:1px solid var(--linea);background:rgba(255,255,255,.04);color:var(--pietra);border-radius:999px;padding:7px 12px;font:500 .84em var(--sans);cursor:pointer}
+.chiedi form{display:flex;gap:8px;padding:10px 12px 12px;border-top:1px solid var(--linea)}
+.chiedi input{flex:1;min-width:0;font:inherit;font-size:16px;padding:12px 14px;border-radius:999px;border:1px solid var(--linea);background:rgba(0,0,0,.25);color:var(--pietra)}
+.chiedi form button{flex:none;border-radius:999px;border:0;padding:0 16px;font:600 .9em var(--sans);cursor:pointer;background:var(--oro);color:#1b1408}
+.chiedi form button.mic{background:transparent;border:1px solid var(--linea);color:var(--pietra);padding:0 12px}
+.chiedi form button.mic.on{border-color:#c96a5a;color:#f0b5a8}
+.btn-chiedi{margin-top:10px}
 .rete-chip.ok{border-color:#5fb37a;color:#cfe9d6}
 .rete-chip.off{border-color:var(--oro);color:var(--candela)}
 .rete-riga{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-size:.95em}
@@ -485,6 +514,15 @@ body.silenzio #lettore .l-silenzio{display:inline}
   <button class="ib" id="lTesto" aria-pressed="false" aria-label="Mostra il testo">Aa</button>
   <button class="ib" id="lChiudi" aria-label="Chiudi il lettore">✕</button>
 </div>
+<button class="chiedi-fab" id="chiediFab" type="button" aria-haspopup="dialog"><b aria-hidden="true">?</b><span id="chiediFabTxt">Chiedi alla chiesa</span></button>
+<div class="chiedi" id="chiedi" role="dialog" aria-modal="true" aria-labelledby="chiediTit">
+  <div class="foglio">
+    <header><span class="sigla" aria-hidden="true">S</span><div><h3 id="chiediTit">Chiedi alla chiesa</h3><p id="chiediSub"></p></div><button type="button" id="chiediChiudi" aria-label="Chiudi">×</button></header>
+    <div class="flusso" id="chiediFlusso" aria-live="polite"></div>
+    <div class="proposte" id="chiediProposte"></div>
+    <form id="chiediForm" autocomplete="off"><input id="chiediInput" maxlength="300" enterkeyhint="send"><button type="button" class="mic" id="chiediMic" hidden aria-label="Parla">🎙</button><button type="submit" id="chiediInvia">↑</button></form>
+  </div>
+</div>
 <nav class="nav" id="nav" aria-label="Sezioni">
   <a href="#racconto" data-s="racconto"><i>📖</i><span>Racconto</span></a>
   <a href="#cammino" data-s="cammino"><i>🗺</i><span>Cammino</span></a>
@@ -495,6 +533,7 @@ body.silenzio #lettore .l-silenzio{display:inline}
 <audio id="audio" preload="none"></audio>
 
 <script src="dati/santuario.js"></script>
+<script src="dati/kb.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
@@ -841,11 +880,13 @@ function renderCassetto(s){
   if(s.deviazioni&&s.deviazioni.length)h+='<div class="dev">'+s.deviazioni.map(function(d){var ds=byId[d.a];return ds?'<button class="btn sm" data-dev="'+ds.id+'">↳ '+esc(tr('scene',ds.id,'titolo',ds.titolo))+'</button>':'';}).join('')+'</div>';
   if(inDeviazione){var p=byId[s.da]||MAIN[MAIN.length-1];h+='<div class="dev"><button class="btn sm pieno" data-dev="'+p.id+'">↩ '+t('Torno al cammino')+'</button></div>';}
   if(verso)h+='<div class="verso">'+t('Prosegui verso').replace(' verso','')+': '+esc(verso)+'</div>';
+  if(L.chiedi)h+='<button class="btn sm ghost btn-chiedi" id="btnChiediQui">? '+(S.lang==='it'?'Hai una domanda su questo punto?':'A question about this spot?')+'</button>';
   if(!inDeviazione)h+='<div class="nav-scene"><button class="btn sm ghost" id="scPrev"'+(k<=0?' disabled':'')+'>‹ '+t('Precedente')+'</button><span class="pos">'+(k+1)+' / '+MAIN.length+'</span><button class="btn sm ghost" id="scNext"'+(k>=MAIN.length-1?' disabled':'')+'>'+t('Successiva')+' ›</button></div>';
   var c=$('cassetto');c.innerHTML=h;
   c.querySelectorAll('[data-tr]').forEach(function(b){b.onclick=function(){var id=b.dataset.tr;Lettore.suona(id==='ad'+s.id?{id:id,titolo:t('Descrizione di ciò che vedi')+' · '+tit,sub:t('Il custode'),src:s.audiodescrizione,durata:s.audiodescrizione_durata,testo:tr('scene',s.id,'audiodescrizione_testo',s.audiodescrizione_testo)||alt}:{id:id,titolo:tit,sub:t('La guida'),src:s.audio,durata:s.durata,testo:tr('scene',s.id,'trascrizione',s.trascrizione)||testo,fine:function(){timbra('sc:'+s.id);aggiornaPins();}});};});
   c.querySelectorAll('[data-op]').forEach(function(b){b.onclick=function(){var o=OP.filter(function(z){return z.id===+b.dataset.op;})[0];guardaOpera(o,s);};});
   c.querySelectorAll('[data-dev]').forEach(function(b){b.onclick=function(){vai(byId[+b.dataset.dev],true);};});
+  if($('btnChiediQui'))$('btnChiediQui').onclick=function(){Chiedi.apri();};
   if($('scPrev'))$('scPrev').onclick=function(){vai(MAIN[k-1],true);};
   if($('scNext'))$('scNext').onclick=function(){vai(MAIN[k+1],true);};
 }
@@ -1144,9 +1185,129 @@ var Orari=(function(){
   }
   setInterval(mostra,30000);
   document.addEventListener('visibilitychange',function(){if(!document.hidden)mostra();});
-  return {stato:stato,mostra:mostra,settimana:settimana,adesso:adesso,giorno:giorno};
+  /* frase sugli orari per «Chiedi alla chiesa»: sempre calcolata qui, anche senza rete */
+  function riassunto(){
+    var r=stato();if(!r)return '';var n=r.n,ap=(((C.eccezioni||{})[chiaveData(n)]||{}).apertura||C.apertura[n.dow]||[]).map(function(x){var a=x.split('-');return hm(min(a[0]))+'–'+hm(min(a[1]));});
+    var ms=r.g.messe.map(hm),dm=giornoDopo(n,1),gd=giorno(dm),msd=gd.messe.map(hm);
+    var s=testo(r)+'. '+(it()?'Oggi, '+gn(n.dow)+', sono aperta '+(ap.join(' e ')||'su richiesta')+'; ':'Today, '+gn(n.dow)+', I am open '+(ap.join(' and ')||'on request')+'; ')+
+      (ms.length?(it()?'messa alle '+ms.join(' e '):'Mass at '+ms.join(' and ')):(it()?'oggi non c’è messa':'no Mass today'))+'. '+
+      (msd.length?(it()?'Domani, '+gn(dm.dow)+', messa alle '+msd.join(' e ')+'.':'Tomorrow, '+gn(dm.dow)+', Mass at '+msd.join(' and ')+'.'):'')+
+      (r.g.festa?(it()?' Sono i giorni della festa: gli orari possono cambiare.':' These are the feast days: times may change.'):'');
+    return s;
+  }
+  return {stato:stato,mostra:mostra,settimana:settimana,adesso:adesso,giorno:giorno,riassunto:riassunto,testoStato:function(){var r=stato();return r?testo(r):'';}};
 })();
 window.Orari=Orari;
+/* ====================================================================
+   «CHIEDI ALLA CHIESA»: con la rete risponde ASK Trapani (solo dai testi di questa pagina);
+   senza rete, o se il servizio non risponde, mostra i passaggi più vicini alla domanda.
+   Le domande sugli orari si calcolano qui, dal calendario, sempre.
+   ==================================================================== */
+var Chiedi=(function(){
+  var CF=L.chiedi;if(!CF||!window.KB)return {apri:function(){},chiedi:function(){}};
+  var kb=KB.costruisciKB(D),idx=KB.indice(kb),aperto=false,occupato=false,storia=[];
+  var RE_ORARI=/\b(orari|orario|apert[aoie]|apre|aprite|chiude|chius[aoie]|messa|messe|funzion[ei]|celebrazion[ei]|open|opening|close[sd]?|closing|hours|mass|masses|service[s]?)\b/i;
+  function it(){return S.lang==='it';}
+  function voce(){return (L.voce&&L.voce.nome)||L.nome;}
+  function scorri(){var f=$('chiediFlusso');f.scrollTop=f.scrollHeight;}
+  function bolla(chi,html,cls){var b=document.createElement('div');b.className='bolla '+chi+(cls?' '+cls:'');b.innerHTML=html;$('chiediFlusso').appendChild(b);scorri();return b;}
+  function titoloFonte(f){
+    if(f.tipo==='scena'&&bySlug[f.ref]){var s=bySlug[f.ref];return '◎ '+tr('scene',s.id,'titolo',s.titolo);}
+    if(f.tipo==='opera'){var o=OP.filter(function(z){return z.slug===f.ref;})[0];if(o)return '★ '+tr('opere',o.id,'titolo',o.titolo);}
+    if(f.tipo==='capitolo')return '▶ '+(f.titolo||'');
+    return 'ⓘ '+(f.titolo||'');
+  }
+  function bottoniFonti(fonti){
+    var visti={};fonti=fonti.filter(function(f){var k=f.tipo+':'+f.ref;if(visti[k])return false;visti[k]=1;return true;});
+    if(!fonti.length)return '';
+    return '<div class="fonti">'+fonti.map(function(f,i){return '<button type="button" data-f="'+i+'">'+esc(titoloFonte(f))+'</button>';}).join('')+'</div>';
+  }
+  function collega(b,fonti){
+    var visti={};fonti=fonti.filter(function(f){var k=f.tipo+':'+f.ref;if(visti[k])return false;visti[k]=1;return true;});
+    b.querySelectorAll('[data-f]').forEach(function(x){x.onclick=function(){vaiA(fonti[+x.dataset.f]);};});
+  }
+  /* porta il visitatore al punto della pagina da cui viene la risposta */
+  function vaiA(f){
+    chiudi();
+    if(f.tipo==='scena'&&bySlug[f.ref]){vai(bySlug[f.ref],true);$('cammino').scrollIntoView({behavior:RIDOTTO?'auto':'smooth',block:'start'});return;}
+    if(f.tipo==='opera'){var o=OP.filter(function(z){return z.slug===f.ref;})[0];if(o){var s=scenaPrincipale(o);if(s)vai(s,true);$('cammino').scrollIntoView({behavior:'auto',block:'start'});setTimeout(function(){guardaOpera(o);setTimeout(function(){apriOpera(o,false);},900);},500);}return;}
+    if(f.tipo==='capitolo'){if(QUI)esciQui();setTimeout(function(){var v=$('vid-'+f.ref)||$('racconto');v.scrollIntoView({behavior:'auto',block:'center'});},80);return;}
+    var dest=$(f.ref)&&!$(f.ref).hidden?$(f.ref):$('info');dest.scrollIntoView({behavior:'auto',block:'start'});
+  }
+  function contatto(){
+    var c=L.contatti||{};if(!c.whatsapp)return '';
+    return '<div class="fonti"><a href="https://wa.me/39'+esc(c.whatsapp)+'?text='+encodeURIComponent(L.nome+': ')+'" rel="noopener" target="_blank">'+(it()?'Scrivi su WhatsApp':'Write on WhatsApp')+' · '+esc(c.whatsapp)+'</a></div>';
+  }
+  /* le frasi del passaggio che c'entrano di più con la domanda */
+  function estratto(p,domanda){
+    var q={};KB.parole(domanda).forEach(function(w){q[w]=1;});
+    var fr=p.testo.match(/[^.!?]+[.!?]*/g)||[p.testo],pt=fr.map(function(f,i){var s=0;KB.parole(f).forEach(function(w){if(q[w])s++;});return {i:i,f:f,s:s};});
+    var best=pt.slice().sort(function(a,b){return b.s-a.s||a.i-b.i;}).slice(0,2).sort(function(a,b){return a.i-b.i;});
+    var t=best.map(function(x){return x.f;}).join(' ');return t.length>280?t.slice(0,277)+'…':t;
+  }
+  function locale(domanda,motivo){
+    var r=KB.cerca(idx,domanda,3).filter(function(x){return x.s>=2;}).slice(0,2);
+    var intro=motivo==='rete'?(it()?'Senza rete non posso ragionare sulla domanda, ma ecco cosa dicono i miei testi:':'Without a connection I can’t think it through, but here is what my texts say:')
+      :(it()?'Ora non riesco a rispondere a parole, ma ecco cosa dicono i miei testi:':'I can’t answer in words right now, but here is what my texts say:');
+    if(!r.length){var b0=bolla('lei',esc(it()?'Questo non lo trovo nei miei testi. Chiedi in sacrestia, oppure scrivi:':'I can’t find this in my texts. Ask in the sacristy, or write:')+contatto());return;}
+    var html=esc(intro)+r.map(function(x){return '<div class="estratto"><b>'+esc(titoloFonte(x.p))+'</b>'+esc(estratto(x.p,domanda))+'</div>';}).join('');
+    var fonti=r.map(function(x){return x.p;});
+    var b=bolla('lei',html+bottoniFonti(fonti)+(r.some(function(x){return x.p.stato==='da_validare';})?'<span class="segno">'+(it()?'testi in attesa di revisione':'texts awaiting review')+'</span>':''));collega(b,fonti);
+  }
+  function chiedi(domanda){
+    domanda=String(domanda||'').trim().slice(0,300);if(domanda.length<3||occupato)return;
+    bolla('io',esc(domanda));$('chiediInput').value='';
+    if(RE_ORARI.test(domanda)&&window.Orari&&L.calendario){
+      var b=bolla('lei',esc(Orari.riassunto())+bottoniFonti([{tipo:'info',ref:'info',titolo:it()?'Orari della settimana':'This week’s times'}]));
+      collega(b,[{tipo:'info',ref:'info',titolo:''}]);return;
+    }
+    if(!navigator.onLine||ARTEFATTO||!CF.api){locale(domanda,'rete');return;}
+    occupato=true;$('chiediInvia').disabled=true;
+    var att=bolla('lei','…','attesa');
+    var ctl=window.AbortController?new AbortController():null,timer=setTimeout(function(){if(ctl)ctl.abort();},12000);
+    fetch(CF.api,{method:'POST',headers:{'Content-Type':'application/json'},signal:ctl?ctl.signal:undefined,
+      body:JSON.stringify({luogo:L.slug,domanda:domanda,lingua:S.lang,scena:attiva?attiva.slug:null,adesso:window.Orari?Orari.testoStato():null})})
+    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
+    .then(function(j){
+      att.remove();if(!j||!j.risposta)throw new Error('vuota');
+      var b=bolla('lei',esc(j.risposta)+bottoniFonti(j.fonti||[])+(j.trovata===false?contatto():'')+(j.da_validare?'<span class="segno">'+(it()?'dai testi in attesa di revisione del santuario':'from texts awaiting the sanctuary’s review')+'</span>':''));
+      collega(b,j.fonti||[]);storia.push({d:domanda,r:j.risposta});
+    })
+    .catch(function(){att.remove();locale(domanda,navigator.onLine?'servizio':'rete');})
+    .then(function(){clearTimeout(timer);occupato=false;$('chiediInvia').disabled=false;});
+  }
+  function proposte(){
+    var lista=(CF.suggerite&&(CF.suggerite[S.lang]||CF.suggerite.en||CF.suggerite.it))||[];
+    $('chiediProposte').innerHTML=lista.map(function(q){return '<button type="button">'+esc(q)+'</button>';}).join('');
+    $('chiediProposte').querySelectorAll('button').forEach(function(b){b.onclick=function(){chiedi(b.textContent);};});
+  }
+  function apri(){
+    aperto=true;$('chiedi').classList.add('on');document.body.classList.add('chiedi-on');
+    $('chiediTit').textContent=it()?'Chiedi alla chiesa':'Ask the church';
+    $('chiediSub').textContent=(it()?'Rispondo solo con i miei testi':'I only answer from my own texts')+(attiva?' · '+(it()?'sei in ':'you are in ')+tr('scene',attiva.id,'titolo',attiva.titolo):'');
+    $('chiediInput').placeholder=it()?'Scrivi una domanda…':'Type a question…';
+    if(!$('chiediFlusso').children.length)bolla('lei',esc(it()?'Ciao, sono '+voce().replace(/^Il /,'il ')+'. Chiedimi della mia storia, delle opere, della festa o degli orari.':'Hello, I am '+(L.voce&&L.voce.nome?'the Sanctuary':L.nome)+'. Ask me about my story, the works of art, the feast or the opening times.'));
+    proposte();setTimeout(function(){try{$('chiediInput').focus({preventScroll:true});}catch(e){}},60);
+  }
+  function chiudi(){aperto=false;$('chiedi').classList.remove('on');document.body.classList.remove('chiedi-on');if(rec&&ascolta)try{rec.stop();}catch(e){}}
+  $('chiediFab').onclick=apri;$('chiediChiudi').onclick=chiudi;
+  $('chiedi').addEventListener('click',function(e){if(e.target===$('chiedi'))chiudi();});
+  document.addEventListener('keydown',function(e){if(aperto&&e.key==='Escape')chiudi();});
+  $('chiediForm').addEventListener('submit',function(e){e.preventDefault();chiedi($('chiediInput').value);});
+  /* dettatura, dove il telefono la offre */
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,ascolta=false;
+  if(SR){$('chiediMic').hidden=false;$('chiediMic').onclick=function(){
+    if(ascolta){try{rec.stop();}catch(e){}return;}
+    rec=new SR();rec.lang=it()?'it-IT':'en-GB';rec.interimResults=false;rec.maxAlternatives=1;
+    rec.onresult=function(ev){var t=ev.results[0][0].transcript;$('chiediInput').value=t;chiedi(t);};
+    rec.onend=function(){ascolta=false;$('chiediMic').classList.remove('on');};rec.onerror=rec.onend;
+    try{rec.start();ascolta=true;$('chiediMic').classList.add('on');}catch(e){}
+  };}
+  function etichette(){$('chiediFabTxt').textContent=it()?'Chiedi alla chiesa':'Ask the church';}
+  etichette();
+  return {apri:apri,chiudi:chiudi,chiedi:chiedi,etichette:etichette,kb:kb};
+})();
+
 function renderInfo(){
   var g=$('infoGriglia'),h='';
   var settimanaHtml=L.calendario?Orari.settimana():'';
@@ -1169,7 +1330,7 @@ function renderInfo(){
    ==================================================================== */
 var sio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var id=e.target.id;$('nav').querySelectorAll('a').forEach(function(a){a.classList.toggle('attiva',a.dataset.s===id);});});},{rootMargin:'-35% 0px -55% 0px'});
 ['racconto','cammino','opere','ascolta','info'].forEach(function(id){sio.observe($(id));});
-function renderTutto(){applicaStatici();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();if(attiva){renderCassetto(attiva);renderElenco();renderPins();$('panoTag').textContent=tr('scene',attiva.id,'titolo',attiva.titolo);}if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);}
+function renderTutto(){if(window.Chiedi&&Chiedi.etichette)Chiedi.etichette();applicaStatici();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();if(attiva){renderCassetto(attiva);renderElenco();renderPins();$('panoTag').textContent=tr('scene',attiva.id,'titolo',attiva.titolo);}if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);}
 function notaCammino(){
   $('camminoNota').textContent=QUI?(S.lang==='it'?'Sei sul posto: ascolta, guarda le opere di questa scena e prosegui con i pulsanti.':'You are on site: listen, look at the works in this scene and go on with the buttons.'):(MOBILE||RIDOTTO?(S.lang==='it'?'Tocca i punti sulla pianta o le frecce: il panorama cambia scena. Le cornici dorate nel 360 sono le opere.':'Tap the points on the plan or the arrows: the panorama changes scene. The golden frames in the 360 are the works.'):(S.lang==='it'?'Scorri: il punto cammina lungo la navata e il panorama cambia scena. Il cono sulla pianta segue il tuo sguardo. Le cornici dorate nel 360 sono le opere.':'Scroll: the point walks along the nave and the panorama changes scene. The cone on the plan follows your gaze. The golden frames in the 360 are the works.'));
 }
@@ -1202,7 +1363,7 @@ function avvio(){
   if(GS)setTimeout(function(){ScrollTrigger.refresh();},300);
   swAvvia();statoRete();
 }
-window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera,Orari:Orari,get SILENZIO(){return SILENZIO;}};
+window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera,Orari:Orari,Chiedi:Chiedi,get SILENZIO(){return SILENZIO;}};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',avvio);else avvio();
 })();
 </script>
