@@ -400,6 +400,36 @@ body.silenzio #lettore .l-silenzio{display:inline}
 .arrivare{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
 .arrivare .card h4{margin:0 0 6px;font:600 1.1em var(--serif);color:var(--candela)}
 .arrivare .card p{margin:0;font-size:.93em}
+.avviso-chiesa{display:none;background:#5a3f10;color:#fff3d6;border-bottom:1px solid var(--oro);padding:10px max(16px,env(safe-area-inset-left,0px));font:600 .95em var(--sans)}
+.avviso-chiesa.on{display:flex;gap:10px;align-items:flex-start}
+.avviso-chiesa b{color:#ffd98a}
+.blocco{margin-top:clamp(28px,4vw,44px)}
+.blocco>h3{font-size:1.6em}
+.sostieni{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:center;margin-top:14px;padding:clamp(18px,3vw,28px);border:1px solid var(--oro);border-radius:var(--r);background:linear-gradient(135deg,rgba(201,162,74,.14),transparent 70%),var(--carta)}
+@media (max-width:760px){.sostieni{grid-template-columns:1fr}}
+.sostieni h4{margin:0 0 6px;font:600 1.5em/1.15 var(--serif);color:var(--candela)}
+.sostieni p{margin:0 0 10px}
+.sost-barra{height:12px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:12px 0 6px}
+.sost-barra i{display:block;height:100%;border-radius:999px;background:var(--oro)}
+.sost-cifre{display:flex;justify-content:space-between;gap:10px;font:600 .95em var(--sans)}
+.sost-cifre b{font:600 1.5em var(--serif);color:var(--oro2)}
+.sost-azioni{display:flex;flex-direction:column;gap:10px}
+.sost-iban{font:600 .92em ui-monospace,Menlo,Consolas,monospace;word-break:break-all;color:var(--pietra);background:rgba(0,0,0,.25);border:1px dashed var(--linea);border-radius:10px;padding:10px 12px}
+.passaporto{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px}
+.timbro{position:relative;padding:16px 14px 14px;border-radius:14px;border:1px dashed var(--linea);background:var(--carta);text-align:center;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-decoration:none;color:inherit}
+.timbro .sigillo{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;border:2px dashed var(--muto);color:var(--muto);font:700 22px var(--serif)}
+.timbro.preso{border-style:solid;border-color:var(--oro)}
+.timbro.preso .sigillo{border:3px double var(--oro);color:var(--oro2);transform:rotate(-8deg);background:rgba(201,162,74,.1)}
+.timbro b{font-size:.92em;color:var(--pietra);line-height:1.2} .timbro small{color:var(--muto);font-size:.78em}
+.timbro .stato{font:600 .68em var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--oro2)}
+.timbro.arrivo{background:transparent}
+.timbro.arrivo .sigillo{border-style:dotted}
+.pass-conto{font:600 1.05em var(--sans);margin:6px 0 0} .pass-conto b{color:var(--oro2)}
+.carte details{border:1px solid var(--linea);border-radius:12px;background:var(--carta);padding:0 16px;margin-top:10px}
+.carte summary{cursor:pointer;padding:14px 0;font:600 1em var(--sans);color:var(--pietra);list-style:none}
+.carte summary::-webkit-details-marker{display:none}
+.carte summary::after{content:'+';float:right;color:var(--oro2)} .carte details[open] summary::after{content:'–'}
+.carte ul{margin:0 0 14px;padding-left:18px} .carte li{margin-bottom:6px;font-size:.93em}
 .chiedi-fab{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom,0px));z-index:68;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--oro);background:rgba(27,33,43,.96);color:var(--candela);border-radius:999px;padding:10px 16px 10px 12px;font:600 .9em var(--sans);box-shadow:0 8px 24px #0008;cursor:pointer}
 .chiedi-fab b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--oro);color:#1b1408;font:700 15px var(--serif,serif)}
 .lettore.on ~ .chiedi-fab{bottom:calc(var(--nav-h) + 84px + env(safe-area-inset-bottom,0px))}
@@ -448,6 +478,7 @@ body.chiedi-on .chiedi-fab{display:none}
   <div class="seg" role="group" aria-label="Modalità" id="segModo"><button data-modo="visita" aria-pressed="true">Visita</button><button data-modo="classe" aria-pressed="false">In classe</button></div>
   <button class="tb" id="fsBtn" aria-label="Dimensione del testo" title="Dimensione del testo">Aa</button>
 </header>
+<div class="avviso-chiesa" id="avvisoChiesa" role="status" aria-live="polite"></div>
 <div class="qui-banner" id="quiBanner"></div>
 <div class="rete-chip" id="reteChip" hidden role="status" aria-live="polite"></div>
 <div class="avviso-messa" id="avvisoMessa" hidden role="alertdialog" aria-labelledby="amTit" aria-describedby="amTxt"></div>
@@ -561,9 +592,13 @@ body.chiedi-on .chiedi-fab{display:none}
     <div class="dove-grid"><div class="mappa" id="mappa" role="region" aria-label="Mappa"><div class="vuota" id="mappaVuota">La mappa si apre quando ci arrivi.</div></div><ol class="punti" id="punti"></ol></div>
     <div class="arrivare" id="arrivare"></div>
   </div>
+  <div class="blocco" id="sostieni" hidden><h3 id="hSostieni">Sostieni il Santuario</h3><div id="sostieniCorpo"></div></div>
+  <div class="blocco" id="passaporto"><h3 id="hPass">Il passaporto dei luoghi</h3><div id="passCorpo"></div></div>
   <div class="griglia" id="infoGriglia"></div>
   <div class="card" style="margin-top:14px" id="proseguiCard"></div>
+  <div class="blocco carte" id="carte"><h3 id="hCarte">Privacy, crediti e accessibilità</h3><div id="carteCorpo"></div></div>
   <p class="nota" style="margin-top:20px" id="credito"></p>
+  <p class="nota" style="margin-top:6px"><a href="cruscotto.html" id="linkCruscotto" rel="nofollow">Area riservata del Santuario · statistiche e avvisi</a></p>
 </section>
 </main>
 
@@ -725,7 +760,7 @@ function applicaStatici(){
   $('btnGuidaSoglia').onclick=function(){location.hash='#cammino';setTimeout(function(){Guida.avvia();},400);};
   /* lingue */
   var sel=$('lingua');sel.innerHTML=LINGUE.map(function(l){return '<option value="'+l[0]+'"'+(l[0]===S.lang?' selected':'')+'>'+l[1]+(l[0]!=='it'&&!(D.tr&&D.tr[l[0]])?' · IT':'')+'</option>';}).join('');
-  sel.onchange=function(){S.lang=sel.value;save();renderTutto();};
+  sel.onchange=function(){S.lang=sel.value;save();renderTutto();if(window.Stat)Stat.ev('lingua',S.lang,true);};
   /* banner «sono qui» */
   if(QUI){var s=bySlug[QUI];$('quiBanner').innerHTML='<b>'+t('Sei nel santuario')+'</b> · '+(s?esc(tr('scene',s.id,'titolo',s.titolo)):'')+' <span class="adesso" id="adessoQui" role="status"></span><span class="sp" style="flex:1"></span><a href="#racconto" id="btnEsciQui">'+t('Vedi il racconto')+' ›</a>';$('btnEsciQui').onclick=function(e){e.preventDefault();esciQui();};}
   if(window.Orari)Orari.mostra();
@@ -833,7 +868,7 @@ function quiz(c){
   card.classList.add('on');
   card.querySelectorAll('.opz button').forEach(function(b){b.onclick=function(){var k=+b.dataset.k;if(k===q.ok){b.className='ok';card.querySelector('.fb').textContent=t('Esatto!');timbra('quiz:'+c.id);}else{b.className='ko';card.querySelector('.fb').textContent=t('Non proprio… riprova');}};});
 }
-function timbra(k){S.timbri[k]=1;save();renderPass();}
+function timbra(k){S.timbri[k]=1;save();renderPass();if(window.Rete)Rete.controlla();}
 function renderPass(){
   var n=D.capitoli.filter(function(c){return S.timbri['cap:'+c.id];}).length;
   $('pass').innerHTML='<span class="nota">'+t('Timbri')+': '+n+' / '+D.capitoli.length+' '+t('capitoli ascoltati')+'</span> '+D.capitoli.map(function(c){return '<span class="t'+(S.timbri['cap:'+c.id]?' on':'')+'" title="'+esc(c.titolo)+'">'+c.n+'</span>';}).join('');
@@ -919,6 +954,7 @@ function piatta(s){var p=$('piatta');p.classList.add('on');p.style.backgroundIma
 var sceneCaricate={};
 function vai(s,daUtente){
   if(!s||(attiva&&attiva.id===s.id&&V))return;
+  if(window.Stat)Stat.ev('scena',s.slug,true);
   attiva=s;inDeviazione=s.ordine>=100;
   $('panoTag').textContent=(inDeviazione?t('Deviazione')+' · ':'')+tr('scene',s.id,'titolo',s.titolo);
   renderCassetto(s);aggiornaPins();renderElenco();
@@ -1003,7 +1039,7 @@ function guardaOpera(o,s){ /* livello 1: la scena giusta, il panorama ruota vers
   $('cammino').scrollIntoView({behavior:RIDOTTO?'auto':'smooth',block:'start'});
   if(ST&&!QUI&&!MOBILE){var i=MAIN.indexOf(sc);if(i>=0)window.scrollTo({top:ST.start+(ST.end-ST.start)*((i+.5)/MAIN.length),behavior:'instant'});}
 }
-function apriOpera(o,zoom){ /* livello 2 e 3: zoom nel 360, poi la foto piana con i dettagli, la scheda accanto */
+function apriOpera(o,zoom){if(window.Stat)Stat.ev('opera',o.slug,true); /* livello 2 e 3: zoom nel 360, poi la foto piana con i dettagli, la scheda accanto */
   var p=o.scene.filter(function(x){return x.principale;})[0]||o.scene[0];
   var dopo=function(){
     var f=$('opFoto'),sch=$('opScheda');
@@ -1268,6 +1304,151 @@ var Orari=(function(){
 })();
 window.Orari=Orari;
 /* ====================================================================
+   STATISTICHE ANONIME: niente cookie, niente dati personali, un numero casuale per visita; «Do Not Track» le spegne
+   ==================================================================== */
+var Stat=(function(){
+  var BASE=((L.chiedi&&L.chiedi.api)||'').replace(/\/chiedi$/,''),ON=!!BASE&&!ARTEFATTO&&/^https?:$/.test(location.protocol)&&navigator.doNotTrack!=='1'&&window.doNotTrack!=='1';
+  var visita='';try{visita=sessionStorage.getItem('visita-anonima')||'';}catch(e){}
+  if(!/^[a-z0-9]{12,24}$/.test(visita)){visita='';for(var i=0;i<16;i++)visita+='abcdefghijklmnopqrstuvwxyz0123456789'.charAt(Math.floor(Math.random()*36));try{sessionStorage.setItem('visita-anonima',visita);}catch(e){}}
+  var coda=[],visti={},secondi=0,inizio=document.hidden?0:Date.now(),ingresso=QUI?'qr':(OPERA_URL?'opera':'casa');
+  function ev(tipo,valore,unaVolta,extra){
+    if(!ON)return;var k=tipo+':'+(valore||'');if(unaVolta){if(visti[k])return;visti[k]=1;}
+    coda.push(Object.assign({tipo:tipo,valore:valore||null},extra||{}));if(coda.length>=30)invia();
+  }
+  function tempo(){return secondi+(inizio?Math.round((Date.now()-inizio)/1000):0);}
+  function invia(fine){
+    if(!ON||!coda.length||!navigator.onLine)return;
+    var corpo=JSON.stringify({luogo:L.slug,visita:visita,lingua:S.lang,ingresso:ingresso,eventi:coda.splice(0,40)}),url=BASE+'/eventi';
+    try{if(fine&&navigator.sendBeacon&&navigator.sendBeacon(url,new Blob([corpo],{type:'text/plain;charset=UTF-8'})))return;}catch(e){}
+    try{fetch(url,{method:'POST',body:corpo,headers:{'Content-Type':'text/plain;charset=UTF-8'},keepalive:true,mode:'cors',credentials:'omit'}).catch(function(){});}catch(e){}
+  }
+  if(ON){
+    ev('apertura',null,true,{scena:QUI||null});
+    setInterval(function(){invia(false);},15000);
+    document.addEventListener('visibilitychange',function(){
+      if(document.hidden){secondi=tempo();inizio=0;ev('durata',null,false,{secondi:secondi});invia(true);}else inizio=Date.now();
+    });
+    window.addEventListener('pagehide',function(){if(inizio){secondi=tempo();inizio=0;}ev('durata',null,false,{secondi:secondi});invia(true);});
+    window.addEventListener('online',function(){invia(false);});
+    /* i gesti che contano, raccolti in un punto solo */
+    document.addEventListener('click',function(e){
+      var t=e.target.closest?e.target.closest('[data-cal],#festaGoogle,[data-ics],#festaIcs,#punti a,#reelPlay,.reel-link,[data-sost],#btnScarica,.vid .avvia,.timbro[href]'):null;if(!t)return;
+      if(t.dataset.cal)ev('calendario',t.dataset.cal);else if(t.id==='festaGoogle')ev('calendario','tutta la festa');
+      else if(t.dataset.ics)ev('calendario',t.dataset.ics+' (.ics)');else if(t.id==='festaIcs')ev('calendario','tutta la festa (.ics)');
+      else if(t.closest('#punti')){var li=t.closest('li');ev('indicazioni',li&&li.dataset.p);}
+      else if(t.id==='reelPlay'||t.classList.contains('reel-link'))ev('reel',null,true);
+      else if(t.dataset.sost)ev('sostieni',t.dataset.sost);else if(t.id==='btnScarica')ev('offline',null,true);
+      else if(t.classList.contains('avvia')){var v=t.closest('.vid');ev('video',v&&v.id.replace(/^vid-/,''),true);}
+      else if(t.classList.contains('timbro'))ev('passaporto',t.dataset.id);
+    },true);
+  }
+  return {ev:ev,invia:invia,visita:visita,get attive(){return ON;},get coda(){return coda;}};
+})();
+window.Stat=Stat;
+
+/* ====================================================================
+   IMPOSTAZIONI LIVE dal cruscotto del Santuario: avvisi, giorni speciali, orari della festa, offerte.
+   Se manca la rete usa l'ultima copia salvata sul telefono.
+   ==================================================================== */
+var Live=(function(){
+  var BASE=((L.chiedi&&L.chiedi.api)||'').replace(/\/chiedi$/,''),CHIAVE='chiesa-live-'+L.slug,ultimo=null;
+  function oggi(){var n=window.Orari&&L.calendario?Orari.adesso():null;if(!n){var d=new Date();n={y:d.getFullYear(),mo:d.getMonth()+1,d:d.getDate()};}return n.y+'-'+(n.mo<10?'0':'')+n.mo+'-'+(n.d<10?'0':'')+n.d;}
+  function avvisi(){
+    var b=$('avvisoChiesa');if(!b)return;var g=oggi(),it=S.lang==='it';
+    var a=((ultimo&&ultimo.avvisi)||[]).filter(function(x){return (!x.da||x.da<=g)&&(!x.a||x.a>=g);});
+    b.classList.toggle('on',a.length>0);
+    b.innerHTML=a.length?'<span aria-hidden="true">⚠</span><div>'+a.map(function(x){return '<div><b>'+(it?'Avviso del Santuario':'Notice from the Sanctuary')+':</b> '+esc((!it&&x.testo_en)||x.testo)+'</div>';}).join('')+'</div>':'';
+  }
+  function applica(c,salva){
+    if(!c||typeof c!=='object')return;ultimo=c;
+    if(salva)try{localStorage.setItem(CHIAVE,JSON.stringify(c));}catch(e){}
+    if(c.eccezioni&&L.calendario){L.calendario.eccezioni=Object.assign({},L.calendario._eccezioniBase||(L.calendario._eccezioniBase=Object.assign({},L.calendario.eccezioni||{})),c.eccezioni);}
+    if(c.festa&&L.festa){var m=c.festa.momenti||{};L.festa.momenti.forEach(function(x){if(m[x.id]&&m[x.id].ora)x.ora=m[x.id].ora;});if(c.festa.programma_anno)L.festa.programma_anno=c.festa.programma_anno;}
+    if(c.sostieni&&L.sostieni){Object.keys(c.sostieni).forEach(function(k){if(c.sostieni[k]!==null&&c.sostieni[k]!==undefined)L.sostieni[k]=c.sostieni[k];});L.sostieni.esempio=false;}
+    avvisi();
+    if(window.Orari&&L.calendario){Orari.mostra();}
+    try{renderInfo();}catch(e){}
+    Festa.render();Sostieni.render();
+  }
+  function carica(){
+    try{var c=JSON.parse(localStorage.getItem(CHIAVE)||'null');if(c)applica(c,false);}catch(e){}
+    if(ARTEFATTO||!BASE||!/^https?:$/.test(location.protocol)||!navigator.onLine)return Promise.resolve(ultimo);
+    var ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort();},5000);
+    return fetch(BASE+'/'+L.slug+'/live',{signal:ctl?ctl.signal:undefined,credentials:'omit'}).then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(c){applica(c,true);return c;}).catch(function(){return ultimo;}).then(function(x){clearTimeout(tm);return x;});
+  }
+  return {carica:carica,applica:applica,avvisi:avvisi,get ultimo(){return ultimo;}};
+})();
+window.Live=Live;
+
+/* ====================================================================
+   OFFERTE E SOSTEGNO
+   ==================================================================== */
+var Sostieni=(function(){
+  function it(){return S.lang==='it';}
+  function T(o,k){return (!it()&&o[k+'_en'])||o[k];}
+  function euro(n){return '€ '+String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+  function render(){
+    var box=$('sostieni'),SO=L.sostieni;if(!box)return;
+    if(!SO||!SO.attivo){box.hidden=true;return;}box.hidden=false;
+    $('hSostieni').textContent=it()?'Sostieni il Santuario':'Support the Sanctuary';
+    var pct=SO.traguardo?Math.min(100,Math.round(100*(SO.raccolti||0)/SO.traguardo)):0,az='';
+    if(SO.satispay)az+='<a class="btn pieno" data-sost="satispay" href="'+esc(SO.satispay)+'" target="_blank" rel="noopener">'+(it()?'Offri con Satispay':'Give with Satispay')+'</a>';
+    if(SO.paypal)az+='<a class="btn'+(SO.satispay?'':' pieno')+'" data-sost="paypal" href="'+esc(SO.paypal)+'" target="_blank" rel="noopener">'+(it()?'Offri con PayPal o carta':'Give with PayPal or card')+'</a>';
+    if(SO.iban)az+='<div><div class="nota" style="margin-bottom:4px">'+(it()?'Bonifico':'Bank transfer')+(SO.intestatario?' · '+esc(SO.intestatario):'')+'</div><div class="sost-iban" id="sostIban">'+esc(SO.iban)+'</div><button class="btn sm ghost" type="button" data-sost="iban" id="sostCopia" style="margin-top:8px">'+(it()?'Copia IBAN':'Copy IBAN')+'</button></div>';
+    var wa=L.contatti&&L.contatti.whatsapp;
+    if(!az)az='<a class="btn pieno" data-sost="whatsapp" href="https://wa.me/39'+esc(wa||'')+'?text='+encodeURIComponent((it()?'Vorrei fare un’offerta per: ':'I would like to donate to: ')+T(SO,'obiettivo'))+'" target="_blank" rel="noopener">'+(it()?'Chiedi come fare un’offerta':'Ask how to donate')+'</a><p class="nota" style="margin:0">'+(it()?'Puoi anche lasciare la tua offerta nella cassetta in chiesa.':'You can also leave your offering in the box in the church.')+'</p>';
+    $('sostieniCorpo').innerHTML='<div class="sostieni"><div>'+(SO.esempio?'<span class="prova">'+(it()?'esempio · obiettivo e cifre da decidere con la Chiesa':'example · goal and figures to be agreed with the Church')+'</span>':'')+
+      '<h4>'+esc(T(SO,'obiettivo'))+'</h4><p>'+esc(T(SO,'descrizione')||'')+'</p>'+
+      (SO.traguardo?'<div class="sost-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'" aria-label="'+(it()?'Raccolti':'Raised')+'"><i style="width:'+pct+'%"></i></div><div class="sost-cifre"><span><b>'+euro(SO.raccolti||0)+'</b> '+(it()?'raccolti':'raised')+'</span><span>'+(it()?'su ':'of ')+euro(SO.traguardo)+' · '+pct+'%</span></div>':'')+
+      '</div><div class="sost-azioni">'+az+'</div></div>';
+    if($('sostCopia'))$('sostCopia').onclick=function(){var b=this,f=function(){b.textContent=it()?'IBAN copiato ✓':'IBAN copied ✓';};
+      try{navigator.clipboard.writeText(SO.iban).then(f,function(){sel();});}catch(e){sel();}
+      function sel(){var r=document.createRange();r.selectNodeContents($('sostIban'));var s=window.getSelection();s.removeAllRanges();s.addRange(r);}};
+  }
+  return {render:render};
+})();
+
+/* ====================================================================
+   IL PASSAPORTO DEI LUOGHI (rete Esplora Trapani): i timbri restano su questo telefono
+   ==================================================================== */
+var Rete=(function(){
+  var K='esplora-passaporto';
+  function it(){return S.lang==='it';}
+  function leggi(){try{return JSON.parse(localStorage.getItem(K)||'{}')||{};}catch(e){return {};}}
+  function scrivi(p){try{localStorage.setItem(K,JSON.stringify(p));}catch(e){}}
+  function controlla(){
+    if(!L.rete)return;var p=leggi();if(p[L.slug])return;
+    var n=Object.keys(S.timbri||{}).length;
+    if(QUI||n>=3){p[L.slug]=new Date().toISOString().slice(0,10);scrivi(p);render();if(window.Stat)Stat.ev('passaporto','timbro',true);}
+  }
+  function render(){
+    if(!L.rete||!$('passCorpo'))return;var p=leggi(),fatti=L.rete.filter(function(r){return p[r.id];}).length,tot=L.rete.length;
+    $('hPass').textContent=it()?'Il passaporto dei luoghi':'The places passport';
+    $('passCorpo').innerHTML='<p class="pass-conto">'+(it()?'Hai visitato <b>'+fatti+' '+(fatti===1?'luogo':'luoghi')+' su '+tot+'</b> della rete Esplora Trapani.':'You have visited <b>'+fatti+' of '+tot+' places</b> in the Esplora Trapani network.')+'</p>'+
+      '<p class="nota">'+(it()?'Il timbro del Santuario arriva quando entri da un QR in chiesa o completi tre tappe del racconto. I timbri restano solo su questo telefono.':'The Sanctuary stamp comes when you enter from a QR code in the church or complete three steps of the story. Stamps stay on this phone only.')+'</p>'+
+      '<div class="passaporto">'+L.rete.map(function(r){var preso=!!p[r.id],qui=r.id===L.slug,tag=r.url&&!qui?'a':'div';
+        return '<'+tag+' class="timbro'+(preso?' preso':'')+(r.stato==='in_arrivo'?' arrivo':'')+'" data-id="'+esc(r.id)+'"'+(tag==='a'?' href="'+esc(r.url)+'" target="_blank" rel="noopener"':'')+'><span class="sigillo" aria-hidden="true">'+(preso?'✓':esc(r.nome.charAt(0)))+'</span><b>'+esc(r.nome)+'</b><small>'+esc(r.comune)+'</small><span class="stato">'+(preso?(it()?'visitato':'visited'):qui?(it()?'sei qui':'you are here'):r.stato==='in_arrivo'?(it()?'in arrivo':'coming soon'):(it()?'da visitare ↗':'to visit ↗'))+'</span></'+tag+'>';}).join('')+'</div>';
+  }
+  return {render:render,controlla:controlla,leggi:leggi};
+})();
+window.Rete=Rete;
+
+/* ====================================================================
+   LE CARTE IN REGOLA: privacy, crediti, accessibilità, narratori
+   ==================================================================== */
+function renderCarte(){
+  var C=L.carte;if(!C||!$('carteCorpo'))return;var it=S.lang==='it';
+  $('hCarte').textContent=it?'Privacy, crediti e accessibilità':'Privacy, credits and accessibility';
+  var li=function(a){return '<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';};
+  $('carteCorpo').innerHTML=(C.bozza?'<p><span class="prova">'+(it?'bozza da approvare prima del lancio':'draft to be approved before launch')+'</span></p>':'')+
+    '<details id="cartePrivacy"><summary>'+(it?'Informativa privacy':'Privacy notice')+'</summary>'+li(C.privacy)+'<p class="nota">'+(it?'Titolare: ':'Controller: ')+esc(C.titolare)+' · '+esc(C.contatto)+'</p></details>'+
+    '<details><summary>'+(it?'Crediti di foto, video e testi':'Credits for photos, videos and texts')+'</summary>'+li(C.crediti)+'</details>'+
+    '<details><summary>'+(it?'Dichiarazione di accessibilità':'Accessibility statement')+'</summary>'+li(C.accessibilita)+'</details>'+
+    '<details><summary>'+(it?'Narratori e diritti':'Narrators and rights')+'</summary><ul><li>'+esc(C.narratori)+'</li></ul></details>';
+}
+
+/* ====================================================================
    LA FESTA: date calcolate ogni anno (ultimo mercoledì di agosto), reel, giorni con «aggiungi al calendario», storia
    ==================================================================== */
 var Festa=(function(){
@@ -1332,7 +1513,7 @@ var Festa=(function(){
       '<p>'+(it()?'Nove sere di novena, poi quattro giorni di festa: le chiavi della città, i carretti, lo sbarco dal mare, la processione di cinque ore e i fuochi di mezzanotte.':'Nine evenings of novena, then four days of feast: the keys of the town, the painted carts, the landing from the sea, the five-hour procession and the midnight fireworks.')+'</p>'+
       '<div class="festa-azioni"><a class="btn pieno" href="'+googleTutta(y)+'" target="_blank" rel="noopener" id="festaGoogle">📅 '+(it()?'Aggiungi la festa a Google Calendar':'Add the feast to Google Calendar')+'</a>'+
       (ARTEFATTO?'':'<button class="btn" type="button" id="festaIcs">⤓ '+(it()?'Tutti gli appuntamenti (iPhone, Outlook)':'All events (iPhone, Outlook)')+'</button>')+'</div>'+
-      '<p class="nota">'+(y>F.edizione.anno?(it()?'Le date del '+y+' sono calcolate dalla regola (ultimo mercoledì di agosto); gli orari vengono dal programma '+F.edizione.anno+', il programma ufficiale esce d’estate.':'The '+y+' dates follow the rule (last Wednesday of August); the times come from the '+F.edizione.anno+' programme, the official one comes out in summer.'):'')+
+      '<p class="nota">'+(F.programma_anno===y?(it()?'Orari del programma ufficiale '+y+'.':'Times from the official '+y+' programme.'):y>F.edizione.anno?(it()?'Le date del '+y+' sono calcolate dalla regola (ultimo mercoledì di agosto); gli orari vengono dal programma '+F.edizione.anno+', il programma ufficiale esce d’estate.':'The '+y+' dates follow the rule (last Wednesday of August); the times come from the '+F.edizione.anno+' programme, the official one comes out in summer.'):'')+
       (F.fonte_programma?' <a href="'+esc(F.fonte_programma.url)+'" target="_blank" rel="noopener">'+esc(F.fonte_programma.nome)+' ↗</a>':'')+'</p></div></div>';
     h+='<h3>'+(it()?'I giorni della festa':'The feast days')+'</h3><ol class="festa-giorni">'+F.momenti.map(function(m){
       var q=quando(m,y),ogg=Date.UTC(q.g.y,q.g.mo-1,q.g.d)===oggiMs;
@@ -1482,7 +1663,7 @@ var Chiedi=(function(){
     var att=bolla('lei','…','attesa');
     var ctl=window.AbortController?new AbortController():null,timer=setTimeout(function(){if(ctl)ctl.abort();},12000);
     fetch(CF.api,{method:'POST',headers:{'Content-Type':'application/json'},signal:ctl?ctl.signal:undefined,
-      body:JSON.stringify({luogo:L.slug,domanda:domanda,lingua:S.lang,scena:attiva?attiva.slug:null,adesso:window.Orari?Orari.testoStato():null})})
+      body:JSON.stringify({luogo:L.slug,visita:window.Stat?Stat.visita:null,domanda:domanda,lingua:S.lang,scena:attiva?attiva.slug:null,adesso:window.Orari?Orari.testoStato():null})})
     .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
     .then(function(j){
       att.remove();if(!j||!j.risposta)throw new Error('vuota');
@@ -1538,7 +1719,7 @@ function renderInfo(){
   if(L.calendario)Orari.mostra();
   var p=$('proseguiCard');
   if(L.prosegui&&L.prosegui.length){p.hidden=false;p.innerHTML='<h3>'+t('Prosegui la visita')+'</h3><div class="prosegui">'+L.prosegui.map(function(x){return '<a href="'+esc(x.url)+'" rel="noopener"><b>'+esc(x.nome)+'</b><small>'+esc(x.dist)+' · '+esc(x.desc)+'</small></a>';}).join('')+'</div>';}else p.hidden=true;
-  if(L.sostieni_url){var s=document.createElement('div');s.className='card';s.style.marginTop='14px';s.innerHTML='<h3>'+(S.lang==='it'?'Sostieni il restauro':'Support the restoration')+'</h3><p>'+esc(L.sostieni_obiettivo||'')+'</p><a class="btn" href="'+esc(L.sostieni_url)+'" rel="noopener">→</a>';p.after(s);}
+  if(L.sostieni_url&&!L.sostieni){var s=document.createElement('div');s.className='card';s.style.marginTop='14px';s.innerHTML='<h3>'+(S.lang==='it'?'Sostieni il restauro':'Support the restoration')+'</h3><p>'+esc(L.sostieni_obiettivo||'')+'</p><a class="btn" href="'+esc(L.sostieni_url)+'" rel="noopener">→</a>';p.after(s);}
 }
 
 /* ====================================================================
@@ -1546,7 +1727,7 @@ function renderInfo(){
    ==================================================================== */
 var sio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var id=e.target.id;$('nav').querySelectorAll('a').forEach(function(a){a.classList.toggle('attiva',a.dataset.s===id);});});},{rootMargin:'-35% 0px -55% 0px'});
 ['racconto','cammino','opere','festa','ascolta','info'].forEach(function(id){if($(id))sio.observe($(id));});
-function renderTutto(){if(window.Chiedi&&Chiedi.etichette)Chiedi.etichette();Festa.render();Dove.render();applicaStatici();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();if(attiva){renderCassetto(attiva);renderElenco();renderPins();$('panoTag').textContent=tr('scene',attiva.id,'titolo',attiva.titolo);}if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);}
+function renderTutto(){if(window.Chiedi&&Chiedi.etichette)Chiedi.etichette();Festa.render();Dove.render();Sostieni.render();Rete.render();renderCarte();Live.avvisi();applicaStatici();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();if(attiva){renderCassetto(attiva);renderElenco();renderPins();$('panoTag').textContent=tr('scene',attiva.id,'titolo',attiva.titolo);}if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);}
 function notaCammino(){
   $('camminoNota').textContent=QUI?(S.lang==='it'?'Sei sul posto: ascolta, guarda le opere di questa scena e prosegui con i pulsanti.':'You are on site: listen, look at the works in this scene and go on with the buttons.'):(MOBILE||RIDOTTO?(S.lang==='it'?'Tocca i punti sulla pianta o le frecce: il panorama cambia scena. Le cornici dorate nel 360 sono le opere.':'Tap the points on the plan or the arrows: the panorama changes scene. The golden frames in the 360 are the works.'):(S.lang==='it'?'Scorri: il punto cammina lungo la navata e il panorama cambia scena. Il cono sulla pianta segue il tuo sguardo. Le cornici dorate nel 360 sono le opere.':'Scroll: the point walks along the nave and the panorama changes scene. The cone on the plan follows your gaze. The golden frames in the 360 are the works.'));
 }
@@ -1566,7 +1747,7 @@ function esciQui(){
 }
 function avvio(){
   document.documentElement.style.setProperty('--top-h',$('top').offsetHeight+'px');
-  applicaStatici();soglia();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();Festa.render();Dove.render();
+  applicaStatici();soglia();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();Festa.render();Dove.render();Sostieni.render();Rete.controlla();Rete.render();renderCarte();Live.carica();
   notaCammino();
   disegnaPianta();
   var prima=QUI&&bySlug[QUI]?bySlug[QUI]:MAIN[0];
@@ -1579,7 +1760,7 @@ function avvio(){
   if(GS)setTimeout(function(){ScrollTrigger.refresh();},300);
   swAvvia();statoRete();
 }
-window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera,Orari:Orari,Chiedi:Chiedi,Festa:Festa,Dove:Dove,get SILENZIO(){return SILENZIO;}};
+window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera,Orari:Orari,Chiedi:Chiedi,Festa:Festa,Dove:Dove,Stat:Stat,Live:Live,Rete:Rete,get SILENZIO(){return SILENZIO;}};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',avvio);else avvio();
 })();
 </script>

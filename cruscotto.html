@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Cruscotto del Santuario</title>
+<meta name="theme-color" content="#101419">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fondo:#101419; --fondo2:#151a22; --carta:#1b212b; --carta2:#232a36; --linea:#2d3542; --griglia:#252c38;
+  --pietra:#d9d0bd; --oro:#c9a15a; --oro2:#e4c67f; --candela:#f2c572; --testo:#ece6d8; --muto:#a69e90;
+  --ok:#5fb37a; --ko:#d0623b; --r:14px;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif; --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--fondo);color:var(--testo);font:400 16px/1.55 var(--sans)}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--oro2)}
+:focus-visible{outline:3px solid var(--candela);outline-offset:2px}
+.cont{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:0;z-index:10;background:rgba(16,20,25,.96);border-bottom:1px solid var(--linea);padding-top:env(safe-area-inset-top,0px)}
+header.top .cont{display:flex;align-items:center;gap:14px;min-height:64px;flex-wrap:wrap;padding-block:8px}
+.sigla{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--oro);color:var(--oro2);font:600 20px var(--serif);flex:none}
+header h1{margin:0;font:600 1.35em/1.1 var(--serif);color:var(--pietra)}
+header h1 small{display:block;font:500 .55em var(--sans);color:var(--muto);letter-spacing:.06em}
+.badge{display:none;font:600 .72em var(--sans);letter-spacing:.1em;text-transform:uppercase;border:1px dashed var(--oro);color:var(--oro2);border-radius:999px;padding:4px 10px}
+.badge.on{display:inline-block}
+.esci{margin-left:auto;background:none;border:1px solid var(--linea);border-radius:999px;padding:6px 14px;cursor:pointer;color:var(--muto)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 20px;border-radius:999px;border:1.5px solid var(--oro);background:transparent;color:var(--pietra);font-weight:600;cursor:pointer;text-decoration:none}
+.btn.pieno{background:var(--oro);color:#161616}
+.btn.sm{min-height:36px;padding:6px 14px;font-size:.9em}
+.btn:disabled{opacity:.5;cursor:default}
+.card{background:var(--carta);border:1px solid var(--linea);border-radius:var(--r);padding:clamp(16px,2.5vw,24px);min-width:0}
+h2{font:600 1.7em/1.15 var(--serif);color:var(--pietra);margin:0 0 6px}
+h3{font:600 1.2em/1.2 var(--serif);color:var(--pietra);margin:0 0 10px}
+.nota{color:var(--muto);font-size:.9em}
+/* accesso */
+.accesso{max-width:520px;margin:clamp(30px,8vw,80px) auto;display:grid;gap:14px}
+.accesso input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--linea);background:var(--fondo2);font-size:16px}
+.errore{color:#f0a38c;font-weight:600;min-height:1.4em;margin:0}
+/* schede */
+.schede{display:flex;gap:6px;overflow-x:auto;margin:20px 0 18px;border-bottom:1px solid var(--linea)}
+.schede button{background:none;border:0;border-bottom:3px solid transparent;padding:12px 14px;cursor:pointer;color:var(--muto);font-weight:600;white-space:nowrap}
+.schede button[aria-selected="true"]{color:var(--oro2);border-bottom-color:var(--oro)}
+.pannello[hidden]{display:none}
+.periodo{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.periodo button{border:1px solid var(--linea);background:var(--carta);border-radius:999px;padding:7px 14px;cursor:pointer;color:var(--pietra)}
+.periodo button[aria-pressed="true"]{border-color:var(--oro);color:var(--oro2);background:rgba(201,161,90,.12)}
+.periodo .sp{flex:1}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:12px}
+.kpi .card{padding:16px}
+.kpi b{display:block;font:600 2.2em/1 var(--serif);color:var(--candela)}
+.kpi span{display:block;color:var(--muto);font-size:.85em;margin-top:6px}
+.due{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:12px;margin-top:12px}
+.grafico{position:relative;margin-top:12px}
+.grafico svg{display:block;width:100%;height:auto}
+.tip{position:absolute;pointer-events:none;background:#0b0e12;border:1px solid var(--oro);border-radius:8px;padding:6px 10px;font-size:.85em;white-space:nowrap;transform:translate(-50%,-110%);display:none;z-index:2}
+.barre{display:grid;gap:8px}
+.barra{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:10px;align-items:center;font-size:.92em}
+.barra .nome{display:block;color:var(--pietra);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.barra .tr{height:10px;border-radius:999px;background:var(--griglia);overflow:hidden}
+.barra .tr i{display:block;height:100%;border-radius:999px;background:var(--oro)}
+.barra .n{text-align:right;font-weight:600;color:var(--pietra)}
+.vuoto{color:var(--muto);font-style:italic}
+.domande{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.domande li{padding:10px 12px;border-radius:10px;background:var(--fondo2);border:1px solid var(--linea)}
+.domande small{display:block;color:var(--muto);font-size:.78em;margin-top:2px}
+/* moduli */
+.righe{display:grid;gap:10px}
+.riga{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));padding:12px;border:1px solid var(--linea);border-radius:12px;background:var(--fondo2);align-items:end}
+.riga .largo{grid-column:1/-1}
+label{display:grid;gap:4px;font-size:.82em;color:var(--muto);font-weight:600;min-width:0}
+input[type=text],input[type=date],input[type=time],input[type=number],input[type=url],textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--linea);background:var(--carta);font-size:15px;font-weight:400;color:var(--testo)}
+textarea{min-height:70px;resize:vertical}
+.check{display:flex;align-items:center;gap:8px;font-size:.92em;color:var(--pietra)}
+.check input{width:20px;height:20px;accent-color:var(--oro)}
+.salva{position:sticky;bottom:0;margin-top:16px;padding:12px max(16px,env(safe-area-inset-left,0px)) calc(12px + env(safe-area-inset-bottom,0px));background:rgba(16,20,25,.96);border-top:1px solid var(--linea);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.esito{font-weight:600}
+.esito.ok{color:var(--ok)} .esito.ko{color:#f0a38c}
+.festa-tab{width:100%;border-collapse:collapse}
+.festa-tab td,.festa-tab th{padding:8px 6px;border-bottom:1px solid var(--linea);text-align:left;vertical-align:middle}
+.festa-tab th{font-size:.75em;letter-spacing:.08em;text-transform:uppercase;color:var(--muto)}
+.festa-tab input{max-width:130px}
+.scorre{overflow-x:auto}
+footer{padding:30px 0 40px;color:var(--muto);font-size:.85em}
+</style>
+</head>
+<body>
+<header class="top"><div class="cont">
+  <span class="sigla" aria-hidden="true">S</span>
+  <h1 id="titolo">Cruscotto del Santuario<small id="sottotitolo">la visita raccontata · Esplora Trapani</small></h1>
+  <span class="badge" id="badgeDemo">dati di esempio</span>
+  <button class="esci" id="esci" type="button" hidden>Esci</button>
+</div></header>
+
+<main class="cont">
+  <!-- accesso -->
+  <section class="accesso" id="accesso">
+    <div class="card">
+      <h2>Entra nel cruscotto</h2>
+      <p class="nota">Qui il Santuario vede quante persone usano la visita e cambia da solo avvisi, orari speciali, orari della festa e offerte. La chiave te la consegna Esplora Trapani.</p>
+      <form id="formChiave" autocomplete="off" style="display:grid;gap:10px;margin-top:10px">
+        <label for="chiave">Chiave di accesso<input id="chiave" type="password" autocomplete="current-password" required></label>
+        <p class="errore" id="erroreChiave" role="alert"></p>
+        <button class="btn pieno" type="submit" id="entra">Entra</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>Vuoi solo vedere come funziona?</h3>
+      <p class="nota">Apri il cruscotto con numeri di esempio: puoi provare tutto, ma non si salva nulla.</p>
+      <button class="btn" type="button" id="demo">Guarda con dati di esempio</button>
+    </div>
+  </section>
+
+  <!-- cruscotto -->
+  <section id="cruscotto" hidden>
+    <div class="schede" role="tablist" aria-label="Sezioni del cruscotto">
+      <button role="tab" aria-selected="true" aria-controls="pStat" id="tStat">Statistiche</button>
+      <button role="tab" aria-selected="false" aria-controls="pAvvisi" id="tAvvisi">Avvisi e orari</button>
+      <button role="tab" aria-selected="false" aria-controls="pFesta" id="tFesta">Festa</button>
+      <button role="tab" aria-selected="false" aria-controls="pOfferte" id="tOfferte">Offerte</button>
+    </div>
+
+    <div class="pannello" id="pStat" role="tabpanel" aria-labelledby="tStat">
+      <div class="periodo" role="group" aria-label="Periodo">
+        <button type="button" data-g="7" aria-pressed="false">7 giorni</button>
+        <button type="button" data-g="30" aria-pressed="true">30 giorni</button>
+        <button type="button" data-g="90" aria-pressed="false">90 giorni</button>
+        <span class="sp"></span>
+        <button type="button" id="csv">⤓ Scarica i numeri (CSV)</button>
+      </div>
+      <p class="errore" id="erroreStat" role="alert"></p>
+      <div class="kpi" id="kpi"></div>
+      <div class="card grafico" style="margin-top:12px"><h3 id="titGiorni">Visite per giorno</h3><div id="graficoGiorni"></div><div class="tip" id="tip"></div></div>
+      <div class="due">
+        <div class="card"><h3>Da quale QR entrano</h3><div class="barre" id="bQr"></div></div>
+        <div class="card"><h3>In che lingua</h3><div class="barre" id="bLingue"></div></div>
+      </div>
+      <div class="due">
+        <div class="card"><h3>Opere più aperte</h3><div class="barre" id="bOpere"></div></div>
+        <div class="card"><h3>Punti più visti</h3><div class="barre" id="bScene"></div></div>
+      </div>
+      <div class="due">
+        <div class="card"><h3>Festa: salvata in calendario</h3><div class="barre" id="bCal"></div></div>
+        <div class="card"><h3>Indicazioni stradali chieste</h3><div class="barre" id="bInd"></div></div>
+        <div class="card"><h3>Offerte: clic sui bottoni</h3><div class="barre" id="bSost"></div></div>
+      </div>
+      <div class="card" style="margin-top:12px"><h3>Cosa chiedono i visitatori alla chat</h3><ul class="domande" id="domande"></ul></div>
+      <p class="nota" style="margin-top:14px">Numeri anonimi: nessun nome, nessun cookie, nessun indirizzo salvato. Chi chiede al browser di non essere tracciato non viene contato.</p>
+    </div>
+
+    <div class="pannello" id="pAvvisi" role="tabpanel" aria-labelledby="tAvvisi" hidden>
+      <div class="card">
+        <h3>Avvisi in cima alla pagina</h3>
+        <p class="nota">Per esempio «Oggi la chiesa chiude alle 17 per un funerale» o «La messa di domenica è spostata alle 10». Si vedono solo nei giorni indicati.</p>
+        <div class="righe" id="avvisi"></div>
+        <button class="btn sm" type="button" id="addAvviso" style="margin-top:10px">+ Aggiungi un avviso</button>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h3>Giorni speciali</h3>
+        <p class="nota">Orari diversi dal solito per un giorno: Natale, Pasqua, una chiusura. Scrivi le fasce come <b>09:00-12:00, 16:00-18:00</b> e le messe come <b>18:00, 21:00</b>. La pagina calcola da sola «aperto», «chiuso» e l'avviso della messa.</p>
+        <div class="righe" id="eccezioni"></div>
+        <button class="btn sm" type="button" id="addEccezione" style="margin-top:10px">+ Aggiungi un giorno</button>
+      </div>
+    </div>
+
+    <div class="pannello" id="pFesta" role="tabpanel" aria-labelledby="tFesta" hidden>
+      <div class="card">
+        <h3>Orari della festa</h3>
+        <p class="nota">Le date si calcolano da sole (ultimo mercoledì di agosto). Qui cambi solo gli orari quando esce il programma ufficiale, e indichi l'anno del programma.</p>
+        <label style="max-width:240px;margin:10px 0">Anno del programma ufficiale<input type="number" id="festaAnno" min="2026" max="2100" placeholder="es. 2027"></label>
+        <div class="scorre"><table class="festa-tab"><thead><tr><th>Momento</th><th>Giorno</th><th>Ora</th></tr></thead><tbody id="festaRighe"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="pannello" id="pOfferte" role="tabpanel" aria-labelledby="tOfferte" hidden>
+      <div class="card">
+        <h3>Offerte e sostegno</h3>
+        <p class="nota">Un obiettivo chiaro e la cifra raccolta convincono più di un generico «dona». I link devono iniziare con https://.</p>
+        <div class="riga" style="margin-top:10px">
+          <label class="check largo"><input type="checkbox" id="sAttivo"> Mostra il riquadro «Sostieni il Santuario» nella pagina</label>
+          <label class="largo">Obiettivo<input type="text" id="sObiettivo" maxlength="80" placeholder="es. Il restauro della cornice d'argento"></label>
+          <label class="largo">Descrizione<textarea id="sDescrizione" maxlength="300"></textarea></label>
+          <label>Traguardo (€)<input type="number" id="sTraguardo" min="0" step="50"></label>
+          <label>Raccolti finora (€)<input type="number" id="sRaccolti" min="0" step="10"></label>
+          <label>Intestatario del conto<input type="text" id="sIntestatario" maxlength="80"></label>
+          <label>IBAN<input type="text" id="sIban" maxlength="34" autocomplete="off"></label>
+          <label>Link PayPal<input type="url" id="sPaypal" placeholder="https://paypal.me/…"></label>
+          <label>Link Satispay<input type="url" id="sSatispay" placeholder="https://…"></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="salva" id="barraSalva" hidden>
+      <button class="btn pieno" type="button" id="salva">Salva le modifiche</button>
+      <span class="esito" id="esito" role="status"></span>
+    </div>
+  </section>
+  <footer>Esplora Trapani · per aiuto scrivi su WhatsApp al 349 062 7997</footer>
+</main>
+
+<script src="dati/santuario.js"></script>
+<script>
+(function(){
+'use strict';
+var D=window.CHIESA,L=D.luogo,API=((L.chiedi&&L.chiedi.api)||'').replace(/\/chiedi$/,'');
+var qs=new URLSearchParams(location.search);if(qs.get('api'))API=qs.get('api');
+var $=function(id){return document.getElementById(id);};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+var stato={chiave:null,demo:false,giorni:30,stat:null,config:{}};
+$('titolo').firstChild.textContent='Cruscotto · '+L.nome;
+
+/* nomi leggibili per scene e opere */
+var nomeScena={},nomeOpera={},nomeMomento={},nomeLingua={it:'Italiano',en:'Inglese',fr:'Francese',es:'Spagnolo',de:'Tedesco'},nomePunto={};
+D.scene.forEach(function(s){nomeScena[s.slug]=s.titolo;});D.opere.forEach(function(o){nomeOpera[o.slug]=o.titolo;});
+(L.festa?L.festa.momenti:[]).forEach(function(m){nomeMomento[m.id]=m.titolo;});
+((L.dove&&L.dove.punti)||[]).forEach(function(p){nomePunto[p.id]=p.nome;});
+nomeMomento['tutta la festa']='Tutta la festa';
+
+/* ---------------- dati di esempio (stessa forma di quelli veri) ---------------- */
+function esempio(giorni){
+  var seme=7;function r(){seme=(seme*16807)%2147483647;return seme/2147483647;}
+  var oggi=new Date(),serie=[],tot=0;
+  for(var i=giorni-1;i>=0;i--){var d=new Date(oggi.getFullYear(),oggi.getMonth(),oggi.getDate()-i),dow=d.getDay(),base=dow===0?46:dow===6?34:16;var v=Math.round(base*(0.7+0.6*r()));tot+=v;
+    serie.push({giorno:d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),visite:v});}
+  var q=function(f){return Math.round(tot*f);};
+  return {giorni:giorni,visite:tot,per_giorno:serie,ingresso:{qr:q(.58),casa:q(.36),opera:q(.06)},
+    qr:[{nome:'altare',n:q(.24)},{nome:'ingresso',n:q(.17)},{nome:'museo-vara',n:q(.07)},{nome:'crociera',n:q(.05)},{nome:'battistero',n:q(.03)},{nome:'crocifisso',n:q(.02)}],
+    lingue:[{nome:'it',n:q(.62)},{nome:'en',n:q(.17)},{nome:'fr',n:q(.09)},{nome:'de',n:q(.07)},{nome:'es',n:q(.05)}],
+    durata_mediana_s:640,visite_con_durata:q(.8),
+    scene:[{nome:'altare',n:q(.71)},{nome:'ingresso',n:q(.66)},{nome:'navata',n:q(.52)},{nome:'museo-vara',n:q(.33)},{nome:'cantoria',n:q(.21)},{nome:'tetto',n:q(.18)}],
+    opere:[{nome:'madonna-custonaci',n:q(.48)},{nome:'vara-1831',n:q(.22)},{nome:'crocifisso-ligneo',n:q(.15)},{nome:'approdo',n:q(.11)},{nome:'nativita-la-bruna',n:q(.08)}],
+    video:[{nome:'perche',n:q(.31)},{nome:'chi',n:q(.18)}],calendario:[{nome:'sbarco',n:q(.06)},{nome:'tutta la festa',n:q(.05)},{nome:'processione',n:q(.03)}],
+    indicazioni:[{nome:'parcheggio',n:q(.09)},{nome:'cala-buguto',n:q(.05)},{nome:'bus',n:q(.02)}],sostieni:[{nome:'whatsapp',n:q(.012)}],
+    reel:q(.14),offline:q(.21),domande_n:q(.11),
+    domande:[{testo:'A che ora è la messa domenica?'},{testo:'Chi ha dipinto il quadro?'},{testo:'Si può salire sul tetto?'},{testo:'Where can I park?'},{testo:'Perché il quadro andava a Erice?'},{testo:'Quando è lo sbarco?'},{testo:'C’è un bagno per disabili?'}]};
+}
+function configEsempio(){
+  var g=new Date(),iso=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+  return {avvisi:[{testo:'Sabato la chiesa chiude alle 17 per un matrimonio',da:iso(g),a:iso(new Date(g.getTime()+4*864e5))}],
+    eccezioni:{},festa:{momenti:{},programma_anno:null},
+    sostieni:{attivo:true,obiettivo:L.sostieni?L.sostieni.obiettivo:'',descrizione:L.sostieni?L.sostieni.descrizione:'',traguardo:8000,raccolti:2350}};
+}
+
+/* ---------------- chiamate al servizio ---------------- */
+function chiama(metodo,percorso,corpo){
+  return fetch(API+percorso,{method:metodo,headers:Object.assign({'X-Chiave':stato.chiave||''},corpo?{'Content-Type':'application/json'}:{}),body:corpo?JSON.stringify(corpo):undefined,credentials:'omit'})
+    .then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok){var e=new Error(j.detail||('Errore '+r.status));e.status=r.status;throw e;}return j;});});
+}
+
+/* ---------------- accesso ---------------- */
+function entra(demo){
+  stato.demo=demo;$('accesso').hidden=true;$('cruscotto').hidden=false;$('esci').hidden=false;$('badgeDemo').classList.toggle('on',demo);
+  caricaStat();caricaConfig();
+}
+$('formChiave').addEventListener('submit',function(e){
+  e.preventDefault();var k=$('chiave').value.trim();if(!k)return;$('entra').disabled=true;$('erroreChiave').textContent='';
+  stato.chiave=k;
+  chiama('GET','/'+L.slug+'/statistiche?giorni=7').then(function(){try{sessionStorage.setItem('cruscotto-chiave',k);}catch(x){}entra(false);})
+    .catch(function(err){stato.chiave=null;$('erroreChiave').textContent=err.status===401?'Chiave non valida.':err.status===503?'Il cruscotto non è ancora attivo per questo luogo: chiedi a Esplora Trapani.':'Il servizio non risponde: riprova tra poco.';})
+    .then(function(){$('entra').disabled=false;});
+});
+$('demo').onclick=function(){entra(true);};
+$('esci').onclick=function(){try{sessionStorage.removeItem('cruscotto-chiave');}catch(x){}location.href=location.pathname;};
+try{var salvata=sessionStorage.getItem('cruscotto-chiave');if(salvata){stato.chiave=salvata;entra(false);}}catch(x){}
+if(qs.get('demo')==='1'||window.__ARTEFATTO)entra(true);
+
+/* ---------------- schede ---------------- */
+var schede=[['tStat','pStat'],['tAvvisi','pAvvisi'],['tFesta','pFesta'],['tOfferte','pOfferte']];
+schede.forEach(function(s){$(s[0]).onclick=function(){schede.forEach(function(x){$(x[0]).setAttribute('aria-selected',x[0]===s[0]);$(x[1]).hidden=x[0]!==s[0];});$('barraSalva').hidden=s[0]==='tStat';};});
+
+/* ---------------- statistiche ---------------- */
+document.querySelectorAll('.periodo [data-g]').forEach(function(b){b.onclick=function(){stato.giorni=+b.dataset.g;document.querySelectorAll('.periodo [data-g]').forEach(function(x){x.setAttribute('aria-pressed',x===b);});caricaStat();};});
+function caricaStat(){
+  $('erroreStat').textContent='';
+  if(stato.demo){disegna(esempio(stato.giorni));return;}
+  chiama('GET','/'+L.slug+'/statistiche?giorni='+stato.giorni).then(disegna).catch(function(e){$('erroreStat').textContent='Statistiche non disponibili: '+e.message;});
+}
+function pct(a,b){return b?Math.round(100*a/b)+'%':'—';}
+function disegna(s){
+  stato.stat=s;var ing=s.ingresso||{},totI=(ing.qr||0)+(ing.casa||0)+(ing.opera||0),lin=s.lingue||[],straniere=lin.filter(function(x){return x.nome!=='it';}).reduce(function(a,x){return a+x.n;},0),totL=lin.reduce(function(a,x){return a+x.n;},0);
+  var cal=(s.calendario||[]).reduce(function(a,x){return a+x.n;},0);
+  var kpi=[[s.visite,'visite negli ultimi '+s.giorni+' giorni'],[pct(ing.qr||0,totI),'entrano dal QR in chiesa'],[s.durata_mediana_s?Math.round(s.durata_mediana_s/60)+' min':'—','tempo tipico di una visita'],
+    [pct(straniere,totL),'in una lingua straniera'],[s.domande_n||0,'domande alla chat'],[cal,'salvataggi della festa in calendario'],[s.offline||0,'visite scaricate per usarle senza rete']];
+  $('kpi').innerHTML=kpi.map(function(k){return '<div class="card"><b>'+esc(k[0])+'</b><span>'+esc(k[1])+'</span></div>';}).join('');
+  colonne(s.per_giorno||[]);
+  barre('bQr',s.qr,nomeScena);barre('bLingue',s.lingue,nomeLingua);barre('bOpere',s.opere,nomeOpera);barre('bScene',s.scene,nomeScena);
+  barre('bCal',s.calendario,nomeMomento);barre('bInd',s.indicazioni,nomePunto);barre('bSost',s.sostieni,{whatsapp:'Chiedi come donare (WhatsApp)',paypal:'PayPal',satispay:'Satispay',iban:'Copia IBAN'});
+  $('domande').innerHTML=(s.domande&&s.domande.length)?s.domande.slice(0,15).map(function(d){return '<li>'+esc(d.testo)+(d.quando?'<small>'+esc(new Date(d.quando).toLocaleString('it-IT',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}))+'</small>':'')+'</li>';}).join(''):'<li class="vuoto">Ancora nessuna domanda.</li>';
+}
+function barre(id,dati,nomi){
+  var el=$(id);dati=(dati||[]).filter(function(x){return x.nome;});
+  if(!dati.length){el.innerHTML='<p class="vuoto">Ancora nessun dato.</p>';return;}
+  var max=Math.max.apply(null,dati.map(function(x){return x.n;}));
+  el.innerHTML=dati.slice(0,8).map(function(x){var n=(nomi&&nomi[x.nome])||x.nome;return '<div class="barra"><div><span class="nome" title="'+esc(n)+'">'+esc(n)+'</span><div class="tr"><i style="width:'+Math.max(2,Math.round(100*x.n/max))+'%"></i></div></div><span class="n">'+x.n+'</span></div>';}).join('');
+}
+/* colonne delle visite per giorno: una serie sola, niente legenda; il valore al passaggio del dito o del mouse */
+function colonne(serie){
+  var W=760,H=220,ml=34,mr=8,mt=10,mb=26,n=serie.length||1,max=Math.max(4,Math.max.apply(null,serie.map(function(x){return x.visite;}).concat([0])));
+  var passo=Math.pow(10,Math.floor(Math.log10(max))),tick=max/passo>5?2*passo:max/passo>2.5?passo:passo/2;tick=Math.max(1,Math.round(tick));
+  var top=Math.ceil(max/tick)*tick,bw=(W-ml-mr)/n,gap=Math.min(2,bw*.2),y=function(v){return mt+(H-mt-mb)*(1-v/top);};
+  var g='';for(var t=0;t<=top;t+=tick)g+='<line x1="'+ml+'" x2="'+(W-mr)+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="var(--griglia)"/><text x="'+(ml-6)+'" y="'+(y(t)+4)+'" text-anchor="end" font-size="11" fill="var(--muto)">'+t+'</text>';
+  var ogni=Math.ceil(n/7),b='',l='';
+  serie.forEach(function(d,i){var x=ml+i*bw+gap/2,w=Math.max(1,bw-gap),h=Math.max(0,y(0)-y(d.visite)),r=Math.min(4,w/2,h);
+    b+='<path d="M'+x+' '+y(0)+'V'+(y(0)-h+r)+'q0 -'+r+' '+r+' -'+r+'H'+(x+w-r)+'q'+r+' 0 '+r+' '+r+'V'+y(0)+'Z" fill="var(--oro)"/>';
+    b+='<rect x="'+(ml+i*bw)+'" y="'+mt+'" width="'+bw+'" height="'+(H-mt-mb)+'" fill="transparent" data-i="'+i+'"/>';
+    if(i%ogni===0||i===n-1){var dd=new Date(d.giorno+'T12:00:00');l+='<text x="'+(x+w/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="11" fill="var(--muto)">'+dd.getDate()+'/'+(dd.getMonth()+1)+'</text>';}});
+  $('graficoGiorni').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Visite per giorno, ultimi '+n+' giorni">'+g+b+l+'</svg>';
+  $('titGiorni').textContent='Visite per giorno · ultimi '+n+' giorni';
+  var svg=$('graficoGiorni').querySelector('svg'),tip=$('tip');
+  svg.addEventListener('pointermove',function(e){var t=e.target;if(t.dataset.i===undefined){tip.style.display='none';return;}var d=serie[+t.dataset.i],box=svg.getBoundingClientRect(),k=box.width/W,dd=new Date(d.giorno+'T12:00:00');
+    tip.innerHTML='<b>'+d.visite+'</b> visite · '+dd.toLocaleDateString('it-IT',{weekday:'short',day:'numeric',month:'short'});tip.style.display='block';tip.style.left=((+t.getAttribute('x')+bw/2)*k+box.left-svg.parentNode.getBoundingClientRect().left)+'px';tip.style.top=(y(d.visite)*k+30)+'px';});
+  svg.addEventListener('pointerleave',function(){tip.style.display='none';});
+}
+$('csv').onclick=function(){
+  var s=stato.stat;if(!s)return;var righe=[['giorno','visite']].concat((s.per_giorno||[]).map(function(d){return [d.giorno,d.visite];}));
+  ['qr','lingue','opere','scene','calendario','indicazioni','sostieni'].forEach(function(k){(s[k]||[]).forEach(function(x){righe.push([k+': '+x.nome,x.n]);});});
+  var csv=righe.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(';');}).join('\r\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'}));a.download='statistiche-'+L.slug+'-'+s.giorni+'giorni.csv';document.body.appendChild(a);a.click();setTimeout(function(){a.remove();},500);
+};
+
+/* ---------------- impostazioni ---------------- */
+function caricaConfig(){
+  var p=stato.demo?Promise.resolve(configEsempio()):fetch(API+'/'+L.slug+'/live',{credentials:'omit'}).then(function(r){return r.ok?r.json():{};}).catch(function(){return {};});
+  p.then(function(c){stato.config=c||{};compila();});
+}
+function rigaAvviso(a){
+  var d=document.createElement('div');d.className='riga';
+  d.innerHTML='<label class="largo">Testo dell’avviso<input type="text" data-k="testo" maxlength="200" value="'+esc(a.testo||'')+'"></label>'+
+    '<label class="largo">In inglese (facoltativo)<input type="text" data-k="testo_en" maxlength="200" value="'+esc(a.testo_en||'')+'"></label>'+
+    '<label>Dal giorno<input type="date" data-k="da" value="'+esc(a.da||'')+'"></label><label>Al giorno<input type="date" data-k="a" value="'+esc(a.a||'')+'"></label>'+
+    '<button class="btn sm" type="button" data-togli>Togli</button>';
+  d.querySelector('[data-togli]').onclick=function(){d.remove();};return d;
+}
+function rigaGiorno(data,v){
+  v=v||{};var chiusa=v.apertura&&!v.apertura.length&&v.messe&&!v.messe.length,d=document.createElement('div');d.className='riga';
+  d.innerHTML='<label>Giorno<input type="date" data-k="data" value="'+esc(data||'')+'"></label>'+
+    '<label class="check"><input type="checkbox" data-k="chiusa"'+(chiusa?' checked':'')+'> Chiesa chiusa tutto il giorno</label>'+
+    '<label>Aperta<input type="text" data-k="apertura" placeholder="09:00-12:00, 16:00-18:00" value="'+esc((v.apertura||[]).join(', '))+'"></label>'+
+    '<label>Messe<input type="text" data-k="messe" placeholder="18:00, 21:00" value="'+esc((v.messe||[]).join(', '))+'"></label>'+
+    '<label class="largo">Nota<input type="text" data-k="nota" maxlength="120" placeholder="es. Messa della notte" value="'+esc(v.nota||'')+'"></label>'+
+    '<button class="btn sm" type="button" data-togli>Togli</button>';
+  d.querySelector('[data-togli]').onclick=function(){d.remove();};return d;
+}
+function compila(){
+  var c=stato.config;$('avvisi').innerHTML='';(c.avvisi||[]).forEach(function(a){$('avvisi').appendChild(rigaAvviso(a));});
+  $('eccezioni').innerHTML='';Object.keys(c.eccezioni||{}).sort().forEach(function(k){$('eccezioni').appendChild(rigaGiorno(k,c.eccezioni[k]));});
+  var mom=(c.festa&&c.festa.momenti)||{};$('festaAnno').value=(c.festa&&c.festa.programma_anno)||'';
+  $('festaRighe').innerHTML=(L.festa?L.festa.momenti:[]).map(function(m){var g=m.giorno===0?'mercoledì':m.giorno>0?m.giorno+' giorni dopo':(m.giorno===-9?'lunedì, 9 giorni prima':['','martedì','lunedì','domenica','sabato'][-m.giorno]||(-m.giorno)+' giorni prima');
+    var ora=(mom[m.id]&&mom[m.id].ora)||m.ora;return '<tr><td>'+esc(m.titolo)+'</td><td class="nota">'+esc(g)+'</td><td><input type="time" data-m="'+esc(m.id)+'" value="'+esc(ora==='24:00'?'00:00':ora)+'" aria-label="Ora: '+esc(m.titolo)+'"></td></tr>';}).join('');
+  var s=c.sostieni||{};$('sAttivo').checked=!!s.attivo;$('sObiettivo').value=s.obiettivo||'';$('sDescrizione').value=s.descrizione||'';$('sTraguardo').value=s.traguardo||'';$('sRaccolti').value=s.raccolti||'';
+  $('sIntestatario').value=s.intestatario||'';$('sIban').value=s.iban||'';$('sPaypal').value=s.paypal||'';$('sSatispay').value=s.satispay||'';
+}
+$('addAvviso').onclick=function(){var oggi=new Date().toISOString().slice(0,10);$('avvisi').appendChild(rigaAvviso({da:oggi,a:oggi}));};
+$('addEccezione').onclick=function(){$('eccezioni').appendChild(rigaGiorno('',{}));};
+var lista=function(t){return String(t||'').split(/[,;]+/).map(function(x){return x.trim().replace(/\./g,':').replace(/^(\d):/,'0$1:').replace(/-(\d):/,'-0$1:');}).filter(Boolean);};
+function raccogli(){
+  var avvisi=[].map.call($('avvisi').children,function(r){var o={};r.querySelectorAll('[data-k]').forEach(function(i){o[i.dataset.k]=i.value.trim()||null;});return o;}).filter(function(a){return a.testo;});
+  var ecc={};[].forEach.call($('eccezioni').children,function(r){var g=function(k){return r.querySelector('[data-k="'+k+'"]');};var data=g('data').value;if(!data)return;
+    ecc[data]=g('chiusa').checked?{apertura:[],messe:[],nota:g('nota').value.trim()||'Chiesa chiusa'}:{apertura:lista(g('apertura').value),messe:lista(g('messe').value),nota:g('nota').value.trim()||null};});
+  var mom={};document.querySelectorAll('#festaRighe [data-m]').forEach(function(i){var m=(L.festa.momenti.filter(function(x){return x.id===i.dataset.m;})[0])||{},v=i.value;if(v==='00:00'&&m.ora==='24:00')v='24:00';if(v&&v!==m.ora)mom[i.dataset.m]={ora:v};});
+  return {avvisi:avvisi,eccezioni:ecc,festa:{momenti:mom,programma_anno:$('festaAnno').value||null},
+    sostieni:{attivo:$('sAttivo').checked,obiettivo:$('sObiettivo').value.trim(),descrizione:$('sDescrizione').value.trim(),traguardo:$('sTraguardo').value,raccolti:$('sRaccolti').value,
+      intestatario:$('sIntestatario').value.trim(),iban:$('sIban').value.replace(/\s+/g,'').toUpperCase(),paypal:$('sPaypal').value.trim(),satispay:$('sSatispay').value.trim()}};
+}
+$('salva').onclick=function(){
+  var dati=raccogli(),es=$('esito');es.className='esito';
+  if(stato.demo){stato.config=dati;es.className='esito ok';es.textContent='Modalità esempio: le modifiche funzionano qui ma non vengono salvate.';return;}
+  $('salva').disabled=true;es.textContent='Salvo…';
+  chiama('PUT','/'+L.slug+'/config',dati).then(function(j){stato.config=j.config||dati;compila();es.className='esito ok';es.textContent='Salvato ✓ La pagina pubblica si aggiorna entro un minuto.';})
+    .catch(function(e){es.className='esito ko';es.textContent='Non salvato: '+e.message;}).then(function(){$('salva').disabled=false;});
+};
+window.__cruscotto={stato:stato,raccogli:raccogli,esempio:esempio};
+})();
+</script>
+</body>
+</html>

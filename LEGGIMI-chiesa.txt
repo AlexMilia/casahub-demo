@@ -39,6 +39,18 @@ DOVE SIAMO: dentro Info, mappa OpenStreetMap (si carica solo quando ci si arriva
 AST, sosta pullman, Pozzo della Madonna, Cala Buguto; distanze a piedi e «Indicazioni stradali» su Google Maps. I punti sono in
 luogo.dove.punti. Da verificare con il Comune: piano gratuito del parcheggio, punto esatto della sosta pullman. Test: test/test-festa.js.
 
+STATISTICHE ANONIME: la pagina manda al server ASK Trapani (POST /chiesa/eventi) aperture, QR usato, punti visti, opere aperte, video,
+reel, salvataggi in calendario, indicazioni chieste, clic sulle offerte, lingua e durata. Un numero casuale per visita (non resta sul
+telefono), nessun cookie, nessun IP; con «Do Not Track» non parte nulla. Tabelle Supabase chiese_eventi e chiese_config.
+CRUSCOTTO: cruscotto.html (link «Area riservata del Santuario» in fondo alla pagina). Con la chiave: statistiche (7/30/90 giorni, CSV),
+avvisi in cima alla pagina, giorni speciali (orari diversi, chiusure), orari della festa e anno del programma, offerte (obiettivo,
+traguardo, raccolti, IBAN, PayPal, Satispay). Senza chiave: «Guarda con dati di esempio» (o cruscotto.html?demo=1).
+LA CHIAVE: va creata su Railway (progetto brilliant-harmony → servizio ask-trapani-api → Variables) con il nome
+CHIESE_CHIAVE_SANTUARIO_MADONNA_CUSTONACI e una parola segreta lunga. Finché non c'è, statistiche e modifiche restano chiuse.
+OFFERTE: in dati/santuario.js luogo.sostieni (oggi ESEMPIO dichiarato); dal cruscotto diventano vere. PASSAPORTO: luogo.rete, timbri
+sul telefono (localStorage «esplora-passaporto», condiviso con le altre pagine dello stesso dominio). CARTE: luogo.carte (privacy,
+crediti, accessibilità, narratori) — BOZZA da approvare. Test: test/test-vendibile.js · ask-trapani-api/test_gestione.py.
+
 I DUE INGRESSI: chiesa-sim1.html (da casa: soglia + racconto + cammino) · chiesa-sim1.html?qui=altare (dal QR in cappella: audio per
 primo, «sei qui», niente soglia). Slug dei punti: dal-cielo, ingresso, navata, verso-altare, crociera, presbiterio, altare; deviazioni
 cantoria, rosone, tetto (100-102), museo, museo-2, museo-dipinti, museo-tesoro, museo-vara (200-204), porta-laterale (300), battistero,

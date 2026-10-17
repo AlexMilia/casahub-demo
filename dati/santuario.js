@@ -54,6 +54,52 @@ var CHIESA = {
       eccezioni: {}   /* es. '2026-12-24': { apertura: ['09:00-12:00','22:00-01:00'], messe: ['23:30'], nota: 'Messa della notte' } */
     },
     contatti: { whatsapp: '3490627997', telefono: '0923 971113', mail: 'info@santuariocustonaci.it' },
+    /* ---------- OFFERTE E SOSTEGNO — ESEMPIO: obiettivo, cifre e modalità li decide la Chiesa (poi dal cruscotto) ---------- */
+    sostieni: {
+      attivo: true, esempio: true,
+      obiettivo: 'Il Museo Arte e Fede', obiettivo_en: 'The Arte e Fede Museum',
+      descrizione: 'Le offerte aiutano a custodire le vesti, gli ex voto e la vara del 1831, e a tenere aperto il museo per chi viene da lontano.',
+      descrizione_en: 'Donations help look after the vestments, the votive offerings and the 1831 carrying frame, and keep the museum open for visitors.',
+      traguardo: 8000, raccolti: 2350,
+      intestatario: null, iban: null, paypal: null, satispay: null   /* si riempiono dal cruscotto quando la Chiesa sceglie */
+    },
+    /* ---------- IL PASSAPORTO DEI LUOGHI: la rete di Esplora Trapani ---------- */
+    rete: [
+      { id: 'santuario-madonna-custonaci', nome: 'Santuario di Maria SS. di Custonaci', comune: 'Custonaci', stato: 'attivo' },
+      { id: 'mac-custonaci', nome: 'MAC · Museo a Cielo Aperto', comune: 'Custonaci', stato: 'attivo', url: 'https://www.alessandromilia.it/project/mac/' },
+      { id: 'grotta-mangiapane', nome: 'Grotta Mangiapane', comune: 'Custonaci', stato: 'in_arrivo' },
+      { id: 'cala-buguto', nome: 'Cala Buguto e la baia di Cornino', comune: 'Custonaci', stato: 'in_arrivo' },
+      { id: 'erice', nome: 'Erice', comune: 'Erice', stato: 'in_arrivo' },
+      { id: 'segesta', nome: 'Parco archeologico di Segesta', comune: 'Calatafimi-Segesta', stato: 'in_arrivo' }
+    ],
+    /* ---------- LE CARTE IN REGOLA — BOZZA da rivedere con la Chiesa e il Comune prima del lancio ---------- */
+    carte: {
+      bozza: true,
+      titolare: 'Esplora Trapani · Alessandro Milia',
+      contatto: 'WhatsApp 349 062 7997',
+      privacy: [
+        'Per usare la visita non serve registrarsi e non chiediamo nome, email o telefono.',
+        'La pagina non usa cookie né sistemi pubblicitari. Quello che salva per la visita senza rete (panorami, voci, i tuoi timbri) resta sul tuo telefono e lo puoi cancellare dalle impostazioni del browser.',
+        'Statistiche anonime: per capire come viene usata la visita la pagina conta aperture, punti visti, opere aperte, lingua e durata. A ogni visita corrisponde un numero casuale che non ti identifica e non viene conservato sul telefono; il tuo indirizzo di rete non viene salvato. Se il browser chiede di non essere tracciato («Do Not Track»), le statistiche non partono.',
+        'Chiedi alla chiesa: la domanda viene inviata al servizio di Esplora Trapani e a un modello di intelligenza artificiale (Claude, di Anthropic) per scrivere la risposta, usando solo i testi del Santuario. Conserviamo l’inizio della domanda, senza sapere chi l’ha fatta, per migliorare i testi. Non scrivere dati personali nella chat.',
+        'Mappa e video vengono da servizi esterni (OpenStreetMap, YouTube in modalità senza cookie) e si aprono solo quando ci arrivi o li tocchi.'
+      ],
+      crediti: [
+        'Foto e video a 360°, riprese con il drone, montaggio dei reel: Esplora Trapani · Alessandro Milia, pilota abilitato ENAC.',
+        'Reel della festa: Esplora Trapani (YouTube).',
+        'Testi: da fonti pubbliche (parrocchia cittadicustonaci.it, censimento dei santuari 2023, Catalogo generale dei beni culturali, custonaciweb.it), in attesa di revisione del Santuario.',
+        'Pianta del Santuario: planimetria storica con le fasi costruttive.',
+        'Voci: sintetiche di prova (Piper), da sostituire con narratori veri.',
+        'Mappa: © OpenStreetMap contributors, con Leaflet. Panorami: Pannellum. Animazioni: GSAP.'
+      ],
+      accessibilita: [
+        'Stato: parzialmente conforme. La pagina supera i controlli automatici WCAG 2.1 livello A e AA (axe) su telefono e computer.',
+        'Ci sono testo ingrandibile, lettura facile, descrizione a voce di ciò che si vede, sottotitoli e trascrizioni di tutti gli audio.',
+        'Da fare sul posto: misurare gradino d’ingresso, rampa, percorso interno e distanza dal parcheggio; prova con persone con disabilità visiva e motoria.',
+        'Per segnalare un problema di accessibilità scrivi su WhatsApp al 349 062 7997.'
+      ],
+      narratori: 'Le voci attuali sono sintetiche. Per i narratori veri servono la liberatoria per l’uso della voce e dell’immagine e la cessione dei diritti sui testi letti.'
+    },
     /* ---------- LA FESTA (ultimo mercoledì di agosto) ----------
        Le date si calcolano da sole ogni anno. Gli orari sono quelli del programma 2026 (275ª edizione,
        fonte custonaciweb.it): per l'anno nuovo restano come guida finché non esce il programma ufficiale. */
