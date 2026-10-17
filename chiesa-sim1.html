@@ -320,6 +320,13 @@ body.qui .cassetto .btn.ascolta-btn{min-height:64px;font-size:1.1em;width:100%}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media (max-width:700px){.vers{display:none}}
+.rete-chip{position:fixed;left:50%;transform:translateX(-50%);top:calc(var(--top-h,58px) + 8px + env(safe-area-inset-top,0px));z-index:72;background:rgba(27,33,43,.95);border:1px solid var(--linea);color:var(--pietra);border-radius:999px;padding:6px 14px;font:600 13px var(--sans);box-shadow:0 4px 16px #0006;transition:opacity .4s;max-width:calc(100vw - 32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rete-chip.ok{border-color:#5fb37a;color:#cfe9d6}
+.rete-chip.off{border-color:var(--oro);color:var(--candela)}
+.rete-riga{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-size:.95em}
+.rete-riga span{color:var(--pietra2);white-space:nowrap}
+.rete-barra{height:6px;border-radius:3px;background:#ffffff1a;margin-top:6px;overflow:hidden}
+.rete-barra i{display:block;height:100%;background:var(--oro);transition:width .4s}
 </style>
 </head>
 <body>
@@ -334,6 +341,7 @@ body.qui .cassetto .btn.ascolta-btn{min-height:64px;font-size:1.1em;width:100%}
   <button class="tb" id="fsBtn" aria-label="Dimensione del testo" title="Dimensione del testo">Aa</button>
 </header>
 <div class="qui-banner" id="quiBanner"></div>
+<div class="rete-chip" id="reteChip" hidden role="status" aria-live="polite"></div>
 
 <main>
 <!-- ================= SOGLIA ================= -->
@@ -514,18 +522,46 @@ function scenaPrincipale(o){var p=o.scene.filter(function(x){return x.principale
 function narr(id){return D.narratori.filter(function(n){return n.id===id;})[0];}
 
 /* ---------- media: panorami con doppio host e ripiego ---------- */
-var blobCache={};
-function urlPano(s,i){return L.media_base[i]+s.file;}
-function risolviPano(s){
-  if(blobCache[s.id])return blobCache[s.id];
-  blobCache[s.id]=new Promise(function(ok,ko){
-    var i=0;(function tenta(){
-      if(i>=L.media_base.length)return ko(new Error('pano'));
-      var u=urlPano(s,i++);
+var blobCache={}, hqFatta={};
+/* panorami a due qualità: «lq» (2048 px, ~230 KB) si apre subito, «hq» (4096 px) la sostituisce appena arriva */
+function urlPano(s,i,q){var b=L.media_base[i];return (q==='lq'&&L.pano_lq&&i===0)?b+'lq/'+s.file:b+s.file;}
+function risolviPano(s,q){
+  q=q||'hq';var k=s.id+q;
+  if(blobCache[k])return blobCache[k];
+  var pr=new Promise(function(ok,ko){
+    var i=0,n=q==='lq'?1:L.media_base.length;(function tenta(){
+      if(i>=n)return ko(new Error('pano'));
+      var u=urlPano(s,i++,q);
       fetch(u,{mode:'cors'}).then(function(r){if(!r.ok)throw 0;return r.blob();}).then(function(b){ok(URL.createObjectURL(b));}).catch(tenta);
     })();
   });
-  return blobCache[s.id];
+  if(q==='lq')pr=pr.catch(function(){return risolviPano(s,'hq');});
+  else pr.then(function(u){hqFatta[s.id]=u;},function(){});
+  blobCache[k]=pr;return pr;
+}
+var primoPanoOk,primoPano=new Promise(function(r){primoPanoOk=r;});
+function sid(s){return 's'+s.id+(hqFatta[s.id]?'h':'');}
+function inVista(el){var r=el.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight;}
+function migliora(s){ /* sostituisce il panorama leggero con quello nitido senza perdere lo sguardo */
+  (function attendi(n){
+    if(attiva!==s)return;
+    if(!inVista($('pano'))&&n<600){setTimeout(function(){attendi(n+1);},800);return;}
+    risolviPano(s,'hq').then(function(u){
+      (function prova(k){
+        if(!V||attiva!==s)return;
+        if(($('opPanel').classList.contains('on')||Guida.on)&&k<90){setTimeout(function(){prova(k+1);},1000);return;}
+        var id='s'+s.id+'h';
+        if(!sceneCaricate[id]){V.addScene(id,cfgScena(s,u));sceneCaricate[id]=1;}
+        try{V.loadScene(id,V.getPitch(),V.getYaw(),V.getHfov());}catch(e){}
+        prossime(s);
+      })(0);
+    }).catch(function(){});
+  })(0);
+}
+function prossime(s){ /* a rete libera, prepara in leggero le scene a cui si può andare da qui */
+  var k=MAIN.indexOf(s),v=[];if(k>=0&&MAIN[k+1])v.push(MAIN[k+1]);if(k>0)v.push(MAIN[k-1]);
+  (s.deviazioni||[]).forEach(function(d){if(byId[d.a])v.push(byId[d.a]);});
+  v.forEach(function(x){risolviPano(x,'lq');});
 }
 
 /* ====================================================================
@@ -585,15 +621,15 @@ function soglia(){
   }
   if(!window.pannellum||!L.foto_portale&&!s0){apri();return;}
   var host=$('heroPano');altFade(host);
-  risolviPano(s0).then(function(u0){
+  risolviPano(s0,'lq').then(function(u0){
     heroV=pannellum.viewer(host,{default:{firstScene:'facciata',autoLoad:true,showControls:false,mouseZoom:false,draggable:false,keyboardZoom:false,compass:false,friction:.6,sceneFadeDuration:1200},scenes:{facciata:{type:'equirectangular',panorama:u0,yaw:L.yaw_facciata||0,pitch:(L.pitch_facciata!=null?L.pitch_facciata:4),hfov:80}}});
     heroV.on('load',function once(){
-      heroV.off('load',once);
+      heroV.off('load',once);primoPanoOk();
       try{var img=heroV.getRenderer().render((L.pitch_facciata!=null?L.pitch_facciata:4)*Math.PI/180,(L.yaw_facciata||0)*Math.PI/180,80*Math.PI/180,{returnImage:true});
         ante.forEach(function(a){a.style.backgroundImage='url('+img+')';a.style.backgroundSize=(host.clientWidth)+'px '+(host.clientHeight)+'px';});}catch(e){}
       apri();
       /* dietro le ante: la navata, con una rotazione lentissima finché la soglia è in vista */
-      risolviPano(s2).then(function(u2){heroV.addScene('dietro',{type:'equirectangular',panorama:u2,yaw:0,pitch:2,hfov:90,autoRotate:RIDOTTO?0:-1.2,autoRotateInactivityDelay:1000});heroV.loadScene('dietro');});
+      risolviPano(s2,'lq').then(function(u2){heroV.addScene('dietro',{type:'equirectangular',panorama:u2,yaw:0,pitch:2,hfov:90,autoRotate:RIDOTTO?0:-1.2,autoRotateInactivityDelay:1000});heroV.loadScene('dietro');});
     });
     heroV.on('error',apri);
   }).catch(function(){apri();$('heroPano').style.background='radial-gradient(circle at 50% 40%,#2c3a52,#0d1016)';});
@@ -605,6 +641,7 @@ function soglia(){
    RACCONTO (Atto I): capitoli con il video dei narratori e le scoperte
    ==================================================================== */
 var Vplayers={};
+var vicino=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var v=e.target;if(v.dataset.poster&&!v.poster)v.poster=v.dataset.poster;if(v.preload==='none')v.preload='metadata';vicino.unobserve(v);});},{rootMargin:'600px 0px'}):null;
 function renderRacconto(){
   if(QUI){$('racconto').hidden=true;return;}
   $('voceSaluto').innerHTML='<b>'+esc(L.voce.nome)+' · '+esc(L.voce.ruolo)+'</b>'+esc(tr('luogo',0,'voce.saluto',L.voce.saluto));
@@ -623,7 +660,7 @@ function renderRacconto(){
       (c.n===1&&L.lettura_facile?'<details class="facile"><summary>'+t('Testo facile')+'</summary><div class="in">'+esc(tr('luogo',0,'lettura_facile',L.lettura_facile))+'</div></details>':'')+
       '</div>'+
       '<div class="vid" id="vid-'+c.id+'">'+
-        '<video playsinline preload="metadata" poster="'+esc(c.poster)+'" aria-label="'+esc(c.titolo)+'"><source src="'+esc(c.video)+'" type="video/mp4">'+(c.sottotitoli?'<track kind="subtitles" srclang="it" label="Italiano" src="'+esc(c.sottotitoli)+'">':'')+'</video>'+
+        '<video playsinline preload="none" data-poster="'+esc(c.poster)+'" aria-label="'+esc(c.titolo)+'"><source src="'+esc(c.video)+'" type="video/mp4">'+(c.sottotitoli?'<track kind="subtitles" srclang="it" label="Italiano" src="'+esc(c.sottotitoli)+'">':'')+'</video>'+
         '<button class="avvia"><span>▶ '+t('Guarda il racconto')+'</span><small>'+mmss(c.durata)+(c.sottotitoli?' · '+t('Sottotitoli nei video').toLowerCase():'')+'</small></button>'+
         '<button class="pp" hidden aria-label="'+t('Pausa')+'">❚❚</button>'+
         '<button class="scop" aria-label="'+t('Scoperta')+'">?</button>'+
@@ -637,7 +674,8 @@ function renderRacconto(){
   if(GS&&!RIDOTTO)gsap.utils.toArray('.cap').forEach(function(el){gsap.from(el,{opacity:0,y:40,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',once:true}});});
 }
 function bindCapitolo(c){
-  var box=$('vid-'+c.id),v=box.querySelector('video'),avvia=box.querySelector('.avvia'),pp=box.querySelector('.pp'),scop=box.querySelector('.scop'),narrB=box.querySelector('.narr'),fill=box.querySelector('.barra i'),barra=box.querySelector('.barra');
+  var box=$('vid-'+c.id),v=box.querySelector('video');if(vicino)vicino.observe(v);else{v.poster=v.dataset.poster;}
+  var avvia=box.querySelector('.avvia'),pp=box.querySelector('.pp'),scop=box.querySelector('.scop'),narrB=box.querySelector('.narr'),fill=box.querySelector('.barra i'),barra=box.querySelector('.barra');
   var P={attesa:false,fatta:false};Vplayers[c.id]=P;
   if(c.scoperta&&c.durata){var b=document.createElement('b');b.style.left=(c.scoperta.t/c.durata*100)+'%';barra.appendChild(b);}
   function play(){var p=v.play();if(p&&p.catch)p.catch(function(){});pp.textContent='❚❚';pp.setAttribute('aria-label',t('Pausa'));}
@@ -684,8 +722,9 @@ function disegnaPianta(){
   var box=$('piantaBox'),img=$('piantaImg');
   function pronto(){renderPins();}
   if(!L.site_plan){schemaAuto();pronto();return;}
-  img.alt=(S.lang==='it'?'Pianta del santuario':'Plan of the sanctuary');img.onload=pronto;img.onerror=function(){img.onerror=null;schemaAuto();pronto();};img.src=L.site_plan;
-  if(img.complete&&img.naturalWidth)pronto();
+  img.alt=(S.lang==='it'?'Pianta del santuario':'Plan of the sanctuary');img.onload=pronto;img.onerror=function(){img.onerror=null;schemaAuto();pronto();};
+  var via=false;function carica(){if(via)return;via=true;img.src=L.site_plan;if(img.complete&&img.naturalWidth)pronto();}
+  primoPano.then(carica);setTimeout(carica,1500);
 }
 function H(){ /* rapporto altezza/larghezza della pianta in percentuale: serve ai pin */ return 1; }
 function renderPins(){
@@ -708,11 +747,12 @@ function aggiornaPins(){
   $('piantaSvg').querySelectorAll('line[data-dev]').forEach(function(l){var s=byId[+l.dataset.dev];var mostra=attiva&&(s.da===attiva.id||Math.floor(s.ordine/100)===ramo);l.style.opacity=mostra?'.8':'0';});
   if(attiva){var p=posScena(attiva);var c=$('cono');c.hidden=false;c.style.left=p[0]+'%';c.style.top=p[1]+'%';if(!QUI){var pt=$('punto');if(pt.hidden){pt.hidden=false;pt.style.left=p[0]+'%';pt.style.top=p[1]+'%';}}}
 }
-function creaViewer(s,u){
-  var cfg={default:{firstScene:'s'+s.id,sceneFadeDuration:900,autoLoad:true,showControls:false,compass:false,friction:.65,hfov:90,minHfov:25,keyboardZoom:true,mouseZoom:true,doubleClickZoom:false,touchPanSpeedCoeffFactor:1},scenes:{}};
-  cfg.scenes['s'+s.id]=cfgScena(s,u);
+function creaViewer(s,u,id){
+  id=id||'s'+s.id;
+  var cfg={default:{firstScene:id,sceneFadeDuration:900,autoLoad:true,showControls:false,compass:false,friction:.65,hfov:90,minHfov:25,keyboardZoom:true,mouseZoom:true,doubleClickZoom:false,touchPanSpeedCoeffFactor:1},scenes:{}};
+  cfg.scenes[id]=cfgScena(s,u);
   V=pannellum.viewer('pano',cfg);
-  V.on('load',function(){$('panoHint').hidden=false;$('panoHint').textContent=t('Trascina per guardarti intorno');setTimeout(function(){$('panoHint').hidden=true;},3500);montaHotspot();});
+  V.on('load',function(){primoPanoOk();$('panoHint').hidden=false;$('panoHint').textContent=t('Trascina per guardarti intorno');setTimeout(function(){$('panoHint').hidden=true;},3500);montaHotspot();});
   V.on('error',function(){piatta(attiva);});
   V.on('touchstart',function(){Guida.libera();});V.on('mousedown',function(){Guida.libera();});
   $('pano').addEventListener('keydown',function(e){if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].indexOf(e.key)>=0)Guida.libera();});
@@ -750,10 +790,14 @@ function vai(s,daUtente){
   renderCassetto(s);aggiornaPins();renderElenco();
   if(daUtente&&!QUI&&GS&&!RIDOTTO&&!MOBILE&&!inDeviazione&&ST){var i=MAIN.indexOf(s);if(i>=0){var p=(i+.5)/MAIN.length;var y=ST.start+(ST.end-ST.start)*p;if(Math.abs(window.scrollY-y)>40)window.scrollTo({top:y,behavior:'instant'});}}
   $('piatta').classList.remove('on');
-  risolviPano(s).then(function(u){
-    if(!V){creaViewer(s,u);}
-    else{if(!sceneCaricate[s.id]){V.addScene('s'+s.id,cfgScena(s,u));}V.loadScene('s'+s.id,s.pitch_avanti||0,s.yaw_avanti||0,90);}
-    sceneCaricate[s.id]=1;
+  var nitida=!!hqFatta[s.id];
+  risolviPano(s,nitida?'hq':'lq').then(function(u){
+    if(attiva!==s)return;
+    var id=sid(s);
+    if(!V){creaViewer(s,u,id);}
+    else{if(!sceneCaricate[id]){V.addScene(id,cfgScena(s,u));}V.loadScene(id,s.pitch_avanti||0,s.yaw_avanti||0,90);}
+    sceneCaricate[id]=1;sceneCaricate[s.id]=1;
+    if(!hqFatta[s.id])migliora(s);else prossime(s);
   }).catch(function(){piatta(s);});
   if(daUtente)Guida.libera();
 }
@@ -898,25 +942,63 @@ function renderGuidaCard(){
   if($('btnGuida'))$('btnGuida').onclick=function(){$('cammino').scrollIntoView({behavior:RIDOTTO?'auto':'smooth'});setTimeout(function(){Guida.avvia();},300);};
   if($('btnGuidaStop'))$('btnGuidaStop').onclick=function(){Guida.ferma();Lettore.pausa();};
 }
-function listaScarico(){
-  var u=[];D.capitoli.forEach(function(c){if(c.video)u.push(c.video);if(c.poster)u.push(c.poster);if(c.sottotitoli)u.push(c.sottotitoli);});
-  SC.forEach(function(s){if(s.audio)u.push(s.audio);if(s.audiodescrizione)u.push(s.audiodescrizione);u.push(urlPano(s,0));});
-  OP.forEach(function(o){if(o.audio)u.push(o.audio);if(o.audio_voce2)u.push(o.audio_voce2);if(o.foto_hd)u.push(o.foto_hd);});
-  if(L.site_plan)u.push(L.site_plan);
+function abs(u){try{return new URL(u,location.href).href;}catch(e){return u;}}
+function listaEssenziale(){ /* quanto basta per fare la visita senza rete: panorami leggeri, voci, pianta (~8 MB) */
+  var u=[];if(L.site_plan)u.push(L.site_plan);
+  SC.forEach(function(s){u.push(urlPano(s,0,'lq'));if(s.audio)u.push(s.audio);if(s.audiodescrizione)u.push(s.audiodescrizione);});
+  OP.forEach(function(o){if(o.audio)u.push(o.audio);if(o.audio_voce2)u.push(o.audio_voce2);});
+  D.capitoli.forEach(function(c){if(c.poster)u.push(c.poster);if(c.sottotitoli)u.push(c.sottotitoli);});
+  return u.map(abs);
+}
+function listaScarico(){ /* tutto: anche panorami nitidi, reel e foto delle opere */
+  var u=listaEssenziale();D.capitoli.forEach(function(c){if(c.video)u.push(abs(c.video));});
+  SC.forEach(function(s){u.push(abs(urlPano(s,0)));});
+  OP.forEach(function(o){if(o.foto_hd)u.push(abs(o.foto_hd));});
   return u;
 }
-function renderScarica(){
-  var c=$('scaricaCard'),mb=Math.round(3+SC.length*(D.peso.panorama_mb||2.5));
-  var ok=!ARTEFATTO&&(location.protocol==='http:'||location.protocol==='https:');
-  c.innerHTML='<h3>'+t('Scarica la visita')+'</h3><p>'+t('Dentro una chiesa la rete spesso manca: scarica audio e panorami adesso, poi funzionano anche senza segnale.')+'</p>'+(ok&&'serviceWorker' in navigator?'<button class="btn pieno" id="btnScarica">⤓ '+t('Scarica la visita')+' · '+t('circa')+' '+mb+' MB</button><p class="nota" id="scaricaStato"></p>':'<p class="nota">'+(ARTEFATTO?(S.lang==='it'?'Non disponibile in questa anteprima: funziona sulla pagina pubblicata su esploratrapani.it.':'Not available in this preview: it works on the page published on esploratrapani.it.'):t('Disponibile quando la pagina è online (http), non aprendo il file dal computer.'))+'</p>');
-  if($('btnScarica'))$('btnScarica').onclick=scarica;
+/* ---------- senza rete: service worker automatico ---------- */
+var SWok=!ARTEFATTO&&'serviceWorker' in navigator&&/^https?:$/.test(location.protocol), SWreg=null, Rete={essenziale:null,tutto:null};
+function swInvia(msg,cb){if(!SWreg)return;var w=SWreg.active||navigator.serviceWorker.controller;if(!w)return;var ch=new MessageChannel();ch.port1.onmessage=function(e){cb&&cb(e.data||{});};w.postMessage(msg,[ch.port2]);}
+function swAvvia(){
+  if(!SWok)return;
+  navigator.serviceWorker.register('sw.js').then(function(){return navigator.serviceWorker.ready;}).then(function(r){
+    SWreg=r;
+    /* l'involucro della pagina: html, dati, librerie, caratteri */
+    var shell=[location.href.split('#')[0].split('?')[0]];
+    [].forEach.call(document.querySelectorAll('script[src],link[rel=stylesheet][href]'),function(e){shell.push(e.src||e.href);});
+    swInvia({tipo:'shell',urls:shell});
+    swInvia({tipo:'stato',urls:listaEssenziale()},function(d){Rete.essenziale=d;statoRete();
+      var risparmio=navigator.connection&&navigator.connection.saveData;
+      if(d.fatti<d.tot&&!risparmio&&navigator.onLine){setTimeout(function(){prepara(listaEssenziale(),'essenziale');},QUI?1500:6000);}});
+    swInvia({tipo:'stato',urls:listaScarico()},function(d){Rete.tutto=d;statoRete();});
+  }).catch(function(){SWok=false;statoRete();});
 }
-function scarica(){
-  var st=$('scaricaStato');st.textContent=t('Scarico')+'…';
-  navigator.serviceWorker.register('sw.js').then(function(r){return navigator.serviceWorker.ready;}).then(function(r){
-    var ch=new MessageChannel();ch.port1.onmessage=function(e){var d=e.data||{};st.textContent=t('Scaricato')+': '+d.ok+' / '+d.tot+(d.ko?' · '+d.ko+' '+t('file non scaricati'):'');};
-    (r.active||navigator.serviceWorker.controller).postMessage({tipo:'scarica',urls:listaScarico()},[ch.port2]);
-  }).catch(function(){st.textContent='SW: '+(S.lang==='it'?'non disponibile':'not available');});
+function prepara(urls,chi){
+  Rete[chi]=Rete[chi]||{fatti:0,tot:urls.length};Rete[chi].corso=true;statoRete();
+  swInvia({tipo:'scarica',urls:urls},function(d){Rete[chi]=d;Rete[chi].corso=!d.fine;statoRete();
+    if(d.fine&&chi==='tutto')swInvia({tipo:'stato',urls:listaEssenziale()},function(e){Rete.essenziale=e;statoRete();});});
+}
+function statoRete(){
+  var e=Rete.essenziale,chip=$('reteChip');if(!chip)return;
+  var off=!navigator.onLine,txt='',cls='';
+  if(e&&e.tot&&e.fatti>=e.tot){txt='✓ '+(S.lang==='it'?'pronta anche senza rete':'ready offline');cls='ok';}
+  else if(e&&e.corso){txt=(S.lang==='it'?'preparo la visita senza rete':'preparing offline visit')+' '+Math.round(100*e.fatti/Math.max(1,e.tot))+'%';cls='corso';}
+  if(off)txt=(S.lang==='it'?'senza rete':'offline')+(e&&e.fatti>=e.tot?' · '+(S.lang==='it'?'tutto disponibile':'everything available'):' · '+(S.lang==='it'?'solo ciò che è già scaricato':'only what is downloaded'));
+  chip.textContent=txt;chip.className='rete-chip '+cls+(off?' off':'');chip.hidden=!txt;
+  if($('scaricaCard'))renderScarica();
+}
+window.addEventListener('online',statoRete);window.addEventListener('offline',statoRete);
+function renderScarica(){
+  var c=$('scaricaCard'),it=S.lang==='it',e=Rete.essenziale,tu=Rete.tutto;
+  var mb=Math.round(10+SC.length*(D.peso.panorama_mb||1.3)+D.capitoli.length*6);
+  if(!SWok){c.innerHTML='<h3>'+t('Scarica la visita')+'</h3><p class="nota">'+(ARTEFATTO?(it?'Non disponibile in questa anteprima: funziona sulla pagina pubblicata.':'Not available in this preview: it works on the published page.'):t('Disponibile quando la pagina è online (http), non aprendo il file dal computer.'))+'</p>';return;}
+  var pct=function(d){return d&&d.tot?Math.round(100*d.fatti/d.tot):0;};
+  var h='<h3>'+(it?'Senza rete':'Offline')+'</h3><p>'+(it?'Dentro una chiesa la rete spesso manca. La visita si prepara da sola appena apri la pagina: panorami leggeri, voci e pianta.':'Inside a church there is often no signal. The visit gets ready by itself as soon as you open the page: light panoramas, voices and plan.')+'</p>';
+  h+='<div class="rete-riga"><b>'+(it?'Visita essenziale':'Essential visit')+'</b><span>'+(e&&e.fatti>=e.tot?'✓ '+(it?'pronta':'ready'):(e&&e.corso?pct(e)+'%':(it?'in attesa':'waiting')))+'</span></div><div class="rete-barra"><i style="width:'+pct(e)+'%"></i></div>';
+  h+='<div class="rete-riga"><b>'+(it?'Tutto, anche reel e panorami nitidi':'Everything, reels and sharp panoramas too')+'</b><span>'+(tu&&tu.fatti>=tu.tot?'✓':(tu&&tu.corso?pct(tu)+'%':(it?'circa ':'about ')+mb+' MB'))+'</span></div><div class="rete-barra"><i style="width:'+pct(tu)+'%"></i></div>';
+  if(!(tu&&(tu.fatti>=tu.tot||tu.corso)))h+='<button class="btn pieno" id="btnScarica">⤓ '+(it?'Scarica tutto (meglio col Wi-Fi)':'Download everything (Wi-Fi recommended)')+'</button>';
+  c.innerHTML=h;
+  if($('btnScarica'))$('btnScarica').onclick=function(){prepara(listaScarico(),'tutto');};
 }
 
 /* ====================================================================
@@ -994,6 +1076,7 @@ function avvio(){
   if(OPERA_URL){var o2=OP.filter(function(z){return z.slug===OPERA_URL;})[0];if(o2){setTimeout(function(){$('cammino').scrollIntoView({behavior:'auto'});guardaOpera(o2);setTimeout(function(){apriOpera(o2,false);},1200);},300);}}
   window.addEventListener('resize',function(){montaHotspot();if(V)V.resize();});
   if(GS)setTimeout(function(){ScrollTrigger.refresh();},300);
+  swAvvia();statoRete();
 }
 window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',avvio);else avvio();

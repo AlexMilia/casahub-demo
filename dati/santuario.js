@@ -24,6 +24,7 @@ var CHIESA = {
     patrono: 'Maria SS. di Custonaci',
     festa_patronale: 'ultimo mercoledì di agosto (quattro giorni dalla domenica precedente)',
     /* media */
+    pano_lq: true,                          /* in pano/lq/ le versioni leggere (2048 px) che si aprono subito */
     media_base: ['pano/', 'https://media.esploratrapani.it/Santuario-Madonna-Custonaci/', 'https://f003.backblazeb2.com/file/Santuario-Madonna-Custonaci/'],
     site_plan: 'pano/pianta.jpg',           /* la pianta vera (fasi 1575–1851, 1900, 1968), facciata in basso; i pin del museo sono da confermare */
     foto_portale: null,                     /* la soglia usa la facciata vista dal drone */
