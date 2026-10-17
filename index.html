@@ -465,6 +465,94 @@ body.chiedi-on .chiedi-fab{display:none}
 .rete-riga span{color:var(--pietra2);white-space:nowrap}
 .rete-barra{height:6px;border-radius:3px;background:#ffffff1a;margin-top:6px;overflow:hidden}
 .rete-barra i{display:block;height:100%;background:var(--oro);transition:width .4s}
+
+/* ============ IN CLASSE · la versione per la LIM: il 360 a tutto schermo, testi grandi, penna, quiz ============ */
+.lim{position:fixed;inset:0;z-index:120;background:#07090c;color:var(--testo);font-size:clamp(16px,1.12vw,40px);display:grid;
+  grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden}
+.lim[hidden]{display:none}
+body.lim-on{overflow:hidden}
+body.lim-on .chiedi{z-index:140}
+.lim-pano{position:absolute;inset:0;z-index:0}
+.lim-pano .pnlm-container{background:#07090c}
+.lim-tela{position:absolute;inset:0;z-index:3;touch-action:none;cursor:crosshair}
+.lim-top{grid-column:1/-1;grid-row:1;position:relative;z-index:5;display:flex;align-items:center;gap:1em;flex-wrap:wrap;
+  padding:.7em max(16px,env(safe-area-inset-right,0px)) .7em max(16px,env(safe-area-inset-left,0px));padding-top:calc(.7em + env(safe-area-inset-top,0px));
+  background:linear-gradient(180deg,rgba(7,9,12,.92),rgba(7,9,12,.55) 70%,transparent)}
+.lim-marca{display:flex;align-items:center;gap:.6em;min-width:0}
+.lim-marca .sig{width:2.2em;height:2.2em;border-radius:50%;border:2px solid var(--oro);display:grid;place-items:center;color:var(--oro2);font-family:var(--serif);font-weight:700;flex:none}
+.lim-marca b{display:block;font-family:var(--serif);font-size:1.05em;color:var(--pietra);line-height:1.1}
+.lim-marca small{display:block;font-size:.72em;letter-spacing:.14em;text-transform:uppercase;color:var(--oro)}
+.lim-top h2{flex:1 1 12em;min-width:0;font-size:2em;text-align:center;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.7);text-wrap:balance}
+.lim-strumenti{display:flex;gap:.45em;flex-wrap:wrap;justify-content:flex-end;margin-left:auto}
+.lim button{font:inherit;color:inherit}
+.lim-b{min-height:2.6em;min-width:2.6em;padding:.35em .9em;border-radius:999px;border:2px solid rgba(201,161,90,.75);background:rgba(16,20,25,.82);color:var(--pietra);font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:.4em;font-size:.95em}
+.lim-b:hover,.lim-b:focus-visible{background:var(--oro);color:#161616}
+.lim-b[aria-pressed=true],.lim-b.pieno{background:var(--oro);color:#161616;border-color:var(--oro)}
+.lim-b.esci{border-color:rgba(255,255,255,.35)}
+.lim-lato{grid-column:2;grid-row:2;position:relative;z-index:5;width:min(31vw,34em);margin:0 max(16px,env(safe-area-inset-right,0px)) 1em 0;
+  background:rgba(16,20,25,.9);backdrop-filter:blur(8px);border:1px solid var(--linea);border-radius:1em;display:flex;flex-direction:column;min-height:0}
+.lim-lato[hidden]{display:none}
+.lim-tab{display:flex;gap:.3em;padding:.5em;border-bottom:1px solid var(--linea);flex-wrap:wrap}
+.lim-tab button{flex:1 1 auto;min-height:2.4em;border-radius:.6em;border:0;background:transparent;color:var(--muto);font-weight:600;font-size:.9em;padding:.2em .6em}
+.lim-tab button[aria-selected=true]{background:var(--carta2);color:var(--oro2)}
+.lim-corpo{overflow:auto;padding:1em 1.2em 1.4em;min-height:0}
+.lim-corpo h3{font-size:1.6em;margin:.1em 0 .45em;color:var(--pietra)}
+.lim-corpo p{font-size:1.08em;line-height:1.5;max-width:none}
+.lim-corpo .kicker{font-size:.72em}
+.lim-corpo .nota{font-size:.85em}
+.lim-lista{display:grid;gap:.5em;margin:.6em 0}
+.lim-lista button{text-align:left;min-height:2.8em;padding:.55em .9em;border-radius:.7em;border:1px solid var(--linea);background:var(--carta);color:var(--testo);font-size:1em;display:flex;gap:.6em;align-items:center}
+.lim-lista button:hover,.lim-lista button:focus-visible{border-color:var(--oro)}
+.lim-lista button .n{flex:none;width:1.9em;height:1.9em;border-radius:50%;background:var(--oro);color:#161616;display:grid;place-items:center;font-weight:700;font-size:.85em}
+.lim-lista button small{display:block;color:var(--muto);font-size:.8em}
+.lim-quiz .d{font-family:var(--serif);font-size:1.7em;line-height:1.15;color:#fff;margin:.2em 0 .7em;text-wrap:balance}
+.lim-quiz .opz{display:grid;gap:.55em}
+.lim-quiz .opz button{text-align:left;min-height:3em;padding:.6em 1em;border-radius:.8em;border:2px solid var(--linea);background:var(--carta);font-size:1.1em;display:flex;gap:.7em;align-items:center}
+.lim-quiz .opz button b{flex:none;width:1.8em;height:1.8em;border-radius:50%;border:2px solid var(--oro);display:grid;place-items:center;color:var(--oro2)}
+.lim-quiz .opz button.ok{border-color:var(--ok);background:#173524}
+.lim-quiz .opz button.ok b{background:var(--ok);border-color:var(--ok);color:#06140b}
+.lim-quiz .opz button.ko{border-color:var(--ko);opacity:.7}
+.lim-quiz .giu{display:flex;gap:.5em;align-items:center;margin-top:1em;flex-wrap:wrap}
+.lim-quiz .fb{min-height:1.5em;font-weight:700;color:var(--ok);margin:.6em 0 0}
+.lim-basso{grid-column:1/-1;grid-row:3;position:relative;z-index:5;display:flex;align-items:center;gap:.6em;
+  padding:.6em max(16px,env(safe-area-inset-right,0px)) calc(.7em + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  background:linear-gradient(0deg,rgba(7,9,12,.92),rgba(7,9,12,.5) 70%,transparent)}
+.lim-basso .frec{flex:none;width:2.9em;height:2.9em;border-radius:50%;border:2px solid var(--oro);background:rgba(16,20,25,.85);color:var(--oro2);font-size:1.3em;font-weight:700}
+.lim-basso .frec[disabled]{opacity:.3}
+.lim-scene{flex:1;min-width:0;display:flex;gap:.45em;overflow-x:auto;scrollbar-width:thin;padding:.2em 0}
+.lim-scene button{flex:none;min-height:2.7em;max-width:14em;padding:.3em .85em .3em .35em;border-radius:999px;border:1.5px solid var(--linea);background:rgba(16,20,25,.85);color:var(--testo);display:flex;align-items:center;gap:.5em;font-size:.9em;white-space:nowrap}
+.lim-scene button span{overflow:hidden;text-overflow:ellipsis}
+.lim-scene button i{font-style:normal;flex:none;width:2em;height:2em;border-radius:50%;display:grid;place-items:center;background:var(--carta2);font-weight:700;font-size:.85em}
+.lim-scene button.dev i{background:transparent;border:1px dashed var(--oro)}
+.lim-scene button[aria-current=true]{border-color:var(--oro);background:var(--oro);color:#161616}
+.lim-scene button[aria-current=true] i{background:#161616;color:var(--oro2)}
+.lim-penne{position:absolute;z-index:6;left:50%;transform:translateX(-50%);top:calc(5.2em + env(safe-area-inset-top,0px));display:flex;gap:.5em;align-items:center;padding:.45em .7em;border-radius:999px;background:rgba(16,20,25,.92);border:1px solid var(--oro)}
+.lim-penne[hidden]{display:none}
+.lim-penne .col{width:2.3em;height:2.3em;border-radius:50%;border:3px solid transparent}
+.lim-penne .col[aria-pressed=true]{border-color:#fff}
+.lim-penne small{color:var(--muto);font-size:.75em;max-width:16em;line-height:1.2}
+.lim-hs .cornice{border-color:var(--oro2)!important}
+.lim-hs .lab{opacity:1!important;font-size:clamp(14px,1vw,34px)!important}
+.lim-scheda{position:absolute;inset:0;z-index:8;background:rgba(5,7,10,.9);display:grid;place-items:center;padding:clamp(16px,3vw,60px)}
+.lim-scheda[hidden]{display:none}
+.lim-scheda .in{width:min(100%,78em);max-height:100%;overflow:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:2em;align-items:start;background:var(--fondo2);border:1px solid var(--linea);border-radius:1.2em;padding:1.6em}
+.lim-scheda .in.solo{grid-template-columns:minmax(0,1fr)}
+.lim-scheda .foto{background:#000;border-radius:.8em;overflow:hidden;display:grid;place-items:center;min-height:12em}
+.lim-scheda .foto img,.lim-scheda video{width:100%;max-height:72vh;object-fit:contain;border-radius:.8em;background:#000}
+.lim-scheda .foto .t{font-family:var(--serif);font-size:1.8em;color:var(--oro2);padding:1.5em;text-align:center}
+.lim-scheda h3{font-size:2.1em;margin:.15em 0 .4em;color:#fff}
+.lim-scheda p{font-size:1.15em;line-height:1.5;max-width:none}
+.lim-scheda .meta{color:var(--muto);font-size:.95em;margin-bottom:.8em}
+.lim-scheda .az{display:flex;gap:.5em;flex-wrap:wrap;margin-top:1em}
+.lim-chiudi{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:calc(1em + env(safe-area-inset-top,0px))}
+.lim-aiuto{position:absolute;z-index:4;left:50%;bottom:5.4em;transform:translateX(-50%);background:rgba(16,20,25,.85);border-radius:999px;padding:.35em 1em;font-size:.85em;color:var(--pietra);pointer-events:none;transition:opacity .6s}
+@media (max-width:820px){
+  .lim{grid-template-columns:minmax(0,1fr)}
+  .lim-top h2{order:3;flex-basis:100%;font-size:1.5em}
+  .lim-lato{grid-column:1;grid-row:2;align-self:end;width:auto;max-height:46vh;margin:0 max(12px,env(safe-area-inset-right,0px)) .5em max(12px,env(safe-area-inset-left,0px))}
+  .lim-scheda .in{grid-template-columns:minmax(0,1fr)}
+  .lim-b .tx{display:none}
+}
 </style>
 </head>
 <body>
@@ -474,9 +562,9 @@ body.chiedi-on .chiedi-fab{display:none}
 <header class="top" id="top">
   <a class="marca" href="#soglia" id="marca"><span class="sig">S</span><span class="n" id="marcaNome">Santuario di Custonaci</span></a>
   <div class="sp"></div>
-  <select id="lingua" aria-label="Lingua"></select>
-  <div class="seg" role="group" aria-label="Modalità" id="segModo"><button data-modo="visita" aria-pressed="true">Visita</button><button data-modo="classe" aria-pressed="false">In classe</button></div>
-  <button class="tb" id="fsBtn" aria-label="Dimensione del testo" title="Dimensione del testo">Aa</button>
+  <select id="lingua" aria-label="Lingua" data-ta="Lingua"></select>
+  <div class="seg" role="group" aria-label="Modalità" data-ta="Modalità" id="segModo"><button data-modo="visita" aria-pressed="true">Visita</button><button data-modo="classe" aria-pressed="false">In classe</button></div>
+  <button class="tb" id="fsBtn" aria-label="Dimensione del testo" data-ta="Dimensione del testo" title="Dimensione del testo" data-tt="Dimensione del testo">Aa</button>
 </header>
 <div class="avviso-chiesa" id="avvisoChiesa" role="status" aria-live="polite"></div>
 <div class="qui-banner" id="quiBanner"></div>
@@ -485,7 +573,7 @@ body.chiedi-on .chiedi-fab{display:none}
 
 <main>
 <!-- ================= SOGLIA ================= -->
-<section class="soglia" id="soglia" aria-label="La soglia">
+<section class="soglia" id="soglia" aria-label="La soglia" data-ta="La soglia">
   <div class="scena">
     <div class="pano" id="heroPano"></div>
     <div class="velo"></div>
@@ -530,19 +618,19 @@ body.chiedi-on .chiedi-fab{display:none}
       </div>
       <div class="stage">
         <div class="pano-box" id="panoBox">
-          <div id="pano" tabindex="0" role="application" aria-label="Panorama a 360 gradi della scena"></div>
+          <div id="pano" tabindex="0" role="application" aria-label="Panorama a 360 gradi della scena" data-ta="Panorama a 360 gradi della scena"></div>
           <div class="piatta" id="piatta"><p></p></div>
           <div class="hud"><span class="tag" id="panoTag"></span><span class="sp"></span><span class="tag" id="panoHint" hidden></span></div>
           <div class="guida-badge" id="guidaBadge"></div>
-          <div class="frecce" aria-label="Gira il panorama" id="frecce">
-            <button class="su" data-d="su" aria-label="Guarda in alto">▲</button>
-            <button class="sx" data-d="sx" aria-label="Gira a sinistra">◀</button>
-            <button class="giu" data-d="giu" aria-label="Guarda in basso">▼</button>
-            <button class="dx" data-d="dx" aria-label="Gira a destra">▶</button>
+          <div class="frecce" aria-label="Gira il panorama" data-ta="Gira il panorama" id="frecce">
+            <button class="su" data-d="su" aria-label="Guarda in alto" data-ta="Guarda in alto">▲</button>
+            <button class="sx" data-d="sx" aria-label="Gira a sinistra" data-ta="Gira a sinistra">◀</button>
+            <button class="giu" data-d="giu" aria-label="Guarda in basso" data-ta="Guarda in basso">▼</button>
+            <button class="dx" data-d="dx" aria-label="Gira a destra" data-ta="Gira a destra">▶</button>
           </div>
         </div>
         <div class="cassetto" id="cassetto"></div>
-        <div class="elenco-scene" id="elencoScene" role="tablist" aria-label="Scene"></div>
+        <div class="elenco-scene" id="elencoScene" role="tablist" aria-label="Scene" data-ta="Scene"></div>
       </div>
     </div>
   </div>
@@ -589,7 +677,7 @@ body.chiedi-on .chiedi-fab{display:none}
   <h2 id="hInfo">Informazioni</h2>
   <div class="dove" id="dove" aria-labelledby="hDove">
     <h3 id="hDove">Dove siamo</h3>
-    <div class="dove-grid"><div class="mappa" id="mappa" role="region" aria-label="Mappa"><div class="vuota" id="mappaVuota">La mappa si apre quando ci arrivi.</div></div><ol class="punti" id="punti"></ol></div>
+    <div class="dove-grid"><div class="mappa" id="mappa" role="region" aria-label="Mappa" data-ta="Mappa"><div class="vuota" id="mappaVuota">La mappa si apre quando ci arrivi.</div></div><ol class="punti" id="punti"></ol></div>
     <div class="arrivare" id="arrivare"></div>
   </div>
   <div class="blocco" id="sostieni" hidden><h3 id="hSostieni">Sostieni il Santuario</h3><div id="sostieniCorpo"></div></div>
@@ -598,35 +686,71 @@ body.chiedi-on .chiedi-fab{display:none}
   <div class="card" style="margin-top:14px" id="proseguiCard"></div>
   <div class="blocco carte" id="carte"><h3 id="hCarte">Privacy, crediti e accessibilità</h3><div id="carteCorpo"></div></div>
   <p class="nota" style="margin-top:20px" id="credito"></p>
-  <p class="nota" style="margin-top:6px"><a href="cruscotto.html" id="linkCruscotto" rel="nofollow">Area riservata del Santuario · statistiche e avvisi</a></p>
+  <p class="nota" style="margin-top:6px"><a href="cruscotto.html" id="linkCruscotto" rel="nofollow" data-t="Area riservata del Santuario · statistiche e avvisi">Area riservata del Santuario · statistiche e avvisi</a></p>
 </section>
 </main>
 
 <!-- pannello opera -->
 <div class="op-panel" id="opPanel" role="dialog" aria-modal="true" aria-labelledby="opTitolo">
-  <button class="chiudi" id="opChiudi" aria-label="Chiudi">✕</button>
+  <button class="chiudi" id="opChiudi" aria-label="Chiudi" data-ta="Chiudi">✕</button>
   <div class="inner"><div class="foto" id="opFoto"></div><div class="scheda" id="opScheda"></div></div>
 </div>
 
 <!-- lettore persistente -->
 <div class="testo-sheet" id="testoSheet"></div>
-<div class="lettore" id="lettore" aria-label="Lettore audio">
-  <button class="pp" id="lPP" aria-label="Riproduci">▶</button>
-  <button class="ib" id="lMeno" aria-label="Indietro di 15 secondi">−15</button>
+<div class="lettore" id="lettore" aria-label="Lettore audio" data-ta="Lettore audio">
+  <button class="pp" id="lPP" aria-label="Riproduci" data-ta="Riproduci">▶</button>
+  <button class="ib" id="lMeno" aria-label="Indietro di 15 secondi" data-ta="Indietro di 15 secondi">−15</button>
   <div class="t"><b id="lTit"></b><small id="lSub"></small><div class="prog" id="lProg"><i id="lFill"></i></div></div>
-  <button class="ib" id="lTesto" aria-pressed="false" aria-label="Mostra il testo">Aa</button>
-  <button class="ib" id="lChiudi" aria-label="Chiudi il lettore">✕</button>
+  <button class="ib" id="lTesto" aria-pressed="false" aria-label="Mostra il testo" data-ta="Mostra il testo">Aa</button>
+  <button class="ib" id="lChiudi" aria-label="Chiudi il lettore" data-ta="Chiudi il lettore">✕</button>
 </div>
 <button class="chiedi-fab" id="chiediFab" type="button" aria-haspopup="dialog"><b aria-hidden="true">?</b><span id="chiediFabTxt">Chiedi alla chiesa</span></button>
 <div class="chiedi" id="chiedi" role="dialog" aria-modal="true" aria-labelledby="chiediTit">
   <div class="foglio">
-    <header><span class="sigla" aria-hidden="true">S</span><div><h3 id="chiediTit">Chiedi alla chiesa</h3><p id="chiediSub"></p></div><button type="button" id="chiediChiudi" aria-label="Chiudi">×</button></header>
+    <header><span class="sigla" aria-hidden="true">S</span><div><h3 id="chiediTit" data-t="Chiedi alla chiesa">Chiedi alla chiesa</h3><p id="chiediSub"></p></div><button type="button" id="chiediChiudi" aria-label="Chiudi" data-ta="Chiudi">×</button></header>
     <div class="flusso" id="chiediFlusso" aria-live="polite"></div>
     <div class="proposte" id="chiediProposte"></div>
-    <form id="chiediForm" autocomplete="off"><input id="chiediInput" maxlength="300" enterkeyhint="send"><button type="button" class="mic" id="chiediMic" hidden aria-label="Parla">🎙</button><button type="submit" id="chiediInvia">↑</button></form>
+    <form id="chiediForm" autocomplete="off"><input id="chiediInput" maxlength="300" enterkeyhint="send"><button type="button" class="mic" id="chiediMic" hidden aria-label="Parla" data-ta="Parla">🎙</button><button type="submit" id="chiediInvia">↑</button></form>
   </div>
 </div>
-<nav class="nav" id="nav" aria-label="Sezioni">
+<!-- IN CLASSE · versione per la LIM -->
+<div class="lim" id="lim" hidden role="dialog" aria-modal="true" aria-labelledby="limTit">
+  <div class="lim-pano" id="limPano" tabindex="0" aria-label="Panorama a 360 gradi della scena" data-ta="Panorama a 360 gradi della scena"></div>
+  <canvas class="lim-tela" id="limTela" hidden></canvas>
+  <header class="lim-top">
+    <div class="lim-marca"><span class="sig" aria-hidden="true">S</span><div><b id="limLuogo"></b><small id="limModo"></small></div></div>
+    <h2 id="limTit"></h2>
+    <div class="lim-strumenti">
+      <button class="lim-b pieno" type="button" id="limAudio"></button>
+      <button class="lim-b" type="button" id="limPenna" aria-pressed="false"></button>
+      <button class="lim-b" type="button" id="limChiedi"></button>
+      <button class="lim-b" type="button" id="limPannello" aria-pressed="true"></button>
+      <button class="lim-b" type="button" id="limSchermo"></button>
+      <button class="lim-b esci" type="button" id="limEsci"></button>
+    </div>
+  </header>
+  <div class="lim-penne" id="limPenne" hidden>
+    <button class="col" type="button" data-c="#f2c572" style="background:#f2c572"></button>
+    <button class="col" type="button" data-c="#ff5a4e" style="background:#ff5a4e"></button>
+    <button class="col" type="button" data-c="#5ec8ff" style="background:#5ec8ff"></button>
+    <button class="col" type="button" data-c="#ffffff" style="background:#ffffff"></button>
+    <button class="lim-b" type="button" id="limCancella"></button>
+    <small id="limPennaNota"></small>
+  </div>
+  <aside class="lim-lato" id="limLato">
+    <div class="lim-tab" role="tablist" id="limTab"></div>
+    <div class="lim-corpo" id="limCorpo"></div>
+  </aside>
+  <div class="lim-aiuto" id="limAiuto" aria-hidden="true"></div>
+  <footer class="lim-basso">
+    <button class="frec" type="button" id="limPrev">‹</button>
+    <div class="lim-scene" id="limScene"></div>
+    <button class="frec" type="button" id="limNext">›</button>
+  </footer>
+  <div class="lim-scheda" id="limScheda" hidden></div>
+</div>
+<nav class="nav" id="nav" aria-label="Sezioni" data-ta="Sezioni">
   <a href="#racconto" data-s="racconto"><i>📖</i><span>Racconto</span></a>
   <a href="#cammino" data-s="cammino"><i>🗺</i><span>Cammino</span></a>
   <a href="#opere" data-s="opere"><i>🖼</i><span>Opere</span></a>
@@ -636,8 +760,8 @@ body.chiedi-on .chiedi-fab{display:none}
 </nav>
 <audio id="audio" preload="none"></audio>
 
-<script src="dati/santuario.js?v=20261017c"></script>
-<script src="dati/kb.js?v=20261017c"></script>
+<script src="dati/santuario.js?v=20261017d"></script>
+<script src="dati/kb.js?v=20261017d"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
@@ -665,18 +789,54 @@ if(MOBILE)document.body.classList.add('mobile');
 if(QUI)document.body.classList.add('qui');
 
 /* ---------- lingue: interfaccia (dizionario a chiavi italiane) ---------- */
-var T={
- en:{'Visita':'Visit','In classe':'In class','Vai al cammino':'Skip to the walk','scorri per entrare':'scroll to enter','Entra':'Enter','Visita guidata':'Guided visit','Sono qui':'I am here','Atto I':'Act I','Il racconto':'The story','Atto II':'Act II','Il cammino':'The walk','Atto III':'Act III','Le opere':'The works','Audioguida':'Audio guide','Ascolta':'Listen','Per tutti':'For everyone','Visita senza barriere':'A visit without barriers','Prima di venire':'Before you come','Informazioni':'Information','Racconto':'Story','Cammino':'Walk','Opere':'Works','Info':'Info','Guarda il racconto':'Watch the story','Ascolta il racconto':'Listen to the story','Riproduci':'Play','Pausa':'Pause','Continua il racconto':'Continue the story','Scoperta':'Discovery','testo di prova · da validare':'draft text · to be validated','Trascrizione':'Transcript','Testo facile':'Easy text','Prosegui verso':'Continue towards','In questa scena vedi':'In this scene you see','Deviazione':'Side way','Torno al cammino':'Back to the walk','Scena':'Scene','di':'of','Descrizione di ciò che vedi':'Description of what you see','Cosa hai davanti':'What is in front of you','ascolta':'listen','in studio':'under study','capolavoro':'masterpiece','La vedi anche in':'You can also see it from','Dov’è':'Where it is','Guardala nel 360':'Look at it in 360','Apri la scheda':'Open the card','Tocca un dettaglio':'Tap a detail','Foto ad alta risoluzione non ancora caricata':'High-resolution photo not loaded yet','Seconda voce':'Second voice','La guida':'The guide','Il custode':'The custodian','Durata totale':'Total length','Avvia la visita guidata':'Start the guided visit','Dopo il primo tocco la visita avanza da sola, scena per scena, e il panorama gira verso ciò di cui si parla. Tocca il panorama per riprendere il controllo.':'After the first tap the visit goes on by itself, scene by scene, and the panorama turns towards what is being described. Tap the panorama to take back control.','Visita guidata in corso':'Guided visit in progress','Esci dalla visita guidata':'Leave the guided visit','Scarica la visita':'Download the visit','Dentro una chiesa la rete spesso manca: scarica audio e panorami adesso, poi funzionano anche senza segnale.':'Inside a church there is often no signal: download audio and panoramas now, then they work offline too.','circa':'about','Disponibile quando la pagina è online (http), non aprendo il file dal computer.':'Available when the page is online (http), not when the file is opened from the computer.','Scaricato':'Downloaded','Scarico':'Downloading','file non scaricati':'files not downloaded','Gradino all’ingresso':'Step at the entrance','Rampa':'Ramp','Bagno accessibile':'Accessible toilet','Sedute lungo il percorso':'Seats along the way','Dal parcheggio':'From the car park','Percorso senza barriere sulla pianta':'Step-free route on the plan','Audiodescrizione':'Audio description','Trascrizioni di tutti gli audio':'Transcripts of all audio','Sottotitoli nei video':'Subtitles in the videos','Lettura facile':'Easy reading','accessibilità verificata':'accessibility verified','accessibilità non verificata':'accessibility not verified','dati di prova, da rilevare sul posto':'test data, to be surveyed on site','sì':'yes','no':'no','Orari delle celebrazioni':'Times of services','Durante le funzioni la visita è sospesa':'During services the visit is suspended','Orari di visita':'Visiting hours','Festa patronale':'Patronal feast','Epoca':'Period','Come arrivare':'How to get there','Contatti':'Contacts','Scrivi su WhatsApp':'Write on WhatsApp','Prosegui la visita':'Continue your visit','Produzione':'Production','mostra il percorso':'show the route','nascondi il percorso':'hide the route','Pianta non disponibile: schema del cammino disegnato dall’ordine delle scene':'Plan not available: walk diagram drawn from the order of the scenes','Sei nel santuario':'You are in the sanctuary','Vedi il racconto':'See the story','Vista piatta: il 360 non si è caricato':'Flat view: the 360 did not load','Trascina per guardarti intorno':'Drag to look around','Precedente':'Previous','Successiva':'Next','Capitolo':'Chapter','Quiz':'Quiz','Esatto!':'Correct!','Non proprio… riprova':'Not quite… try again','Timbri':'Stamps','capitoli ascoltati':'chapters heard','contenuti in italiano':'content in Italian','Chiudi':'Close','Testo':'Text','a voce':'spoken','minuti':'minutes'},
- fr:{'Visita':'Visite','In classe':'En classe','Vai al cammino':'Aller au parcours','scorri per entrare':'faites défiler pour entrer','Entra':'Entrer','Visita guidata':'Visite guidée','Sono qui':'Je suis ici','Atto I':'Acte I','Il racconto':'Le récit','Atto II':'Acte II','Il cammino':'Le parcours','Atto III':'Acte III','Le opere':'Les œuvres','Audioguida':'Audioguide','Ascolta':'Écouter','Per tutti':'Pour tous','Visita senza barriere':'Visite sans barrières','Prima di venire':'Avant de venir','Informazioni':'Informations','Racconto':'Récit','Cammino':'Parcours','Opere':'Œuvres','Info':'Infos','Guarda il racconto':'Voir le récit','Ascolta il racconto':'Écouter le récit','Riproduci':'Lire','Pausa':'Pause','Continua il racconto':'Continuer le récit','Scoperta':'Découverte','testo di prova · da validare':'texte provisoire · à valider','Trascrizione':'Transcription','Testo facile':'Texte facile','Prosegui verso':'Continuez vers','In questa scena vedi':'Dans cette scène vous voyez','Deviazione':'Détour','Torno al cammino':'Retour au parcours','Scena':'Scène','di':'sur','Descrizione di ciò che vedi':'Description de ce que vous voyez','Cosa hai davanti':'Ce qui est devant vous','ascolta':'écouter','in studio':'à l’étude','capolavoro':'chef-d’œuvre','La vedi anche in':'Visible aussi depuis','Dov’è':'Où elle est','Guardala nel 360':'La voir en 360','Apri la scheda':'Ouvrir la fiche','Tocca un dettaglio':'Touchez un détail','Foto ad alta risoluzione non ancora caricata':'Photo haute résolution pas encore chargée','Seconda voce':'Deuxième voix','La guida':'La guide','Il custode':'Le gardien','Durata totale':'Durée totale','Avvia la visita guidata':'Lancer la visite guidée','Visita guidata in corso':'Visite guidée en cours','Esci dalla visita guidata':'Quitter la visite guidée','Scarica la visita':'Télécharger la visite','circa':'environ','Scaricato':'Téléchargé','Scarico':'Téléchargement','Orari delle celebrazioni':'Horaires des offices','Durante le funzioni la visita è sospesa':'Pendant les offices la visite est suspendue','Orari di visita':'Horaires de visite','Festa patronale':'Fête patronale','Epoca':'Époque','Come arrivare':'Comment venir','Contatti':'Contacts','Scrivi su WhatsApp':'Écrire sur WhatsApp','Prosegui la visita':'Poursuivez la visite','Produzione':'Production','Sei nel santuario':'Vous êtes dans le sanctuaire','Vedi il racconto':'Voir le récit','Precedente':'Précédente','Successiva':'Suivante','Capitolo':'Chapitre','Chiudi':'Fermer','Testo':'Texte','contenuti in italiano':'contenus en italien','Timbri':'Tampons','capitoli ascoltati':'chapitres écoutés'},
- es:{'Visita':'Visita','In classe':'En clase','Vai al cammino':'Ir al recorrido','scorri per entrare':'desliza para entrar','Entra':'Entra','Visita guidata':'Visita guiada','Sono qui':'Estoy aquí','Atto I':'Acto I','Il racconto':'El relato','Atto II':'Acto II','Il cammino':'El recorrido','Atto III':'Acto III','Le opere':'Las obras','Audioguida':'Audioguía','Ascolta':'Escucha','Per tutti':'Para todos','Visita senza barriere':'Visita sin barreras','Prima di venire':'Antes de venir','Informazioni':'Información','Racconto':'Relato','Cammino':'Recorrido','Opere':'Obras','Info':'Info','Guarda il racconto':'Ver el relato','Ascolta il racconto':'Escuchar el relato','Riproduci':'Reproducir','Pausa':'Pausa','Continua il racconto':'Continuar el relato','Scoperta':'Descubrimiento','testo di prova · da validare':'texto provisional · por validar','Trascrizione':'Transcripción','Testo facile':'Texto fácil','Prosegui verso':'Sigue hacia','In questa scena vedi':'En esta escena ves','Deviazione':'Desvío','Torno al cammino':'Vuelvo al recorrido','Scena':'Escena','di':'de','Descrizione di ciò che vedi':'Descripción de lo que ves','Cosa hai davanti':'Lo que tienes delante','ascolta':'escucha','in studio':'en estudio','capolavoro':'obra maestra','La vedi anche in':'También la ves desde','Dov’è':'Dónde está','Guardala nel 360':'Mírala en 360','Apri la scheda':'Abrir la ficha','Tocca un dettaglio':'Toca un detalle','Foto ad alta risoluzione non ancora caricata':'Foto en alta resolución aún no cargada','Seconda voce':'Segunda voz','La guida':'La guía','Il custode':'El custodio','Durata totale':'Duración total','Avvia la visita guidata':'Iniciar la visita guiada','Visita guidata in corso':'Visita guiada en curso','Esci dalla visita guidata':'Salir de la visita guiada','Scarica la visita':'Descargar la visita','circa':'unos','Scaricato':'Descargado','Scarico':'Descargando','Orari delle celebrazioni':'Horarios de las celebraciones','Durante le funzioni la visita è sospesa':'Durante las celebraciones la visita se suspende','Orari di visita':'Horario de visita','Festa patronale':'Fiesta patronal','Epoca':'Época','Come arrivare':'Cómo llegar','Contatti':'Contactos','Scrivi su WhatsApp':'Escribe por WhatsApp','Prosegui la visita':'Continúa la visita','Produzione':'Producción','Sei nel santuario':'Estás en el santuario','Vedi il racconto':'Ver el relato','Precedente':'Anterior','Successiva':'Siguiente','Capitolo':'Capítulo','Chiudi':'Cerrar','Testo':'Texto','contenuti in italiano':'contenidos en italiano','Timbri':'Sellos','capitoli ascoltati':'capítulos escuchados'}
+var T=/* generato da i18n/costruisci-ui.js */{
+ en:{" Sono i giorni della festa: gli orari possono cambiare.":" These are the feast days: times may change."," · giorni della festa: orari speciali":" · feast days: special times","<b>Domani</b> lo sbarco a Cala Buguto":"The landing is <b>tomorrow</b>","<b>Oggi</b> lo sbarco, alle {h}":"The landing is <b>today</b>, at {h}","<b>È festa</b>: la processione è mercoledì":"<b>The feast is on</b>: the procession is on Wednesday","<b>È festa</b>: la processione è oggi":"<b>The feast is on</b>: the procession is today","Adesso si celebra: la visita è sospesa":"A service is on: the visit is suspended","Aggiungi la festa a Google Calendar":"Add the feast to Google Calendar","Alle {h} comincia la messa":"Mass begins at {h}","Aperto":"Open","Aperto ora · chiude alle ":"Open now · closes at ","Aperto · messa alle {h}, fra {m} min":"Open · Mass at {h}, in {m} min","Apri la scheda":"Open the card","Area riservata del Santuario · statistiche e avvisi":"Sanctuary staff area · statistics and notices","Ascolta":"Listen","Ascolta il racconto":"Listen to the story","Atto I":"Act I","Atto II":"Act II","Atto III":"Act III","Audiodescrizione":"Audio description","Audioguida":"Audio guide","Autore":"Author","Avvia la visita guidata":"Start the guided visit","Avviso del Santuario":"Notice from the Sanctuary","Bagno accessibile":"Accessible toilet","Bonifico":"Bank transfer","Cammino":"Walk","Cancella":"Clear","Capitolo":"Chapter","Chiedi":"Ask","Chiedi alla chiesa":"Ask the church","Chiedi come fare un’offerta":"Ask how to donate","Chiudi":"Close","Chiudi il lettore":"Close the player","Chiuso ora · riapre ":"Closed now · reopens ","Ciao, sono {voce}. Chiedimi della mia storia, delle opere, della festa o degli orari.":"Hello, I am {voce}. Ask me about my story, the works of art, the feast or the opening times.","Come arrivare":"How to get there","Contatti":"Contacts","Continua il racconto":"Continue the story","Copia IBAN":"Copy IBAN","Cosa hai davanti":"What is in front of you","Crediti di foto, video e testi":"Credits for photos, videos and texts","Dal parcheggio":"From the car park","Data":"Date","Dentro una chiesa la rete spesso manca. La visita si prepara da sola appena apri la pagina: panorami leggeri, voci e pianta.":"Inside a church there is often no signal. The visit gets ready by itself as soon as you open the page: light panoramas, voices and plan.","Descrizione di ciò che vedi":"Description of what you see","Deviazione":"Side way","Dichiarazione di accessibilità":"Accessibility statement","Dimensione del testo":"Text size","Disegna sul panorama con il dito o la penna della LIM":"Draw on the panorama with your finger or the whiteboard pen","Disponibile quando la pagina è online (http), non aprendo il file dal computer.":"Available when the page is online (http), not when the file is opened from the computer.","Domanda per la classe":"Question for the class","Domani, {g}, messa alle {h}.":"Tomorrow, {g}, Mass at {h}.","Dopo il primo tocco la visita avanza da sola, scena per scena, e il panorama gira verso ciò di cui si parla. Tocca il panorama per riprendere il controllo.":"After the first tap the visit goes on by itself, scene by scene, and the panorama turns towards what is being described. Tap the panorama to take back control.","Dove siamo":"Where we are","Dov’è":"Where it is","Durante le funzioni la visita è sospesa":"During services the visit is suspended","Durata totale":"Total length","Entra":"Enter","Epoca":"Period","Esatto!":"Correct!","Esci":"Exit","Esci dalla modalità classe":"Leave classroom mode","Esci dalla visita guidata":"Leave the guided visit","Festa":"Feast","Festa patronale":"Patronal feast","Fonte dell’attribuzione":"Source of the attribution","Fonti: ":"Sources: ","Foto ad alta risoluzione non ancora caricata":"High-resolution photo not loaded yet","Fra {m} minuti la messa":"Mass in {m} minutes","Giorno":"Day","Gira a destra":"Turn right","Gira a sinistra":"Turn left","Gira il panorama":"Turn the panorama","Gradino all’ingresso":"Step at the entrance","Guarda il racconto":"Watch the story","Guarda il reel: ":"Watch the reel: ","Guarda in alto":"Look up","Guarda in basso":"Look down","Guardala nel 360":"Look at it in 360","Hai una domanda su questo punto?":"A question about this spot?","Hai visitato <b>{n} luoghi su {tot}</b> della rete Esplora Trapani.":"You have visited <b>{n} of {tot} places</b> in the Esplora Trapani network.","Hai visitato <b>{n} luogo su {tot}</b> della rete Esplora Trapani.":"You have visited <b>{n} of {tot} places</b> in the Esplora Trapani network.","Ho le cuffie, continuo":"I have headphones","I giorni della festa":"The feast days","IBAN copiato ✓":"IBAN copied ✓","Il cammino":"The walk","Il custode":"The custodian","Il panorama resta fermo mentre disegni. Il disegno si cancella quando cambi scena.":"The panorama stays still while you draw. The drawing is cleared when you change scene.","Il passaporto dei luoghi":"The places passport","Il racconto":"The story","Il reel della festa":"The feast reel","Il timbro del Santuario arriva quando entri da un QR in chiesa o completi tre tappe del racconto. I timbri restano solo su questo telefono.":"The Sanctuary stamp comes when you enter from a QR code in the church or complete three steps of the story. Stamps stay on this phone only.","In classe":"In class","In questa scena non ci sono opere schedate: guarda le altre qui sotto.":"There are no catalogued works in this scene: see the others below.","In questa scena vedi":"In this scene you see","Indicazioni stradali ↗":"Directions ↗","Indicazioni ↗":"Directions ↗","Indietro di 15 secondi":"Back 15 seconds","Info":"Info","Informativa privacy":"Privacy notice","Informazioni":"Information","La festa di agosto":"The August feast","La festa · ultimo mercoledì di agosto":"The feast · last Wednesday of August","La guida":"The guide","La mappa interattiva è sulla pagina pubblicata: qui sotto i punti con le indicazioni.":"The interactive map is on the published page: below, the places with directions.","La mappa non si è caricata: usa le indicazioni dei punti.":"The map did not load: use the directions of each place.","La mappa si apre quando ci arrivi.":"The map opens when you get here.","La soglia":"The threshold","La vedi anche in":"You can also see it from","La voce del video è in italiano.":"The voice in the video is in Italian.","Le date del {y} sono calcolate dalla regola (ultimo mercoledì di agosto); gli orari vengono dal programma {p}, il programma ufficiale esce d’estate.":"The {y} dates follow the rule (last Wednesday of August); the times come from the {p} programme, the official one comes out in summer.","Le opere":"The works","Lettore audio":"Audio player","Lettura facile":"Easy reading","Lingua":"Language","Mancano <b>{n} giorni</b> allo sbarco":"<b>{n} days</b> to the landing","Mappa":"Map","Messa in corso":"Mass in progress","Messa in corso · fino alle {h} circa":"Mass in progress · until about {h}","Messe":"Mass","Modalità":"Mode","Mostra il testo":"Show the text","Mostra la risposta":"Show the answer","Narratori e diritti":"Narrators and rights","Nei giorni della festa (fine agosto) gli orari cambiano. ":"On the feast days (late August) times change. ","Nel 360 le opere hanno una cornice che si accende quando le guardi: toccala per avvicinarti. Qui sotto, tutte le opere verificate.":"In the 360 the works have a frame that lights up when you look at them: tap it to get closer. Below, all the verified works.","Nessun audio parte da solo: il primo suono nasce da un tocco. Il lettore resta in basso mentre scorri.":"No audio starts by itself: the first sound comes from a tap. The player stays at the bottom while you scroll.","Non disponibile in questa anteprima: funziona sulla pagina pubblicata.":"Not available in this preview: it works on the published page.","Non proprio… riprova":"Not quite… try again","Nove sere di novena, poi quattro giorni di festa: le chiavi della città, i carretti, lo sbarco dal mare, la processione di cinque ore e i fuochi di mezzanotte.":"Nine evenings of novena, then four days of feast: the keys of the town, the painted carts, the landing from the sea, the five-hour procession and the midnight fireworks.","Novena e festa. Clou: lo sbarco a Cala Buguto e la processione.":"Novena and feast. Highlights: the landing at Cala Buguto and the procession.","Offri con PayPal o carta":"Give with PayPal or card","Offri con Satispay":"Give with Satispay","Oggi, {g}, sono aperta {o}; ":"Today, {g}, I am open {o}; ","Opera":"Work","Opere":"Works","Ora non riesco a rispondere a parole, ma ecco cosa dicono i miei testi:":"I can’t answer in words right now, but here is what my texts say:","Orari dal programma 2026: controlla quello ufficiale dell’anno.":"Times from the 2026 programme: check the official one for the year.","Orari del programma ufficiale {y}.":"Times from the official {y} programme.","Orari della settimana":"This week’s times","Orari delle celebrazioni":"Times of services","Orari di visita":"Visiting hours","Orario estivo delle messe (giugno–settembre).":"Summer Mass times (June–September).","Orario invernale delle messe (d’estate, giugno–settembre, cambia).":"Winter Mass times (they change in summer, June–September).","Pannello":"Panel","Panorama a 360 gradi della scena":"360-degree panorama of the scene","Parla":"Speak","Pausa":"Pause","Penna":"Pen","Penna azzurra":"Blue pen","Penna bianca":"White pen","Penna oro":"Gold pen","Penna rossa":"Red pen","Per tutti":"For everyone","Per vedere il reel serve la rete.":"You need a connection to watch the reel.","Percorso senza barriere sulla pianta":"Step-free route on the plan","Pianta del santuario":"Plan of the sanctuary","Pianta non disponibile: schema del cammino disegnato dall’ordine delle scene":"Plan not available: walk diagram drawn from the order of the scenes","Precedente":"Previous","Prima di venire":"Before you come","Privacy, crediti e accessibilità":"Privacy, credits and accessibility","Produzione":"Production","Prosegui la visita":"Continue your visit","Prosegui verso":"Continue towards","Puoi anche lasciare la tua offerta nella cassetta in chiesa.":"You can also leave your offering in the box in the church.","Puoi restare in silenzio in fondo alla chiesa. Se vuoi continuare, usa le cuffie oppure leggi i testi al posto della voce.":"You can stay quietly at the back of the church. To go on, use headphones or read the texts instead of the voice.","Quattro capitoli in video":"Four chapters on video","Quattro secoli e mezzo di festa":"Four and a half centuries of feast","Questo non lo trovo nei miei testi. Chiedi in sacrestia, oppure scrivi:":"I can’t find this in my texts. Ask in the sacristy, or write:","Quiz":"Quiz","Raccolti":"Raised","Racconto":"Story","Rampa":"Ramp","Riproduci":"Play","Rispondo solo con i miei testi":"I only answer from my own texts","Scarica la visita":"Download the visit","Scarica tutto (meglio col Wi-Fi)":"Download everything (Wi-Fi recommended)","Scena":"Scene","Scena precedente":"Previous scene","Scena successiva":"Next scene","Scene":"Scenes","Schermo intero":"Full screen","Scoperta":"Discovery","Scorri: il punto cammina lungo la navata e il panorama cambia scena. Il cono sulla pianta segue il tuo sguardo. Le cornici dorate nel 360 sono le opere.":"Scroll: the point walks along the nave and the panorama changes scene. The cone on the plan follows your gaze. The golden frames in the 360 are the works.","Scrivi su WhatsApp":"Write on WhatsApp","Scrivi una domanda…":"Type a question…","Seconda voce":"Second voice","Sedute lungo il percorso":"Seats along the way","Sei nel santuario":"You are in the sanctuary","Sei sul posto: ascolta, guarda le opere di questa scena e prosegui con i pulsanti.":"You are on site: listen, look at the works in this scene and go on with the buttons.","Senza rete":"Offline","Senza rete la mappa non si vede: i punti qui accanto hanno comunque le indicazioni.":"Offline the map is not shown: the places alongside still have directions.","Senza rete non posso ragionare sulla domanda, ma ecco cosa dicono i miei testi:":"Without a connection I can’t think it through, but here is what my texts say:","Sezioni":"Sections","Si guardano a tutto schermo; alla fine di ogni capitolo c’è una domanda per la classe.":"They play full screen; at the end of each chapter there is a question for the class.","Solo testo, niente audio":"Text only, no audio","Sono qui":"I am here","Sostieni il Santuario":"Support the Sanctuary","Sostieni il restauro":"Support the restoration","Sottotitoli nei video":"Subtitles in the videos","Storia della festa, scorri di lato":"History of the feast, scroll sideways","Successiva":"Next","Sulla mappa":"On the map","Testo":"Text","Testo facile":"Easy text","Timbri":"Stamps","Tipo":"Type","Titolare: ":"Controller: ","Tocca i punti sulla pianta o le frecce: il panorama cambia scena. Le cornici dorate nel 360 sono le opere.":"Tap the points on the plan or the arrows: the panorama changes scene. The golden frames in the 360 are the works.","Tocca un dettaglio":"Tap a detail","Torno al cammino":"Back to the walk","Trascina per guardarti intorno":"Drag to look around","Trascrizione":"Transcript","Trascrizioni di tutti gli audio":"Transcripts of all audio","Tutte le opere":"All the works","Tutti gli appuntamenti (iPhone, Outlook)":"All events (iPhone, Outlook)","Tutto, anche reel e panorami nitidi":"Everything, reels and sharp panoramas too","Ultimo mercoledì di agosto · ":"Last Wednesday of August · ","Vai al cammino":"Skip to the walk","Vedi il racconto":"See the story","Visita":"Visit","Visita essenziale":"Essential visit","Visita guidata":"Guided visit","Visita guidata in corso":"Guided visit in progress","Visita senza barriere":"A visit without barriers","Vista piatta: il 360 non si è caricato":"Flat view: the 360 did not load","Vorrei fare un’offerta per: ":"I would like to donate to: ","accessibilità non verificata":"accessibility not verified","accessibilità verificata":"accessibility verified","ascolta":"listen","bozza da approvare prima del lancio":"draft to be approved before launch","capitoli ascoltati":"chapters heard","capolavoro":"masterpiece","circa ":"about ","circa {m} m a piedi · {min} min":"about {m} m on foot · {min} min","controllate il ":"checked on ","da non perdere":"unmissable","da visitare ↗":"to visit ↗","dai testi in attesa di revisione del santuario":"from texts awaiting the sanctuary’s review","date, programma e reel":"dates, programme and reel","dati di prova, da rilevare sul posto":"test data, to be surveyed on site","di":"of","domani alle {h}":"tomorrow at {h}","esempio · obiettivo e cifre da decidere con la Chiesa":"example · goal and figures to be agreed with the Church","in arrivo":"coming soon","in attesa":"waiting","in studio":"under study","la visita raccontata":"the narrated visit","la voce del video è in italiano":"the voice in the video is in Italian","messa alle {h}":"Mass at {h}","mostra il percorso":"show the route","narratori di prova":"test narrators","nascondi il percorso":"hide the route","nel capitolo 1":"in chapter 1","no":"no","oggi":"today","oggi alle {h}":"today at {h}","oggi non c’è messa":"no Mass today","ogni scena 360 ha una descrizione testuale letta dallo screen reader":"every 360 scene has a text description read by the screen reader","preparo la visita senza rete":"preparing offline visit","pronta":"ready","pronta anche senza rete":"ready offline","prova":"test","raccolti":"raised","riprese 360 e drone di Alessandro Milia · testi da fonti pubbliche, da validare con il parroco · voci sintetiche di prova":"360 and drone footage by Alessandro Milia · texts from public sources, to be validated with the parish priest · synthetic test voices","schema automatico":"auto diagram","scorri per entrare":"scroll to enter","sei in ":"you are in ","sei qui":"you are here","senza rete":"offline","solo ciò che è già scaricato":"only what is downloaded","sotto ogni video e nel lettore (tasto Aa)":"under each video and in the player (Aa button)","su ":"of ","su richiesta":"on request","sì":"yes","testi in attesa di revisione":"texts awaiting review","testo di prova · da validare":"draft text · to be validated","tocca le cornici dorate per aprire le opere":"tap the golden frames to open the works","tutto disponibile":"everything available","visitato":"visited","{g} alle {h}":"{g} at {h}","{km} km in linea d’aria dal santuario":"{km} km from the sanctuary as the crow flies","{n}ª edizione":"Edition {n}","i miei testi sono in italiano":"my texts are in Italian"},
+ fr:{" Sono i giorni della festa: gli orari possono cambiare.":" Ce sont les jours de la fête : les horaires peuvent changer."," · giorni della festa: orari speciali":" · jours de la fête : horaires spéciaux","<b>Domani</b> lo sbarco a Cala Buguto":"<b>Demain</b>, le débarquement à Cala Buguto","<b>Oggi</b> lo sbarco, alle {h}":"<b>Aujourd’hui</b>, le débarquement, à {h}","<b>È festa</b>: la processione è mercoledì":"<b>C’est la fête</b> : la procession a lieu mercredi","<b>È festa</b>: la processione è oggi":"<b>C’est la fête</b> : la procession a lieu aujourd’hui","Adesso si celebra: la visita è sospesa":"Un office est en cours : la visite est suspendue","Aggiungi la festa a Google Calendar":"Ajouter la fête à Google Calendar","Alle {h} comincia la messa":"À {h} commence la messe","Aperto":"Ouvert","Aperto ora · chiude alle ":"Ouvert maintenant · ferme à ","Aperto · messa alle {h}, fra {m} min":"Ouvert · messe à {h}, dans {m} min","Apri la scheda":"Ouvrir la fiche","Area riservata del Santuario · statistiche e avvisi":"Espace réservé du Sanctuaire · statistiques et avis","Ascolta":"Écouter","Ascolta il racconto":"Écouter le récit","Atto I":"Acte I","Atto II":"Acte II","Atto III":"Acte III","Audiodescrizione":"Audiodescription","Audioguida":"Audioguide","Autore":"Auteur","Avvia la visita guidata":"Lancer la visite guidée","Avviso del Santuario":"Avis du Sanctuaire","Bagno accessibile":"Toilettes accessibles","Bonifico":"Virement","Cammino":"Parcours","Cancella":"Effacer","Capitolo":"Chapitre","Chiedi":"Demander","Chiedi alla chiesa":"Demandez à l’église","Chiedi come fare un’offerta":"Demandez comment faire un don","Chiudi":"Fermer","Chiudi il lettore":"Fermer le lecteur","Chiuso ora · riapre ":"Fermé maintenant · rouvre ","Ciao, sono {voce}. Chiedimi della mia storia, delle opere, della festa o degli orari.":"Bonjour, je suis {voce}. Interrogez-moi sur mon histoire, les œuvres, la fête ou les horaires.","Come arrivare":"Comment venir","Contatti":"Contacts","Continua il racconto":"Continuer le récit","Copia IBAN":"Copier l’IBAN","Cosa hai davanti":"Ce qui est devant vous","Crediti di foto, video e testi":"Crédits des photos, vidéos et textes","Dal parcheggio":"Depuis le parking","Data":"Date","Dentro una chiesa la rete spesso manca. La visita si prepara da sola appena apri la pagina: panorami leggeri, voci e pianta.":"Dans une église, le réseau manque souvent. La visite se prépare toute seule dès que vous ouvrez la page : panoramas légers, voix et plan.","Descrizione di ciò che vedi":"Description de ce que vous voyez","Deviazione":"Détour","Dichiarazione di accessibilità":"Déclaration d’accessibilité","Dimensione del testo":"Taille du texte","Disegna sul panorama con il dito o la penna della LIM":"Dessinez sur le panorama avec le doigt ou le stylet du TBI","Disponibile quando la pagina è online (http), non aprendo il file dal computer.":"Disponible quand la page est en ligne (http), pas en ouvrant le fichier depuis l’ordinateur.","Domanda per la classe":"Question pour la classe","Domani, {g}, messa alle {h}.":"Demain, {g}, messe à {h}.","Dopo il primo tocco la visita avanza da sola, scena per scena, e il panorama gira verso ciò di cui si parla. Tocca il panorama per riprendere il controllo.":"Après le premier toucher, la visite avance toute seule, scène par scène, et le panorama se tourne vers ce dont on parle. Touchez le panorama pour reprendre la main.","Dove siamo":"Où nous sommes","Dov’è":"Où elle est","Durante le funzioni la visita è sospesa":"Pendant les offices la visite est suspendue","Durata totale":"Durée totale","Entra":"Entrer","Epoca":"Époque","Esatto!":"Exact !","Esci":"Quitter","Esci dalla modalità classe":"Quitter le mode classe","Esci dalla visita guidata":"Quitter la visite guidée","Festa":"Fête","Festa patronale":"Fête patronale","Fonte dell’attribuzione":"Source de l’attribution","Fonti: ":"Sources : ","Foto ad alta risoluzione non ancora caricata":"Photo haute résolution pas encore chargée","Fra {m} minuti la messa":"Messe dans {m} minutes","Giorno":"Jour","Gira a destra":"Tournez à droite","Gira a sinistra":"Tournez à gauche","Gira il panorama":"Tourner le panorama","Gradino all’ingresso":"Marche à l’entrée","Guarda il racconto":"Voir le récit","Guarda il reel: ":"Voir le reel : ","Guarda in alto":"Regardez en haut","Guarda in basso":"Regardez en bas","Guardala nel 360":"La voir en 360","Hai una domanda su questo punto?":"Une question sur ce point ?","Hai visitato <b>{n} luoghi su {tot}</b> della rete Esplora Trapani.":"Vous avez visité <b>{n} lieux sur {tot}</b> du réseau Esplora Trapani.","Hai visitato <b>{n} luogo su {tot}</b> della rete Esplora Trapani.":"Vous avez visité <b>{n} lieu sur {tot}</b> du réseau Esplora Trapani.","Ho le cuffie, continuo":"J’ai des écouteurs, je continue","I giorni della festa":"Les jours de la fête","IBAN copiato ✓":"IBAN copié ✓","Il cammino":"Le parcours","Il custode":"Le gardien","Il panorama resta fermo mentre disegni. Il disegno si cancella quando cambi scena.":"Le panorama reste immobile pendant que vous dessinez. Le dessin s’efface quand vous changez de scène.","Il passaporto dei luoghi":"Le passeport des lieux","Il racconto":"Le récit","Il reel della festa":"Le reel de la fête","Il timbro del Santuario arriva quando entri da un QR in chiesa o completi tre tappe del racconto. I timbri restano solo su questo telefono.":"Le tampon du Sanctuaire arrive quand vous entrez par un QR code dans l’église ou terminez trois étapes du récit. Les tampons restent uniquement sur ce téléphone.","In classe":"En classe","In questa scena non ci sono opere schedate: guarda le altre qui sotto.":"Cette scène n’a pas d’œuvres répertoriées : voyez les autres ci-dessous.","In questa scena vedi":"Dans cette scène vous voyez","Indicazioni stradali ↗":"Itinéraire routier ↗","Indicazioni ↗":"Itinéraire ↗","Indietro di 15 secondi":"Reculer de 15 secondes","Info":"Infos","Informativa privacy":"Politique de confidentialité","Informazioni":"Informations","La festa di agosto":"La fête d’août","La festa · ultimo mercoledì di agosto":"La fête · dernier mercredi d’août","La guida":"La guide","La mappa interattiva è sulla pagina pubblicata: qui sotto i punti con le indicazioni.":"La carte interactive est sur la page publiée : ci-dessous, les lieux avec l’itinéraire.","La mappa non si è caricata: usa le indicazioni dei punti.":"La carte ne s’est pas chargée : utilisez l’itinéraire de chaque lieu.","La mappa si apre quando ci arrivi.":"La carte s’ouvre quand vous y arrivez.","La soglia":"Le seuil","La vedi anche in":"Visible aussi depuis","La voce del video è in italiano.":"La voix de la vidéo est en italien.","Le date del {y} sono calcolate dalla regola (ultimo mercoledì di agosto); gli orari vengono dal programma {p}, il programma ufficiale esce d’estate.":"Les dates de {y} sont calculées selon la règle (dernier mercredi d’août) ; les horaires viennent du programme {p}, le programme officiel paraît en été.","Le opere":"Les œuvres","Lettore audio":"Lecteur audio","Lettura facile":"Lecture facile","Lingua":"Langue","Mancano <b>{n} giorni</b> allo sbarco":"Plus que <b>{n} jours</b> avant le débarquement","Mappa":"Carte","Messa in corso":"Messe en cours","Messa in corso · fino alle {h} circa":"Messe en cours · jusqu’à {h} environ","Messe":"Messes","Modalità":"Mode","Mostra il testo":"Afficher le texte","Mostra la risposta":"Afficher la réponse","Narratori e diritti":"Narrateurs et droits","Nei giorni della festa (fine agosto) gli orari cambiano. ":"Pendant les jours de la fête (fin août), les horaires changent. ","Nel 360 le opere hanno una cornice che si accende quando le guardi: toccala per avvicinarti. Qui sotto, tutte le opere verificate.":"Dans le 360, les œuvres ont un cadre qui s’allume quand vous les regardez : touchez-le pour vous approcher. Ci-dessous, toutes les œuvres vérifiées.","Nessun audio parte da solo: il primo suono nasce da un tocco. Il lettore resta in basso mentre scorri.":"Aucun audio ne démarre tout seul : le premier son naît d’un toucher. Le lecteur reste en bas pendant que vous faites défiler.","Non disponibile in questa anteprima: funziona sulla pagina pubblicata.":"Non disponible dans cet aperçu : cela fonctionne sur la page publiée.","Non proprio… riprova":"Pas tout à fait… réessayez","Nove sere di novena, poi quattro giorni di festa: le chiavi della città, i carretti, lo sbarco dal mare, la processione di cinque ore e i fuochi di mezzanotte.":"Neuf soirs de neuvaine, puis quatre jours de fête : les clés de la ville, les charrettes peintes, le débarquement depuis la mer, la procession de cinq heures et le feu d’artifice de minuit.","Novena e festa. Clou: lo sbarco a Cala Buguto e la processione.":"Neuvaine et fête. Temps forts : le débarquement à Cala Buguto et la procession.","Offri con PayPal o carta":"Donner avec PayPal ou carte","Offri con Satispay":"Donner avec Satispay","Oggi, {g}, sono aperta {o}; ":"Aujourd’hui, {g}, je suis ouverte {o}; ","Opera":"Œuvre","Opere":"Œuvres","Ora non riesco a rispondere a parole, ma ecco cosa dicono i miei testi:":"Je ne peux pas répondre avec mes mots pour l’instant, mais voici ce que disent mes textes :","Orari dal programma 2026: controlla quello ufficiale dell’anno.":"Horaires du programme 2026 : vérifiez le programme officiel de l’année.","Orari del programma ufficiale {y}.":"Horaires du programme officiel {y}.","Orari della settimana":"Horaires de la semaine","Orari delle celebrazioni":"Horaires des offices","Orari di visita":"Horaires de visite","Orario estivo delle messe (giugno–settembre).":"Horaires d’été des messes (juin–septembre).","Orario invernale delle messe (d’estate, giugno–settembre, cambia).":"Horaires d’hiver des messes (ils changent en été, juin–septembre).","Pannello":"Panneau","Panorama a 360 gradi della scena":"Panorama à 360 degrés de la scène","Parla":"Parler","Pausa":"Pause","Penna":"Stylet","Penna azzurra":"Stylet bleu","Penna bianca":"Stylet blanc","Penna oro":"Stylet or","Penna rossa":"Stylet rouge","Per tutti":"Pour tous","Per vedere il reel serve la rete.":"Il faut une connexion pour voir le reel.","Percorso senza barriere sulla pianta":"Parcours sans obstacles sur le plan","Pianta del santuario":"Plan du sanctuaire","Pianta non disponibile: schema del cammino disegnato dall’ordine delle scene":"Plan non disponible : schéma du parcours tracé selon l’ordre des scènes","Precedente":"Précédente","Prima di venire":"Avant de venir","Privacy, crediti e accessibilità":"Confidentialité, crédits et accessibilité","Produzione":"Production","Prosegui la visita":"Poursuivez la visite","Prosegui verso":"Continuez vers","Puoi anche lasciare la tua offerta nella cassetta in chiesa.":"Vous pouvez aussi déposer votre offrande dans le tronc de l’église.","Puoi restare in silenzio in fondo alla chiesa. Se vuoi continuare, usa le cuffie oppure leggi i testi al posto della voce.":"Vous pouvez rester en silence au fond de l’église. Pour continuer, utilisez des écouteurs ou lisez les textes à la place de la voix.","Quattro capitoli in video":"Quatre chapitres en vidéo","Quattro secoli e mezzo di festa":"Quatre siècles et demi de fête","Questo non lo trovo nei miei testi. Chiedi in sacrestia, oppure scrivi:":"Je ne trouve pas cela dans mes textes. Demandez à la sacristie, ou écrivez :","Quiz":"Quiz","Raccolti":"Collectés","Racconto":"Récit","Rampa":"Rampe","Riproduci":"Lire","Rispondo solo con i miei testi":"Je réponds seulement à partir de mes textes","Scarica la visita":"Télécharger la visite","Scarica tutto (meglio col Wi-Fi)":"Tout télécharger (de préférence en Wi-Fi)","Scena":"Scène","Scena precedente":"Scène précédente","Scena successiva":"Scène suivante","Scene":"Scènes","Schermo intero":"Plein écran","Scoperta":"Découverte","Scorri: il punto cammina lungo la navata e il panorama cambia scena. Il cono sulla pianta segue il tuo sguardo. Le cornici dorate nel 360 sono le opere.":"Faites défiler : le point avance le long de la nef et le panorama change de scène. Le cône sur le plan suit votre regard. Les cadres dorés dans le 360 sont les œuvres.","Scrivi su WhatsApp":"Écrire sur WhatsApp","Scrivi una domanda…":"Écrivez une question…","Seconda voce":"Deuxième voix","Sedute lungo il percorso":"Sièges le long du parcours","Sei nel santuario":"Vous êtes dans le sanctuaire","Sei sul posto: ascolta, guarda le opere di questa scena e prosegui con i pulsanti.":"Vous êtes sur place : écoutez, regardez les œuvres de cette scène et continuez avec les boutons.","Senza rete":"Hors ligne","Senza rete la mappa non si vede: i punti qui accanto hanno comunque le indicazioni.":"Hors ligne, la carte ne s’affiche pas : les lieux à côté ont quand même leur itinéraire.","Senza rete non posso ragionare sulla domanda, ma ecco cosa dicono i miei testi:":"Sans connexion je ne peux pas réfléchir à la question, mais voici ce que disent mes textes :","Sezioni":"Sections","Si guardano a tutto schermo; alla fine di ogni capitolo c’è una domanda per la classe.":"Ils se regardent en plein écran ; à la fin de chaque chapitre, il y a une question pour la classe.","Solo testo, niente audio":"Texte seul, sans audio","Sono qui":"Je suis ici","Sostieni il Santuario":"Soutenez le Sanctuaire","Sostieni il restauro":"Soutenez la restauration","Sottotitoli nei video":"Sous-titres dans les vidéos","Storia della festa, scorri di lato":"Histoire de la fête, faites défiler sur le côté","Successiva":"Suivante","Sulla mappa":"Sur la carte","Testo":"Texte","Testo facile":"Texte facile","Timbri":"Tampons","Tipo":"Type","Titolare: ":"Responsable : ","Tocca i punti sulla pianta o le frecce: il panorama cambia scena. Le cornici dorate nel 360 sono le opere.":"Touchez les points sur le plan ou les flèches : le panorama change de scène. Les cadres dorés dans le 360 sont les œuvres.","Tocca un dettaglio":"Touchez un détail","Torno al cammino":"Retour au parcours","Trascina per guardarti intorno":"Faites glisser pour regarder autour","Trascrizione":"Transcription","Trascrizioni di tutti gli audio":"Transcriptions de tous les audios","Tutte le opere":"Toutes les œuvres","Tutti gli appuntamenti (iPhone, Outlook)":"Tous les rendez-vous (iPhone, Outlook)","Tutto, anche reel e panorami nitidi":"Tout, y compris reels et panoramas nets","Ultimo mercoledì di agosto · ":"Dernier mercredi d’août · ","Vai al cammino":"Aller au parcours","Vedi il racconto":"Voir le récit","Visita":"Visite","Visita essenziale":"Visite essentielle","Visita guidata":"Visite guidée","Visita guidata in corso":"Visite guidée en cours","Visita senza barriere":"Visite sans obstacles","Vista piatta: il 360 non si è caricato":"Vue à plat : le 360 ne s’est pas chargé","Vorrei fare un’offerta per: ":"Je voudrais faire un don pour : ","accessibilità non verificata":"accessibilité non vérifiée","accessibilità verificata":"accessibilité vérifiée","ascolta":"écouter","bozza da approvare prima del lancio":"brouillon à approuver avant le lancement","capitoli ascoltati":"chapitres écoutés","capolavoro":"chef-d’œuvre","circa ":"environ ","circa {m} m a piedi · {min} min":"environ {m} m à pied · {min} min","controllate il ":"vérifiées le ","da non perdere":"à ne pas manquer","da visitare ↗":"à visiter ↗","dai testi in attesa di revisione del santuario":"d’après des textes en attente de relecture par le sanctuaire","date, programma e reel":"dates, programme et reel","dati di prova, da rilevare sul posto":"données d’essai, à relever sur place","di":"sur","domani alle {h}":"demain à {h}","esempio · obiettivo e cifre da decidere con la Chiesa":"exemple · objectif et montants à définir avec l’Église","in arrivo":"bientôt","in attesa":"en attente","in studio":"à l’étude","la visita raccontata":"la visite racontée","la voce del video è in italiano":"la voix de la vidéo est en italien","messa alle {h}":"messe à {h}","mostra il percorso":"afficher le parcours","narratori di prova":"narrateurs d’essai","nascondi il percorso":"masquer le parcours","nel capitolo 1":"dans le chapitre 1","no":"non","oggi":"aujourd’hui","oggi alle {h}":"aujourd’hui à {h}","oggi non c’è messa":"pas de messe aujourd’hui","ogni scena 360 ha una descrizione testuale letta dallo screen reader":"chaque scène 360 a une description textuelle lue par le lecteur d’écran","preparo la visita senza rete":"je prépare la visite hors ligne","pronta":"prête","pronta anche senza rete":"prête même hors ligne","prova":"essai","raccolti":"collectés","riprese 360 e drone di Alessandro Milia · testi da fonti pubbliche, da validare con il parroco · voci sintetiche di prova":"prises de vue 360 et drone d’Alessandro Milia · textes issus de sources publiques, à valider avec le curé · voix de synthèse d’essai","schema automatico":"schéma automatique","scorri per entrare":"faites défiler pour entrer","sei in ":"vous êtes dans ","sei qui":"vous êtes ici","senza rete":"hors ligne","solo ciò che è già scaricato":"seulement ce qui est déjà téléchargé","sotto ogni video e nel lettore (tasto Aa)":"sous chaque vidéo et dans le lecteur (bouton Aa)","su ":"sur ","su richiesta":"sur demande","sì":"oui","testi in attesa di revisione":"textes en attente de relecture","testo di prova · da validare":"texte provisoire · à valider","tocca le cornici dorate per aprire le opere":"touchez les cadres dorés pour ouvrir les œuvres","tutto disponibile":"tout est disponible","visitato":"visité","{g} alle {h}":"{g} à {h}","{km} km in linea d’aria dal santuario":"{km} km à vol d’oiseau du sanctuaire","{n}ª edizione":"{n}e édition","i miei testi sono in italiano":"mes textes sont en italien"},
+ es:{" Sono i giorni della festa: gli orari possono cambiare.":" Son los días de la fiesta: los horarios pueden cambiar."," · giorni della festa: orari speciali":" · días de la fiesta: horarios especiales","<b>Domani</b> lo sbarco a Cala Buguto":"<b>Mañana</b>, el desembarco en Cala Buguto","<b>Oggi</b> lo sbarco, alle {h}":"<b>Hoy</b>, el desembarco, a las {h}","<b>È festa</b>: la processione è mercoledì":"<b>Es fiesta</b>: la procesión es el miércoles","<b>È festa</b>: la processione è oggi":"<b>Es fiesta</b>: la procesión es hoy","Adesso si celebra: la visita è sospesa":"Ahora hay una celebración: la visita está suspendida","Aggiungi la festa a Google Calendar":"Añade la fiesta a Google Calendar","Alle {h} comincia la messa":"A las {h} empieza la misa","Aperto":"Abierto","Aperto ora · chiude alle ":"Abierto ahora · cierra a las ","Aperto · messa alle {h}, fra {m} min":"Abierto · misa a las {h}, dentro de {m} min","Apri la scheda":"Abrir la ficha","Area riservata del Santuario · statistiche e avvisi":"Área reservada del Santuario · estadísticas y avisos","Ascolta":"Escucha","Ascolta il racconto":"Escuchar el relato","Atto I":"Acto I","Atto II":"Acto II","Atto III":"Acto III","Audiodescrizione":"Audiodescripción","Audioguida":"Audioguía","Autore":"Autor","Avvia la visita guidata":"Iniciar la visita guiada","Avviso del Santuario":"Aviso del Santuario","Bagno accessibile":"Baño accesible","Bonifico":"Transferencia","Cammino":"Recorrido","Cancella":"Borrar","Capitolo":"Capítulo","Chiedi":"Pregunta","Chiedi alla chiesa":"Pregunta a la iglesia","Chiedi come fare un’offerta":"Pregunta cómo hacer una donación","Chiudi":"Cerrar","Chiudi il lettore":"Cerrar el reproductor","Chiuso ora · riapre ":"Cerrado ahora · reabre ","Ciao, sono {voce}. Chiedimi della mia storia, delle opere, della festa o degli orari.":"Hola, soy {voce}. Pregúntame por mi historia, las obras, la fiesta o los horarios.","Come arrivare":"Cómo llegar","Contatti":"Contactos","Continua il racconto":"Continuar el relato","Copia IBAN":"Copiar IBAN","Cosa hai davanti":"Lo que tienes delante","Crediti di foto, video e testi":"Créditos de fotos, vídeos y textos","Dal parcheggio":"Desde el aparcamiento","Data":"Fecha","Dentro una chiesa la rete spesso manca. La visita si prepara da sola appena apri la pagina: panorami leggeri, voci e pianta.":"Dentro de una iglesia a menudo no hay cobertura. La visita se prepara sola en cuanto abres la página: panoramas ligeros, voces y plano.","Descrizione di ciò che vedi":"Descripción de lo que ves","Deviazione":"Desvío","Dichiarazione di accessibilità":"Declaración de accesibilidad","Dimensione del testo":"Tamaño del texto","Disegna sul panorama con il dito o la penna della LIM":"Dibuja sobre el panorama con el dedo o el lápiz de la pizarra digital","Disponibile quando la pagina è online (http), non aprendo il file dal computer.":"Disponible cuando la página está en línea (http), no abriendo el archivo desde el ordenador.","Domanda per la classe":"Pregunta para la clase","Domani, {g}, messa alle {h}.":"Mañana, {g}, misa a las {h}.","Dopo il primo tocco la visita avanza da sola, scena per scena, e il panorama gira verso ciò di cui si parla. Tocca il panorama per riprendere il controllo.":"Tras el primer toque la visita avanza sola, escena a escena, y el panorama gira hacia aquello de lo que se habla. Toca el panorama para retomar el control.","Dove siamo":"Dónde estamos","Dov’è":"Dónde está","Durante le funzioni la visita è sospesa":"Durante las celebraciones la visita se suspende","Durata totale":"Duración total","Entra":"Entra","Epoca":"Época","Esatto!":"¡Correcto!","Esci":"Salir","Esci dalla modalità classe":"Salir del modo clase","Esci dalla visita guidata":"Salir de la visita guiada","Festa":"Fiesta","Festa patronale":"Fiesta patronal","Fonte dell’attribuzione":"Fuente de la atribución","Fonti: ":"Fuentes: ","Foto ad alta risoluzione non ancora caricata":"Foto en alta resolución aún no cargada","Fra {m} minuti la messa":"Misa dentro de {m} minutos","Giorno":"Día","Gira a destra":"Gira a la derecha","Gira a sinistra":"Gira a la izquierda","Gira il panorama":"Girar el panorama","Gradino all’ingresso":"Escalón en la entrada","Guarda il racconto":"Ver el relato","Guarda il reel: ":"Mira el reel: ","Guarda in alto":"Mira hacia arriba","Guarda in basso":"Mira hacia abajo","Guardala nel 360":"Mírala en 360","Hai una domanda su questo punto?":"¿Tienes una pregunta sobre este punto?","Hai visitato <b>{n} luoghi su {tot}</b> della rete Esplora Trapani.":"Has visitado <b>{n} lugares de {tot}</b> de la red Esplora Trapani.","Hai visitato <b>{n} luogo su {tot}</b> della rete Esplora Trapani.":"Has visitado <b>{n} lugar de {tot}</b> de la red Esplora Trapani.","Ho le cuffie, continuo":"Tengo auriculares, sigo","I giorni della festa":"Los días de la fiesta","IBAN copiato ✓":"IBAN copiado ✓","Il cammino":"El recorrido","Il custode":"El custodio","Il panorama resta fermo mentre disegni. Il disegno si cancella quando cambi scena.":"El panorama se queda quieto mientras dibujas. El dibujo se borra cuando cambias de escena.","Il passaporto dei luoghi":"El pasaporte de los lugares","Il racconto":"El relato","Il reel della festa":"El reel de la fiesta","Il timbro del Santuario arriva quando entri da un QR in chiesa o completi tre tappe del racconto. I timbri restano solo su questo telefono.":"El sello del Santuario llega cuando entras desde un QR en la iglesia o completas tres etapas del relato. Los sellos se quedan solo en este teléfono.","In classe":"En clase","In questa scena non ci sono opere schedate: guarda le altre qui sotto.":"En esta escena no hay obras catalogadas: mira las demás aquí abajo.","In questa scena vedi":"En esta escena ves","Indicazioni stradali ↗":"Cómo llegar en coche ↗","Indicazioni ↗":"Indicaciones ↗","Indietro di 15 secondi":"Retroceder 15 segundos","Info":"Info","Informativa privacy":"Aviso de privacidad","Informazioni":"Información","La festa di agosto":"La fiesta de agosto","La festa · ultimo mercoledì di agosto":"La fiesta · último miércoles de agosto","La guida":"La guía","La mappa interattiva è sulla pagina pubblicata: qui sotto i punti con le indicazioni.":"El mapa interactivo está en la página publicada: aquí abajo, los puntos con las indicaciones.","La mappa non si è caricata: usa le indicazioni dei punti.":"El mapa no se ha cargado: usa las indicaciones de cada punto.","La mappa si apre quando ci arrivi.":"El mapa se abre cuando llegas aquí.","La soglia":"El umbral","La vedi anche in":"También la ves desde","La voce del video è in italiano.":"La voz del vídeo está en italiano.","Le date del {y} sono calcolate dalla regola (ultimo mercoledì di agosto); gli orari vengono dal programma {p}, il programma ufficiale esce d’estate.":"Las fechas de {y} se calculan con la regla (último miércoles de agosto); los horarios proceden del programa {p}, el programa oficial sale en verano.","Le opere":"Las obras","Lettore audio":"Reproductor de audio","Lettura facile":"Lectura fácil","Lingua":"Idioma","Mancano <b>{n} giorni</b> allo sbarco":"Faltan <b>{n} días</b> para el desembarco","Mappa":"Mapa","Messa in corso":"Misa en curso","Messa in corso · fino alle {h} circa":"Misa en curso · hasta alrededor de las {h}","Messe":"Misas","Modalità":"Modo","Mostra il testo":"Mostrar el texto","Mostra la risposta":"Mostrar la respuesta","Narratori e diritti":"Narradores y derechos","Nei giorni della festa (fine agosto) gli orari cambiano. ":"En los días de la fiesta (finales de agosto) los horarios cambian. ","Nel 360 le opere hanno una cornice che si accende quando le guardi: toccala per avvicinarti. Qui sotto, tutte le opere verificate.":"En el 360 las obras tienen un marco que se enciende cuando las miras: tócalo para acercarte. Aquí abajo, todas las obras verificadas.","Nessun audio parte da solo: il primo suono nasce da un tocco. Il lettore resta in basso mentre scorri.":"Ningún audio arranca solo: el primer sonido nace de un toque. El reproductor se queda abajo mientras te desplazas.","Non disponibile in questa anteprima: funziona sulla pagina pubblicata.":"No disponible en esta vista previa: funciona en la página publicada.","Non proprio… riprova":"No exactamente… inténtalo de nuevo","Nove sere di novena, poi quattro giorni di festa: le chiavi della città, i carretti, lo sbarco dal mare, la processione di cinque ore e i fuochi di mezzanotte.":"Nueve noches de novena y luego cuatro días de fiesta: las llaves de la ciudad, los carros pintados, el desembarco desde el mar, la procesión de cinco horas y los fuegos artificiales de medianoche.","Novena e festa. Clou: lo sbarco a Cala Buguto e la processione.":"Novena y fiesta. Lo más destacado: el desembarco en Cala Buguto y la procesión.","Offri con PayPal o carta":"Dona con PayPal o tarjeta","Offri con Satispay":"Dona con Satispay","Oggi, {g}, sono aperta {o}; ":"Hoy, {g}, estoy abierta {o}; ","Opera":"Obra","Opere":"Obras","Ora non riesco a rispondere a parole, ma ecco cosa dicono i miei testi:":"Ahora no puedo responder con palabras, pero esto es lo que dicen mis textos:","Orari dal programma 2026: controlla quello ufficiale dell’anno.":"Horarios del programa 2026: consulta el oficial del año.","Orari del programma ufficiale {y}.":"Horarios del programa oficial {y}.","Orari della settimana":"Horarios de la semana","Orari delle celebrazioni":"Horarios de las celebraciones","Orari di visita":"Horario de visita","Orario estivo delle messe (giugno–settembre).":"Horario de verano de las misas (junio–septiembre).","Orario invernale delle messe (d’estate, giugno–settembre, cambia).":"Horario de invierno de las misas (cambia en verano, junio–septiembre).","Pannello":"Panel","Panorama a 360 gradi della scena":"Panorama de 360 grados de la escena","Parla":"Habla","Pausa":"Pausa","Penna":"Lápiz","Penna azzurra":"Lápiz azul","Penna bianca":"Lápiz blanco","Penna oro":"Lápiz dorado","Penna rossa":"Lápiz rojo","Per tutti":"Para todos","Per vedere il reel serve la rete.":"Para ver el reel necesitas conexión.","Percorso senza barriere sulla pianta":"Recorrido sin barreras en el plano","Pianta del santuario":"Plano del santuario","Pianta non disponibile: schema del cammino disegnato dall’ordine delle scene":"Plano no disponible: esquema del recorrido trazado según el orden de las escenas","Precedente":"Anterior","Prima di venire":"Antes de venir","Privacy, crediti e accessibilità":"Privacidad, créditos y accesibilidad","Produzione":"Producción","Prosegui la visita":"Continúa la visita","Prosegui verso":"Sigue hacia","Puoi anche lasciare la tua offerta nella cassetta in chiesa.":"También puedes dejar tu donativo en el cepillo de la iglesia.","Puoi restare in silenzio in fondo alla chiesa. Se vuoi continuare, usa le cuffie oppure leggi i testi al posto della voce.":"Puedes quedarte en silencio al fondo de la iglesia. Si quieres continuar, usa auriculares o lee los textos en lugar de la voz.","Quattro capitoli in video":"Cuatro capítulos en vídeo","Quattro secoli e mezzo di festa":"Cuatro siglos y medio de fiesta","Questo non lo trovo nei miei testi. Chiedi in sacrestia, oppure scrivi:":"Esto no lo encuentro en mis textos. Pregunta en la sacristía o escribe:","Quiz":"Quiz","Raccolti":"Recaudados","Racconto":"Relato","Rampa":"Rampa","Riproduci":"Reproducir","Rispondo solo con i miei testi":"Solo respondo con mis propios textos","Scarica la visita":"Descargar la visita","Scarica tutto (meglio col Wi-Fi)":"Descargar todo (mejor con Wi-Fi)","Scena":"Escena","Scena precedente":"Escena anterior","Scena successiva":"Escena siguiente","Scene":"Escenas","Schermo intero":"Pantalla completa","Scoperta":"Descubrimiento","Scorri: il punto cammina lungo la navata e il panorama cambia scena. Il cono sulla pianta segue il tuo sguardo. Le cornici dorate nel 360 sono le opere.":"Desliza: el punto avanza por la nave y el panorama cambia de escena. El cono del plano sigue tu mirada. Los marcos dorados del 360 son las obras.","Scrivi su WhatsApp":"Escribe por WhatsApp","Scrivi una domanda…":"Escribe una pregunta…","Seconda voce":"Segunda voz","Sedute lungo il percorso":"Asientos a lo largo del recorrido","Sei nel santuario":"Estás en el santuario","Sei sul posto: ascolta, guarda le opere di questa scena e prosegui con i pulsanti.":"Estás aquí: escucha, mira las obras de esta escena y sigue con los botones.","Senza rete":"Sin conexión","Senza rete la mappa non si vede: i punti qui accanto hanno comunque le indicazioni.":"Sin conexión el mapa no se ve: los puntos de al lado tienen igualmente las indicaciones.","Senza rete non posso ragionare sulla domanda, ma ecco cosa dicono i miei testi:":"Sin conexión no puedo pensar la pregunta, pero esto es lo que dicen mis textos:","Sezioni":"Secciones","Si guardano a tutto schermo; alla fine di ogni capitolo c’è una domanda per la classe.":"Se ven a pantalla completa; al final de cada capítulo hay una pregunta para la clase.","Solo testo, niente audio":"Solo texto, sin audio","Sono qui":"Estoy aquí","Sostieni il Santuario":"Apoya el Santuario","Sostieni il restauro":"Apoya la restauración","Sottotitoli nei video":"Subtítulos en los vídeos","Storia della festa, scorri di lato":"Historia de la fiesta, desliza hacia el lado","Successiva":"Siguiente","Sulla mappa":"En el mapa","Testo":"Texto","Testo facile":"Texto fácil","Timbri":"Sellos","Tipo":"Tipo","Titolare: ":"Responsable: ","Tocca i punti sulla pianta o le frecce: il panorama cambia scena. Le cornici dorate nel 360 sono le opere.":"Toca los puntos del plano o las flechas: el panorama cambia de escena. Los marcos dorados del 360 son las obras.","Tocca un dettaglio":"Toca un detalle","Torno al cammino":"Vuelvo al recorrido","Trascina per guardarti intorno":"Arrastra para mirar a tu alrededor","Trascrizione":"Transcripción","Trascrizioni di tutti gli audio":"Transcripciones de todos los audios","Tutte le opere":"Todas las obras","Tutti gli appuntamenti (iPhone, Outlook)":"Todas las citas (iPhone, Outlook)","Tutto, anche reel e panorami nitidi":"Todo, también reels y panoramas nítidos","Ultimo mercoledì di agosto · ":"Último miércoles de agosto · ","Vai al cammino":"Ir al recorrido","Vedi il racconto":"Ver el relato","Visita":"Visita","Visita essenziale":"Visita esencial","Visita guidata":"Visita guiada","Visita guidata in corso":"Visita guiada en curso","Visita senza barriere":"Visita sin barreras","Vista piatta: il 360 non si è caricato":"Vista plana: el 360 no se ha cargado","Vorrei fare un’offerta per: ":"Quisiera hacer una donación para: ","accessibilità non verificata":"accesibilidad no verificada","accessibilità verificata":"accesibilidad verificada","ascolta":"escucha","bozza da approvare prima del lancio":"borrador por aprobar antes del lanzamiento","capitoli ascoltati":"capítulos escuchados","capolavoro":"obra maestra","circa ":"alrededor de ","circa {m} m a piedi · {min} min":"unos {m} m a pie · {min} min","controllate il ":"verificadas el ","da non perdere":"imprescindible","da visitare ↗":"para visitar ↗","dai testi in attesa di revisione del santuario":"a partir de textos pendientes de revisión por el santuario","date, programma e reel":"fechas, programa y reel","dati di prova, da rilevare sul posto":"datos de prueba, por medir in situ","di":"de","domani alle {h}":"mañana a las {h}","esempio · obiettivo e cifre da decidere con la Chiesa":"ejemplo · objetivo y cifras por decidir con la Iglesia","in arrivo":"próximamente","in attesa":"pendiente","in studio":"en estudio","la visita raccontata":"la visita narrada","la voce del video è in italiano":"la voz del vídeo está en italiano","messa alle {h}":"misa a las {h}","mostra il percorso":"mostrar el recorrido","narratori di prova":"narradores de prueba","nascondi il percorso":"ocultar el recorrido","nel capitolo 1":"en el capítulo 1","no":"no","oggi":"hoy","oggi alle {h}":"hoy a las {h}","oggi non c’è messa":"hoy no hay misa","ogni scena 360 ha una descrizione testuale letta dallo screen reader":"cada escena 360 tiene una descripción textual leída por el lector de pantalla","preparo la visita senza rete":"preparo la visita sin conexión","pronta":"lista","pronta anche senza rete":"lista también sin conexión","prova":"prueba","raccolti":"recaudados","riprese 360 e drone di Alessandro Milia · testi da fonti pubbliche, da validare con il parroco · voci sintetiche di prova":"tomas 360 y con dron de Alessandro Milia · textos de fuentes públicas, por validar con el párroco · voces sintéticas de prueba","schema automatico":"esquema automático","scorri per entrare":"desliza para entrar","sei in ":"estás en ","sei qui":"estás aquí","senza rete":"sin conexión","solo ciò che è già scaricato":"solo lo que ya está descargado","sotto ogni video e nel lettore (tasto Aa)":"debajo de cada vídeo y en el reproductor (botón Aa)","su ":"de ","su richiesta":"bajo petición","sì":"sí","testi in attesa di revisione":"textos pendientes de revisión","testo di prova · da validare":"texto provisional · por validar","tocca le cornici dorate per aprire le opere":"toca los marcos dorados para abrir las obras","tutto disponibile":"todo disponible","visitato":"visitado","{g} alle {h}":"{g} a las {h}","{km} km in linea d’aria dal santuario":"{km} km en línea recta del santuario","{n}ª edizione":"{n}.ª edición","i miei testi sono in italiano":"mis textos están en italiano"}
 };
 var LINGUE=[['it','Italiano'],['en','English'],['fr','Français'],['es','Español']];
-var S={lang:(qs.get('lang')||ls('esplora_lang')||(navigator.language||'it').slice(0,2)).toLowerCase(),fs:+(ls('chiesa_fs')||1),modo:ls('chiesa_modo')||'visita',timbri:JSON.parse(ls('chiesa_timbri_'+L.slug)||'{}')};
+var S={lang:(qs.get('lang')||ls('esplora_lang')||(navigator.language||'it').slice(0,2)).toLowerCase(),fs:+(ls('chiesa_fs')||1),modo:'visita',timbri:JSON.parse(ls('chiesa_timbri_'+L.slug)||'{}')};
 if(!LINGUE.some(function(l){return l[0]===S.lang;}))S.lang='it';
-function t(k){return (S.lang!=='it'&&T[S.lang]&&T[S.lang][k])||k;}
+/* interfaccia: chiave italiana → lingua scelta (ripiego: inglese, poi italiano); {x} = valori da inserire */
+function t(k,v){var s=k;if(S.lang!=='it'){var d=T[S.lang]||{};s=d[k]!=null?d[k]:(T.en&&T.en[k]!=null?T.en[k]:k);}
+  if(v)s=s.replace(/\{(\w+)\}/g,function(_,n){return v[n]!=null?v[n]:'';});return s;}
 /* contenuti: campo tradotto con ripiego sull'italiano */
-function tr(tipo,id,campo,it){var b=D.tr&&D.tr[S.lang];if(!b)return it;var o=tipo==='luogo'?b.luogo:(b[tipo]&&b[tipo][id]);return (o&&o[campo]!=null)?o[campo]:it;}
+function tr(tipo,id,campo,it){var b=D.tr&&D.tr[S.lang];if(!b||S.lang==='it')return it;var o=tipo==='luogo'?b.luogo:(b[tipo]&&b[tipo][id]);return (o&&o[campo]!=null)?o[campo]:it;}
+/* campi dei moduli (festa, dove, offerte…): titolo_fr, titolo_es, titolo_en accanto all'italiano */
+function tf(o,k){if(!o)return '';return (S.lang!=='it'&&(o[k+'_'+S.lang]||o[k+'_en']))||o[k];}
 var TRIT=function(){return S.lang!=='it'&&!(D.tr&&D.tr[S.lang]);}; /* lingua senza contenuti → avviso */
+/* i «campi» tradotti (chiavi piatte come festa.momenti.sbarco.titolo) diventano titolo_fr, titolo_es… accanto all'italiano */
+function applicaCampi(){if(!D.tr)return;Object.keys(D.tr).forEach(function(lg){var c=D.tr[lg].campi;if(!c)return;Object.keys(c).forEach(function(k){try{mettiCampo(k.split('.'),c[k],lg);}catch(e){}});});}
+function mettiCampo(p,v,lg){
+  if(p[0]==='chiedi'&&p[1]==='suggerite'){var sg=L.chiedi&&L.chiedi.suggerite;if(sg)(sg[lg]=sg[lg]||[])[+p[2]]=v;return;}
+  var cur=L,par=null,key=null;
+  for(var i=0;i<p.length-1;i++){par=cur;key=p[i];
+    if(Array.isArray(cur))cur=/^\d+$/.test(key)?cur[+key]:cur.filter(function(x){return x&&x.id===key;})[0];else cur=cur[key];
+    if(cur==null)return;}
+  var k=p[p.length-1];
+  if(Array.isArray(cur)&&/^\d+$/.test(k))(par[key+'_'+lg]=par[key+'_'+lg]||[])[+k]=v;else cur[k+'_'+lg]=v;
+}
+applicaCampi();
+function voceNome(){return tr('luogo',0,'voce.nome',L.voce.nome);}
+function voceRuolo(){return tr('luogo',0,'voce.ruolo',L.voce.ruolo);}
+function ruoloN(n){return tr('narratori',n.id,'ruolo',n.ruolo);}
+function dettaglio(o,i,k){var b=D.tr&&D.tr[S.lang]&&S.lang!=='it'&&D.tr[S.lang].opere&&D.tr[S.lang].opere[o.id];var d=b&&b.dettagli&&b.dettagli[i];return (d&&d[k])||o.dettagli[i][k];}
+/* date e ore nella lingua scelta (sempre ora di Roma, calcolata altrove) */
+var CAL={it:{g:['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'],m:['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre']},
+  en:{g:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],m:['January','February','March','April','May','June','July','August','September','October','November','December']},
+  fr:{g:['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'],m:['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']},
+  es:{g:['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],m:['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']}};
+function nomeGiorno(i){return (CAL[S.lang]||CAL.it).g[i];}
+function nomeMese(i){return (CAL[S.lang]||CAL.it).m[i];}
+function oraLoc(h,mi){h=((h%24)+24)%24;var z=(mi<10?'0':'')+mi;if(S.lang==='en')return (h%12||12)+(mi?':'+z:'')+(h<12?' am':' pm');if(S.lang==='fr')return h+' h'+(mi?' '+z:'');return h+':'+z;}
+function maiusc(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
+/* «16 agosto 2027» / «August 16, 2027» / «16 août 2027» / «16 de agosto de 2027» */
+function dataLoc(d,mo,y,conGiorno,dow){var m=nomeMese(mo-1),g=conGiorno?nomeGiorno(dow):'';
+  if(S.lang==='en')return (g?g+', ':'')+m+' '+d+(y?', '+y:'');
+  if(S.lang==='es')return (g?g+' ':'')+d+' de '+m+(y?' de '+y:'');
+  return (g?g+' ':'')+(S.lang==='fr'&&d===1?'1er':d)+' '+m+(y?' '+y:'');}
+function intervalloLoc(d1,d2,mo,y){var m=nomeMese(mo-1);if(S.lang==='en')return m+' '+d1+'–'+d2+', '+y;if(S.lang==='es')return d1+'–'+d2+' de '+m+' de '+y;return d1+'–'+d2+' '+m+' '+y;}
+function elenco(a){if(a.length<2)return a.join('');var e={it:' e ',en:' and ',fr:' et ',es:' y '}[S.lang]||' e ';return a.slice(0,-1).join(', ')+e+a[a.length-1];}
 function save(){ls('esplora_lang',S.lang);ls('chiesa_fs',S.fs);ls('chiesa_modo',S.modo);ls('chiesa_timbri_'+L.slug,JSON.stringify(S.timbri));}
 
 /* ---------- scene, opere ---------- */
@@ -739,7 +899,7 @@ function applicaStatici(){
   document.documentElement.lang=S.lang;document.documentElement.dataset.fs=S.fs;
   document.querySelector('.salta').textContent=t('Vai al cammino');
   $('marcaNome').textContent=L.nome;$('voceAv').textContent=L.voce.sigla;document.querySelector('.top .sig').textContent=L.voce.sigla;
-  $('sogliaKicker').textContent=L.comune+' · '+(S.lang==='it'?'la visita raccontata':t('Il racconto').toLowerCase());
+  $('sogliaKicker').textContent=L.comune+' · '+t('la visita raccontata');
   $('claim').textContent=tr('luogo',0,'claim',L.claim);
   $('scorri').textContent=t('scorri per entrare');
   $('kRacconto').textContent=t('Atto I');$('hRacconto').textContent=t('Il racconto');
@@ -748,10 +908,13 @@ function applicaStatici(){
   $('kAscolta').textContent=t('Audioguida');$('hAscolta').textContent=t('Ascolta');
   $('kBarriere').textContent=t('Per tutti');$('hBarriere').textContent=t('Visita senza barriere');
   $('kInfo').textContent=t('Prima di venire');$('hInfo').textContent=t('Informazioni');
-  var nav=$('nav').querySelectorAll('a span');['Racconto','Cammino','Opere','Festa','Ascolta','Info'].forEach(function(k,i){if(nav[i])nav[i].textContent=k==='Festa'&&S.lang!=='it'?(S.lang==='fr'?'Fête':S.lang==='es'?'Fiesta':'Feast'):t(k);});
+  var nav=$('nav').querySelectorAll('a span');['Racconto','Cammino','Opere','Festa','Ascolta','Info'].forEach(function(k,i){if(nav[i])nav[i].textContent=t(k);});
   $('segModo').querySelectorAll('button').forEach(function(b){b.textContent=t(b.dataset.modo==='visita'?'Visita':'In classe');b.setAttribute('aria-pressed',b.dataset.modo===S.modo);});
-  $('lMeno').setAttribute('aria-label',S.lang==='it'?'Indietro di 15 secondi':'Back 15 seconds');$('lTesto').textContent=t('Testo').slice(0,2);$('lTesto').setAttribute('aria-label',t('Testo'));
+  $('lMeno').setAttribute('aria-label',t('Indietro di 15 secondi'));$('lTesto').textContent=t('Testo').slice(0,2);$('lTesto').setAttribute('aria-label',t('Testo'));
   $('opChiudi').setAttribute('aria-label',t('Chiudi'));$('lChiudi').setAttribute('aria-label',t('Chiudi'));
+  document.querySelectorAll('[data-ta]').forEach(function(e){e.setAttribute('aria-label',t(e.dataset.ta));});
+  document.querySelectorAll('[data-tt]').forEach(function(e){e.title=t(e.dataset.tt);});
+  document.querySelectorAll('[data-t]').forEach(function(e){e.textContent=t(e.dataset.t);});
   /* titolo inciso: lettere separate per l'animazione */
   var tit=L.nome.replace(/^Santuario di /,'');$('titoloInciso').innerHTML=tit.split(' ').map(function(w){return '<span class="w">'+w.split('').map(function(c){return '<span>'+esc(c)+'</span>';}).join('')+'</span>';}).join(' ');
   $('titoloInciso').setAttribute('aria-label',L.nome);
@@ -764,10 +927,10 @@ function applicaStatici(){
   /* banner «sono qui» */
   if(QUI){var s=bySlug[QUI];$('quiBanner').innerHTML='<b>'+t('Sei nel santuario')+'</b> · '+(s?esc(tr('scene',s.id,'titolo',s.titolo)):'')+' <span class="adesso" id="adessoQui" role="status"></span><span class="sp" style="flex:1"></span><a href="#racconto" id="btnEsciQui">'+t('Vedi il racconto')+' ›</a>';$('btnEsciQui').onclick=function(e){e.preventDefault();esciQui();};}
   if(window.Orari)Orari.mostra();
-  $('credito').innerHTML=t('Produzione')+': <a href="https://www.esploratrapani.it" rel="noopener">Esplora Trapani</a> · <span class="prova">'+(S.lang==='it'?'riprese 360 e drone di Alessandro Milia · testi da fonti pubbliche, da validare con il parroco · voci sintetiche di prova':'360 and drone footage by Alessandro Milia · texts from public sources, to be validated with the parish priest · synthetic test voices')+'</span>';
+  $('credito').innerHTML=t('Produzione')+': <a href="https://www.esploratrapani.it" rel="noopener">Esplora Trapani</a> · <span class="prova">'+t('riprese 360 e drone di Alessandro Milia · testi da fonti pubbliche, da validare con il parroco · voci sintetiche di prova')+'</span>';
 }
 $('fsBtn').onclick=function(){S.fs=S.fs%3+1;save();document.documentElement.dataset.fs=S.fs;if(GS)ScrollTrigger.refresh();};
-$('segModo').querySelectorAll('button').forEach(function(b){b.onclick=function(){S.modo=b.dataset.modo;save();applicaStatici();renderRacconto();};});
+$('segModo').querySelectorAll('button').forEach(function(b){b.onclick=function(){if(b.dataset.modo==='classe')Lim.apri();else Lim.chiudi();};});
 
 /* ====================================================================
    SOGLIA (ingresso 2): facciata del 360 come ante che si aprono
@@ -813,27 +976,27 @@ var Vplayers={};
 var vicino=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var v=e.target;if(v.dataset.poster&&!v.poster)v.poster=v.dataset.poster;if(v.preload==='none')v.preload='metadata';vicino.unobserve(v);});},{rootMargin:'600px 0px'}):null;
 function renderRacconto(){
   if(QUI){$('racconto').hidden=true;return;}
-  $('voceSaluto').innerHTML='<b>'+esc(L.voce.nome)+' · '+esc(L.voce.ruolo)+'</b>'+esc(tr('luogo',0,'voce.saluto',L.voce.saluto));
-  $('narrNota').innerHTML=D.narratori.map(function(n){return '<span class="chip oro">'+esc(n.nome)+' · '+esc(n.ruolo)+'</span>';}).join(' ')+' <span class="prova">'+(S.lang==='it'?'narratori di prova':'test narrators')+'</span>';
+  $('voceSaluto').innerHTML='<b>'+esc(voceNome())+' · '+esc(voceRuolo())+'</b>'+esc(tr('luogo',0,'voce.saluto',L.voce.saluto));
+  $('narrNota').innerHTML=D.narratori.map(function(n){return '<span class="chip oro">'+esc(n.nome)+' · '+esc(ruoloN(n))+'</span>';}).join(' ')+' <span class="prova">'+t('narratori di prova')+'</span>';
   var h='';
   D.capitoli.forEach(function(c){
     var n=c.narratore?narr(c.narratore):null;
-    var chi=n?('<div class="av">'+esc(n.sigla)+'</div><span>'+esc(n.nome)+' · '+esc(n.ruolo)+'</span>'):('<div class="av">'+esc(D.narratori[0].sigla)+esc(D.narratori[1].sigla)+'</div><span>'+D.narratori.map(function(x){return esc(x.nome);}).join(' & ')+'</span>');
+    var chi=n?('<div class="av">'+esc(n.sigla)+'</div><span>'+esc(n.nome)+' · '+esc(ruoloN(n))+'</span>'):('<div class="av">'+esc(D.narratori[0].sigla)+esc(D.narratori[1].sigla)+'</div><span>'+D.narratori.map(function(x){return esc(x.nome);}).join(' & ')+'</span>');
     h+='<article class="cap" id="cap-'+c.id+'" aria-labelledby="hcap-'+c.id+'">'+
       '<div><div class="n">'+c.n+'</div><h3 id="hcap-'+c.id+'">'+esc(tr('capitoli',c.id,'titolo',c.titolo))+'</h3><div class="sotto">'+esc(tr('capitoli',c.id,'sottotitolo',c.sottotitolo))+'</div>'+
-      '<div class="voce"><div class="av">'+esc(L.voce.sigla)+'</div><div class="fumetto"><b>'+esc(L.voce.nome)+'</b>'+esc(tr('capitoli',c.id,'voce_luogo',c.voce_luogo))+'</div></div>'+
+      '<div class="voce"><div class="av">'+esc(L.voce.sigla)+'</div><div class="fumetto"><b>'+esc(voceNome())+'</b>'+esc(tr('capitoli',c.id,'voce_luogo',c.voce_luogo))+'</div></div>'+
       '<p>'+esc(tr('capitoli',c.id,'breve',c.breve))+'</p>'+
       '<div class="chi">'+chi+(c.stato_testo==='da_validare'?'<span class="stato">· '+t('testo di prova · da validare')+'</span>':'')+'</div>'+
       '<div class="card scheda-scop" id="scop-'+c.id+'"></div>'+
-      (c.trascrizione?'<details><summary>'+t('Trascrizione')+'</summary><div class="in trascr">'+esc(c.trascrizione)+(S.lang!=='it'?' <span class="chip">'+t('contenuti in italiano')+'</span>':'')+'</div></details>':'')+
+      (c.trascrizione?'<details><summary>'+t('Trascrizione')+'</summary><div class="in trascr">'+esc(tr('capitoli',c.id,'trascrizione',c.trascrizione))+(S.lang!=='it'?' <span class="chip">'+t('la voce del video è in italiano')+'</span>':'')+'</div></details>':'')+
       (c.n===1&&L.lettura_facile?'<details class="facile"><summary>'+t('Testo facile')+'</summary><div class="in">'+esc(tr('luogo',0,'lettura_facile',L.lettura_facile))+'</div></details>':'')+
       '</div>'+
       '<div class="vid" id="vid-'+c.id+'">'+
-        '<video playsinline preload="none" data-poster="'+esc(c.poster)+'" aria-label="'+esc(c.titolo)+'"><source src="'+esc(c.video)+'" type="video/mp4">'+(c.sottotitoli?'<track kind="subtitles" srclang="it" label="Italiano" src="'+esc(c.sottotitoli)+'">':'')+'</video>'+
+        '<video playsinline preload="none" data-poster="'+esc(c.poster)+'" aria-label="'+esc(tr('capitoli',c.id,'titolo',c.titolo))+'"><source src="'+esc(c.video)+'" type="video/mp4">'+(c.sottotitoli?'<track kind="subtitles" srclang="it" label="Italiano" src="'+esc(c.sottotitoli)+'">':'')+'</video>'+
         '<button class="avvia"><span>▶ '+t('Guarda il racconto')+'</span><small>'+mmss(c.durata)+(c.sottotitoli?' · '+t('Sottotitoli nei video').toLowerCase():'')+'</small></button>'+
         '<button class="pp" hidden aria-label="'+t('Pausa')+'">❚❚</button>'+
         '<button class="scop" aria-label="'+t('Scoperta')+'">?</button>'+
-        '<div class="narr"><div class="fumetto"><b>'+esc(L.voce.nome)+'</b><span></span></div></div>'+
+        '<div class="narr"><div class="fumetto"><b>'+esc(voceNome())+'</b><span></span></div></div>'+
         '<div class="barra"><i></i></div>'+
       '</div></article>';
   });
@@ -852,26 +1015,26 @@ function bindCapitolo(c){
   pp.onclick=function(){if(P.attesa)return;if(v.paused)play();else{v.pause();pp.textContent='▶';pp.setAttribute('aria-label',t('Riproduci'));}};
   v.addEventListener('timeupdate',function(){
     if(v.duration)fill.style.width=(v.currentTime/v.duration*100)+'%';
-    if(c.scoperta&&!P.fatta&&!P.attesa&&v.currentTime>=c.scoperta.t){v.pause();P.attesa=true;narrB.querySelector('span').textContent=c.scoperta.narr;narrB.classList.add('on');scop.classList.add('on');}
+    if(c.scoperta&&!P.fatta&&!P.attesa&&v.currentTime>=c.scoperta.t){v.pause();P.attesa=true;narrB.querySelector('span').textContent=tr('capitoli',c.id,'scoperta.narr',c.scoperta.narr);narrB.classList.add('on');scop.classList.add('on');}
   });
   v.addEventListener('ended',function(){timbra('cap:'+c.id);if(S.modo==='classe'&&c.quiz)quiz(c);});
   scop.onclick=function(){
     if(!P.attesa)return;scop.classList.remove('on');narrB.classList.remove('on');
-    var card=$('scop-'+c.id);card.innerHTML='<div class="kicker">'+t('Scoperta')+'</div><h4>'+esc(c.scoperta.tit)+'</h4><p>'+esc(c.scoperta.txt)+'</p>'+(c.stato_testo==='da_validare'?'<span class="prova">'+t('testo di prova · da validare')+'</span> ':'')+'<button class="btn sm pieno" style="margin-top:8px">'+t('Continua il racconto')+' ›</button>';
+    var card=$('scop-'+c.id);card.innerHTML='<div class="kicker">'+t('Scoperta')+'</div><h4>'+esc(tr('capitoli',c.id,'scoperta.tit',c.scoperta.tit))+'</h4><p>'+esc(tr('capitoli',c.id,'scoperta.txt',c.scoperta.txt))+'</p>'+(c.stato_testo==='da_validare'?'<span class="prova">'+t('testo di prova · da validare')+'</span> ':'')+'<button class="btn sm pieno" style="margin-top:8px">'+t('Continua il racconto')+' ›</button>';
     card.classList.add('on');card.querySelector('button').onclick=function(){card.classList.remove('on');P.attesa=false;P.fatta=true;play();box.scrollIntoView({block:'center',behavior:RIDOTTO?'auto':'smooth'});};
     card.scrollIntoView({block:'nearest',behavior:RIDOTTO?'auto':'smooth'});
   };
 }
 function quiz(c){
   var q=c.quiz,card=$('scop-'+c.id);
-  card.innerHTML='<div class="kicker">'+t('Quiz')+'</div><h4>'+esc(q.d)+'</h4><div class="quiz"><div class="opz">'+q.o.map(function(o,k){return '<button data-k="'+k+'">'+(k+1)+'. '+esc(o)+'</button>';}).join('')+'</div><p class="fb" aria-live="assertive"></p></div>';
+  var qo=tr('capitoli',c.id,'quiz.o',q.o);card.innerHTML='<div class="kicker">'+t('Quiz')+'</div><h4>'+esc(tr('capitoli',c.id,'quiz.d',q.d))+'</h4><div class="quiz"><div class="opz">'+qo.map(function(o,k){return '<button data-k="'+k+'">'+(k+1)+'. '+esc(o)+'</button>';}).join('')+'</div><p class="fb" aria-live="assertive"></p></div>';
   card.classList.add('on');
   card.querySelectorAll('.opz button').forEach(function(b){b.onclick=function(){var k=+b.dataset.k;if(k===q.ok){b.className='ok';card.querySelector('.fb').textContent=t('Esatto!');timbra('quiz:'+c.id);}else{b.className='ko';card.querySelector('.fb').textContent=t('Non proprio… riprova');}};});
 }
 function timbra(k){S.timbri[k]=1;save();renderPass();if(window.Rete)Rete.controlla();}
 function renderPass(){
   var n=D.capitoli.filter(function(c){return S.timbri['cap:'+c.id];}).length;
-  $('pass').innerHTML='<span class="nota">'+t('Timbri')+': '+n+' / '+D.capitoli.length+' '+t('capitoli ascoltati')+'</span> '+D.capitoli.map(function(c){return '<span class="t'+(S.timbri['cap:'+c.id]?' on':'')+'" title="'+esc(c.titolo)+'">'+c.n+'</span>';}).join('');
+  $('pass').innerHTML='<span class="nota">'+t('Timbri')+': '+n+' / '+D.capitoli.length+' '+t('capitoli ascoltati')+'</span> '+D.capitoli.map(function(c){return '<span class="t'+(S.timbri['cap:'+c.id]?' on':'')+'" title="'+esc(tr('capitoli',c.id,'titolo',c.titolo))+'">'+c.n+'</span>';}).join('');
 }
 
 /* ====================================================================
@@ -891,7 +1054,7 @@ function disegnaPianta(){
   var box=$('piantaBox'),img=$('piantaImg');
   function pronto(){renderPins();}
   if(!L.site_plan){schemaAuto();pronto();return;}
-  img.alt=(S.lang==='it'?'Pianta del santuario':'Plan of the sanctuary');img.onload=pronto;img.onerror=function(){img.onerror=null;schemaAuto();pronto();};
+  img.alt=t('Pianta del santuario');img.onload=pronto;img.onerror=function(){img.onerror=null;schemaAuto();pronto();};
   var via=false;function carica(){if(via)return;via=true;img.src=L.site_plan;if(img.complete&&img.naturalWidth)pronto();}
   primoPano.then(carica);setTimeout(carica,1500);
 }
@@ -906,7 +1069,7 @@ function renderPins(){
   svg.innerHTML=filo;
   var leg=$('piantaLeg');leg.innerHTML='';
   if(A&&A.percorso_accessibile){var bt=document.createElement('button');bt.className='chip';bt.id='btnPercorso';bt.setAttribute('aria-pressed',percorsoOn);bt.innerHTML='♿ '+t(percorsoOn?'nascondi il percorso':'mostra il percorso');bt.onclick=function(){percorsoOn=!percorsoOn;renderPins();};leg.appendChild(bt);}
-  if(piantaAuto){var c=document.createElement('span');c.className='chip';c.textContent=S.lang==='it'?'schema automatico':'auto diagram';leg.appendChild(c);}
+  if(piantaAuto){var c=document.createElement('span');c.className='chip';c.textContent=t('schema automatico');leg.appendChild(c);}
   aggiornaPins();
 }
 function aggiornaPins(){
@@ -985,7 +1148,7 @@ function renderCassetto(s){
   if(s.deviazioni&&s.deviazioni.length)h+='<div class="dev">'+s.deviazioni.map(function(d){var ds=byId[d.a];return ds?'<button class="btn sm" data-dev="'+ds.id+'">↳ '+esc(tr('scene',ds.id,'titolo',ds.titolo))+'</button>':'';}).join('')+'</div>';
   if(inDeviazione){var p=byId[s.da]||MAIN[MAIN.length-1];h+='<div class="dev"><button class="btn sm pieno" data-dev="'+p.id+'">↩ '+t('Torno al cammino')+'</button></div>';}
   if(verso)h+='<div class="verso">'+t('Prosegui verso').replace(' verso','')+': '+esc(verso)+'</div>';
-  if(L.chiedi)h+='<button class="btn sm ghost btn-chiedi" id="btnChiediQui">? '+(S.lang==='it'?'Hai una domanda su questo punto?':'A question about this spot?')+'</button>';
+  if(L.chiedi)h+='<button class="btn sm ghost btn-chiedi" id="btnChiediQui">? '+t('Hai una domanda su questo punto?')+'</button>';
   if(!inDeviazione)h+='<div class="nav-scene"><button class="btn sm ghost" id="scPrev"'+(k<=0?' disabled':'')+'>‹ '+t('Precedente')+'</button><span class="pos">'+(k+1)+' / '+MAIN.length+'</span><button class="btn sm ghost" id="scNext"'+(k>=MAIN.length-1?' disabled':'')+'>'+t('Successiva')+' ›</button></div>';
   var c=$('cassetto');c.innerHTML=h;
   c.querySelectorAll('[data-tr]').forEach(function(b){b.onclick=function(){var id=b.dataset.tr;Lettore.suona(id==='ad'+s.id?{id:id,titolo:t('Descrizione di ciò che vedi')+' · '+tit,sub:t('Il custode'),src:s.audiodescrizione,durata:s.audiodescrizione_durata,testo:tr('scene',s.id,'audiodescrizione_testo',s.audiodescrizione_testo)||alt}:{id:id,titolo:tit,sub:t('La guida'),src:s.audio,durata:s.durata,testo:tr('scene',s.id,'trascrizione',s.trascrizione)||testo,fine:function(){timbra('sc:'+s.id);aggiornaPins();}});};});
@@ -1023,10 +1186,10 @@ function scrollCammino(){
    ==================================================================== */
 function renderOpere(){
   var pell=$('pellicola');
-  $('opereNota').textContent=S.lang==='it'?'Nel 360 le opere hanno una cornice che si accende quando le guardi: toccala per avvicinarti. Qui sotto, tutte le opere verificate.':'In the 360 the works have a frame that lights up when you look at them: tap it to get closer. Below, all the verified works.';
-  pell.innerHTML=OP.map(function(o){var sp=scenaPrincipale(o);var meta=(o.autore?esc(o.autore):'<span class="studio">'+t('in studio')+'</span>')+' · '+(o.datazione?esc(o.datazione):'<span class="studio">'+t('in studio')+'</span>');
-    return '<article class="opera-card" id="opc-'+o.id+'"><div class="quadro">'+(o.foto_hd?'<img src="'+esc(o.foto_hd)+'" alt="'+esc(o.titolo)+'" loading="lazy">':'<div class="t">'+esc(tr('opere',o.id,'titolo',o.titolo))+'</div>')+'<div class="corn"></div></div>'+
-      '<div class="in"><h3>'+(o.capolavoro?'<span class="stella" title="'+t('capolavoro')+'">★</span> ':'')+esc(tr('opere',o.id,'titolo',o.titolo))+'</h3><div class="meta">'+esc(o.tipo)+' · '+meta+'</div>'+
+  $('opereNota').textContent=t('Nel 360 le opere hanno una cornice che si accende quando le guardi: toccala per avvicinarti. Qui sotto, tutte le opere verificate.');
+  pell.innerHTML=OP.map(function(o){var sp=scenaPrincipale(o);var meta=(o.autore?esc(tr('opere',o.id,'autore',o.autore)):'<span class="studio">'+t('in studio')+'</span>')+' · '+(o.datazione?esc(tr('opere',o.id,'datazione',o.datazione)):'<span class="studio">'+t('in studio')+'</span>');
+    return '<article class="opera-card" id="opc-'+o.id+'"><div class="quadro">'+(o.foto_hd?'<img src="'+esc(o.foto_hd)+'" alt="'+esc(tr('opere',o.id,'titolo',o.titolo))+'" loading="lazy">':'<div class="t">'+esc(tr('opere',o.id,'titolo',o.titolo))+'</div>')+'<div class="corn"></div></div>'+
+      '<div class="in"><h3>'+(o.capolavoro?'<span class="stella" title="'+t('capolavoro')+'">★</span> ':'')+esc(tr('opere',o.id,'titolo',o.titolo))+'</h3><div class="meta">'+esc(tr('opere',o.id,'tipo',o.tipo))+' · '+meta+'</div>'+
       '<div class="az"><button class="btn sm" data-vedi="'+o.id+'">'+t('Guardala nel 360')+'</button><button class="btn sm ghost" data-apri="'+o.id+'">'+t('Apri la scheda')+'</button></div>'+
       (sp?'<div class="nota">'+t('Dov’è')+': '+esc(tr('scene',sp.id,'titolo',sp.titolo))+'</div>':'')+'</div></article>';}).join('');
   pell.querySelectorAll('[data-vedi]').forEach(function(b){b.onclick=function(){var o=OP.filter(function(z){return z.id===+b.dataset.vedi;})[0];guardaOpera(o);};});
@@ -1043,17 +1206,17 @@ function apriOpera(o,zoom){if(window.Stat)Stat.ev('opera',o.slug,true); /* livel
   var p=o.scene.filter(function(x){return x.principale;})[0]||o.scene[0];
   var dopo=function(){
     var f=$('opFoto'),sch=$('opScheda');
-    f.innerHTML=o.foto_hd?'<img src="'+esc(o.foto_hd)+'" alt="'+esc(o.titolo)+'">'+(o.dettagli||[]).map(function(d,i){return '<button class="det" style="left:'+d.x+'%;top:'+d.y+'%" data-i="'+i+'" aria-label="'+esc(d.tit)+'"><b>'+esc(d.tit)+'</b></button>';}).join('')+'<div class="det-pop" id="detPop"></div>':'<div class="nofoto"><div class="opera-card" style="margin:0 auto 14px;flex:none"><div class="quadro" style="aspect-ratio:4/5;width:220px"><div class="t">'+esc(tr('opere',o.id,'titolo',o.titolo))+'</div><div class="corn"></div></div></div>'+t('Foto ad alta risoluzione non ancora caricata')+'</div>';
-    var meta='<dl><dt>'+esc(S.lang==='it'?'Tipo':'Type')+'</dt><dd>'+esc(o.tipo)+'</dd><dt>'+esc(S.lang==='it'?'Autore':'Author')+'</dt><dd>'+(o.autore?esc(o.autore):'<span class="studio">'+t('in studio')+'</span>')+'</dd><dt>'+esc(S.lang==='it'?'Data':'Date')+'</dt><dd>'+(o.datazione?esc(o.datazione):'<span class="studio">'+t('in studio')+'</span>')+'</dd></dl>';
+    f.innerHTML=o.foto_hd?'<img src="'+esc(o.foto_hd)+'" alt="'+esc(tr('opere',o.id,'titolo',o.titolo))+'">'+(o.dettagli||[]).map(function(d,i){return '<button class="det" style="left:'+d.x+'%;top:'+d.y+'%" data-i="'+i+'" aria-label="'+esc(dettaglio(o,i,'tit'))+'"><b>'+esc(dettaglio(o,i,'tit'))+'</b></button>';}).join('')+'<div class="det-pop" id="detPop"></div>':'<div class="nofoto"><div class="opera-card" style="margin:0 auto 14px;flex:none"><div class="quadro" style="aspect-ratio:4/5;width:220px"><div class="t">'+esc(tr('opere',o.id,'titolo',o.titolo))+'</div><div class="corn"></div></div></div>'+t('Foto ad alta risoluzione non ancora caricata')+'</div>';
+    var meta='<dl><dt>'+esc(t('Tipo'))+'</dt><dd>'+esc(tr('opere',o.id,'tipo',o.tipo))+'</dd><dt>'+esc(t('Autore'))+'</dt><dd>'+(o.autore?esc(tr('opere',o.id,'autore',o.autore)):'<span class="studio">'+t('in studio')+'</span>')+'</dd><dt>'+esc(t('Data'))+'</dt><dd>'+(o.datazione?esc(tr('opere',o.id,'datazione',o.datazione)):'<span class="studio">'+t('in studio')+'</span>')+'</dd></dl>';
     var anche=o.scene.map(function(x){var s=byId[x.scena];return s?'<button class="btn sm ghost" data-sc="'+s.id+'" data-yaw="'+x.yaw+'" data-pitch="'+x.pitch+'">'+esc(tr('scene',s.id,'titolo',s.titolo))+'</button>':'';}).join('');
-    sch.innerHTML='<div class="kicker">'+(o.capolavoro?'★ '+t('capolavoro'):esc(o.tipo))+'</div><h2 id="opTitolo">'+esc(tr('opere',o.id,'titolo',o.titolo))+'</h2>'+meta+'<p>'+esc(tr('opere',o.id,'breve',o.breve))+'</p>'+(o.curiosita?'<p class="nota">'+esc(tr('opere',o.id,'curiosita',o.curiosita))+'</p>':'')+
-      (o.fonte_attribuzione?'<p class="nota"><a href="'+esc(o.fonte_attribuzione)+'" rel="noopener" target="_blank">'+(S.lang==='it'?'Fonte dell’attribuzione':'Source of the attribution')+' ↗</a></p>':'')+
+    sch.innerHTML='<div class="kicker">'+(o.capolavoro?'★ '+t('capolavoro'):esc(tr('opere',o.id,'tipo',o.tipo)))+'</div><h2 id="opTitolo">'+esc(tr('opere',o.id,'titolo',o.titolo))+'</h2>'+meta+'<p>'+esc(tr('opere',o.id,'breve',o.breve))+'</p>'+(o.curiosita?'<p class="nota">'+esc(tr('opere',o.id,'curiosita',o.curiosita))+'</p>':'')+
+      (o.fonte_attribuzione?'<p class="nota"><a href="'+esc(o.fonte_attribuzione)+'" rel="noopener" target="_blank">'+t('Fonte dell’attribuzione')+' ↗</a></p>':'')+
       '<div class="azioni" style="display:flex;gap:8px;flex-wrap:wrap">'+(o.audio?'<button class="btn pieno" data-a="1">▶ '+t('ascolta')+' · '+t('La guida')+' · '+mmss(o.durata)+'</button>':'')+(o.audio_voce2?'<button class="btn" data-a="2">▶ '+t('Seconda voce')+' · '+t('Il custode')+' · '+mmss(o.durata_voce2)+'</button>':'')+'</div>'+
       (o.dettagli&&o.dettagli.length&&o.foto_hd?'<p class="nota">'+t('Tocca un dettaglio')+'</p>':'')+
       '<div><div class="kicker" style="margin-bottom:6px">'+t('La vedi anche in')+'</div><div class="anche">'+anche+'</div></div>';
     sch.querySelectorAll('[data-a]').forEach(function(b){b.onclick=function(){var v2=b.dataset.a==='2';Lettore.suona({id:'o'+o.id+(v2?'b':''),titolo:tr('opere',o.id,'titolo',o.titolo),sub:v2?t('Il custode'):t('La guida'),src:v2?o.audio_voce2:o.audio,durata:v2?o.durata_voce2:o.durata,testo:v2?(tr('opere',o.id,'trascrizione_voce2',o.trascrizione_voce2)||null):(tr('opere',o.id,'trascrizione',o.trascrizione)||tr('opere',o.id,'breve',o.breve))});};});
     sch.querySelectorAll('[data-sc]').forEach(function(b){b.onclick=function(){chiudiOpera();guardaOpera(o,byId[+b.dataset.sc]);};});
-    f.querySelectorAll('.det').forEach(function(b){b.onclick=function(){var d=o.dettagli[+b.dataset.i];var pop=$('detPop');pop.innerHTML='<b>'+esc(d.tit)+'</b><p style="margin:4px 0 0">'+esc(d.txt)+'</p>';pop.classList.add('on');};});
+    f.querySelectorAll('.det').forEach(function(b){b.onclick=function(){var i=+b.dataset.i;var pop=$('detPop');pop.innerHTML='<b>'+esc(dettaglio(o,i,'tit'))+'</b><p style="margin:4px 0 0">'+esc(dettaglio(o,i,'txt'))+'</p>';pop.classList.add('on');};});
     var pan=$('opPanel');pan.classList.add('on');$('opChiudi').focus();
     if(GS&&!RIDOTTO){gsap.fromTo('#opFoto img,#opFoto .nofoto',{opacity:0,scale:1.08},{opacity:1,scale:1,duration:.9,ease:'power2.out'});gsap.from('#opScheda > *',{opacity:0,y:16,stagger:.06,duration:.5,ease:'power2.out'});}
   };
@@ -1103,9 +1266,9 @@ var Guida={on:false,i:-1,lista:[],
 };
 function renderAscolta(){
   var tr_=[];SC.forEach(function(s){if(s.audio)tr_.push({id:'s'+s.id,titolo:tr('scene',s.id,'titolo',s.titolo),sub:t('Scena')+' · '+t('La guida'),src:s.audio,durata:s.durata,testo:tr('scene',s.id,'testo',s.testo)});if(s.audiodescrizione)tr_.push({id:'ad'+s.id,titolo:t('Descrizione di ciò che vedi')+' · '+tr('scene',s.id,'titolo',s.titolo),sub:t('Audiodescrizione')+' · '+t('Il custode'),src:s.audiodescrizione,durata:s.audiodescrizione_durata,testo:tr('scene',s.id,'descrizione_scena',s.descrizione_scena)});});
-  OP.forEach(function(o){if(o.audio)tr_.push({id:'o'+o.id,titolo:tr('opere',o.id,'titolo',o.titolo),sub:(S.lang==='it'?'Opera':'Work')+' · '+t('La guida'),src:o.audio,durata:o.durata,testo:tr('opere',o.id,'breve',o.breve)});if(o.audio_voce2)tr_.push({id:'o'+o.id+'b',titolo:tr('opere',o.id,'titolo',o.titolo),sub:t('Seconda voce')+' · '+t('Il custode'),src:o.audio_voce2,durata:o.durata_voce2,testo:null});});
+  OP.forEach(function(o){if(o.audio)tr_.push({id:'o'+o.id,titolo:tr('opere',o.id,'titolo',o.titolo),sub:t('Opera')+' · '+t('La guida'),src:o.audio,durata:o.durata,testo:tr('opere',o.id,'breve',o.breve)});if(o.audio_voce2)tr_.push({id:'o'+o.id+'b',titolo:tr('opere',o.id,'titolo',o.titolo),sub:t('Seconda voce')+' · '+t('Il custode'),src:o.audio_voce2,durata:o.durata_voce2,testo:null});});
   var tot=tr_.reduce(function(a,x){return a+(x.durata||0);},0);
-  $('ascoltaNota').innerHTML=(S.lang==='it'?'Nessun audio parte da solo: il primo suono nasce da un tocco. Il lettore resta in basso mentre scorri.':'No audio starts by itself: the first sound comes from a tap. The player stays at the bottom while you scroll.')+' <b>'+t('Durata totale')+': '+mmss(tot)+'</b> · <span class="lingue-audio"><span class="chip">IT</span></span>';
+  $('ascoltaNota').innerHTML=t('Nessun audio parte da solo: il primo suono nasce da un tocco. Il lettore resta in basso mentre scorri.')+' <b>'+t('Durata totale')+': '+mmss(tot)+'</b> · <span class="lingue-audio"><span class="chip">IT</span></span>';
   $('tracce').innerHTML=tr_.map(function(x){return '<div class="traccia" data-id="'+x.id+'"><button class="play" aria-label="'+t('Riproduci')+': '+esc(x.titolo)+'">▶</button><div class="t"><b>'+esc(x.titolo)+'</b><small>'+esc(x.sub)+'</small></div><span class="d">'+mmss(x.durata)+'</span></div>';}).join('');
   $('tracce').querySelectorAll('.traccia').forEach(function(el,i){el.querySelector('.play').onclick=function(){Lettore.suona(tr_[i]);};});
   renderGuidaCard();renderScarica();
@@ -1130,7 +1293,7 @@ function listaScarico(){ /* tutto: anche panorami nitidi, reel e foto delle oper
   return u;
 }
 /* ---------- senza rete: service worker automatico ---------- */
-var VERSIONE_PAGINA='20261017c';
+var VERSIONE_PAGINA='20261017d';
 var SWok=!ARTEFATTO&&'serviceWorker' in navigator&&/^https?:$/.test(location.protocol), SWreg=null, Rete={essenziale:null,tutto:null};
 function swInvia(msg,cb){if(!SWreg)return;var w=SWreg.active||navigator.serviceWorker.controller;if(!w)return;var ch=new MessageChannel();ch.port1.onmessage=function(e){cb&&cb(e.data||{});};w.postMessage(msg,[ch.port2]);}
 function swAvvia(){
@@ -1162,9 +1325,9 @@ function prepara(urls,chi){
 function statoRete(){
   var e=Rete.essenziale,chip=$('reteChip');if(!chip)return;
   var off=!navigator.onLine,txt='',cls='';
-  if(e&&e.tot&&e.fatti>=e.tot){txt='✓ '+(S.lang==='it'?'pronta anche senza rete':'ready offline');cls='ok';}
-  else if(e&&e.corso){txt=(S.lang==='it'?'preparo la visita senza rete':'preparing offline visit')+' '+Math.round(100*e.fatti/Math.max(1,e.tot))+'%';cls='corso';}
-  if(off)txt=(S.lang==='it'?'senza rete':'offline')+(e&&e.fatti>=e.tot?' · '+(S.lang==='it'?'tutto disponibile':'everything available'):' · '+(S.lang==='it'?'solo ciò che è già scaricato':'only what is downloaded'));
+  if(e&&e.tot&&e.fatti>=e.tot){txt='✓ '+t('pronta anche senza rete');cls='ok';}
+  else if(e&&e.corso){txt=t('preparo la visita senza rete')+' '+Math.round(100*e.fatti/Math.max(1,e.tot))+'%';cls='corso';}
+  if(off)txt=t('senza rete')+(e&&e.fatti>=e.tot?' · '+t('tutto disponibile'):' · '+t('solo ciò che è già scaricato'));
   chip.textContent=txt;chip.className='rete-chip '+cls+(off?' off':'');chip.hidden=!txt;
   if($('scaricaCard'))renderScarica();
 }
@@ -1172,12 +1335,12 @@ window.addEventListener('online',statoRete);window.addEventListener('offline',st
 function renderScarica(){
   var c=$('scaricaCard'),it=S.lang==='it',e=Rete.essenziale,tu=Rete.tutto;
   var mb=Math.round(10+SC.length*(D.peso.panorama_mb||1.3)+D.capitoli.length*6);
-  if(!SWok){c.innerHTML='<h3>'+t('Scarica la visita')+'</h3><p class="nota">'+(ARTEFATTO?(it?'Non disponibile in questa anteprima: funziona sulla pagina pubblicata.':'Not available in this preview: it works on the published page.'):t('Disponibile quando la pagina è online (http), non aprendo il file dal computer.'))+'</p>';return;}
+  if(!SWok){c.innerHTML='<h3>'+t('Scarica la visita')+'</h3><p class="nota">'+(ARTEFATTO?t('Non disponibile in questa anteprima: funziona sulla pagina pubblicata.'):t('Disponibile quando la pagina è online (http), non aprendo il file dal computer.'))+'</p>';return;}
   var pct=function(d){return d&&d.tot?Math.round(100*d.fatti/d.tot):0;};
-  var h='<h3>'+(it?'Senza rete':'Offline')+'</h3><p>'+(it?'Dentro una chiesa la rete spesso manca. La visita si prepara da sola appena apri la pagina: panorami leggeri, voci e pianta.':'Inside a church there is often no signal. The visit gets ready by itself as soon as you open the page: light panoramas, voices and plan.')+'</p>';
-  h+='<div class="rete-riga"><b>'+(it?'Visita essenziale':'Essential visit')+'</b><span>'+(e&&e.fatti>=e.tot?'✓ '+(it?'pronta':'ready'):(e&&e.corso?pct(e)+'%':(it?'in attesa':'waiting')))+'</span></div><div class="rete-barra"><i style="width:'+pct(e)+'%"></i></div>';
-  h+='<div class="rete-riga"><b>'+(it?'Tutto, anche reel e panorami nitidi':'Everything, reels and sharp panoramas too')+'</b><span>'+(tu&&tu.fatti>=tu.tot?'✓':(tu&&tu.corso?pct(tu)+'%':(it?'circa ':'about ')+mb+' MB'))+'</span></div><div class="rete-barra"><i style="width:'+pct(tu)+'%"></i></div>';
-  if(!(tu&&(tu.fatti>=tu.tot||tu.corso)))h+='<button class="btn pieno" id="btnScarica">⤓ '+(it?'Scarica tutto (meglio col Wi-Fi)':'Download everything (Wi-Fi recommended)')+'</button>';
+  var h='<h3>'+t('Senza rete')+'</h3><p>'+t('Dentro una chiesa la rete spesso manca. La visita si prepara da sola appena apri la pagina: panorami leggeri, voci e pianta.')+'</p>';
+  h+='<div class="rete-riga"><b>'+t('Visita essenziale')+'</b><span>'+(e&&e.fatti>=e.tot?'✓ '+t('pronta'):(e&&e.corso?pct(e)+'%':t('in attesa')))+'</span></div><div class="rete-barra"><i style="width:'+pct(e)+'%"></i></div>';
+  h+='<div class="rete-riga"><b>'+t('Tutto, anche reel e panorami nitidi')+'</b><span>'+(tu&&tu.fatti>=tu.tot?'✓':(tu&&tu.corso?pct(tu)+'%':t('circa ')+mb+' MB'))+'</span></div><div class="rete-barra"><i style="width:'+pct(tu)+'%"></i></div>';
+  if(!(tu&&(tu.fatti>=tu.tot||tu.corso)))h+='<button class="btn pieno" id="btnScarica">⤓ '+t('Scarica tutto (meglio col Wi-Fi)')+'</button>';
   c.innerHTML=h;
   if($('btnScarica'))$('btnScarica').onclick=function(){prepara(listaScarico(),'tutto');};
 }
@@ -1189,11 +1352,11 @@ function renderBarriere(){
   var Ac=L.accessibilita||{},righe=[];
   function r(ic,tit,val){righe.push('<li><span class="ic">'+ic+'</span><div><b>'+tit+'</b>'+(val?'<div class="nota">'+val+'</div>':'')+'</div></li>');}
   var haTrascr=SC.some(function(s){return s.audio&&s.testo;})||D.capitoli.some(function(c){return c.trascrizione;});
-  if(haTrascr)r('¶',t('Trascrizioni di tutti gli audio'),S.lang==='it'?'sotto ogni video e nel lettore (tasto Aa)':'under each video and in the player (Aa button)');
+  if(haTrascr)r('¶',t('Trascrizioni di tutti gli audio'),t('sotto ogni video e nel lettore (tasto Aa)'));
   if(D.capitoli.some(function(c){return c.sottotitoli;}))r('CC',t('Sottotitoli nei video'),'IT');
-  if(SC.some(function(s){return s.descrizione_scena;}))r('◉',t('Cosa hai davanti'),S.lang==='it'?'ogni scena 360 ha una descrizione testuale letta dallo screen reader':'every 360 scene has a text description read by the screen reader');
+  if(SC.some(function(s){return s.descrizione_scena;}))r('◉',t('Cosa hai davanti'),t('ogni scena 360 ha una descrizione testuale letta dallo screen reader'));
   if(SC.some(function(s){return s.audiodescrizione;}))r('♪',t('Audiodescrizione'),SC.filter(function(s){return s.audiodescrizione;}).map(function(s){return esc(tr('scene',s.id,'titolo',s.titolo));}).join(', '));
-  if(L.lettura_facile)r('Aa',t('Lettura facile'),S.lang==='it'?'nel capitolo 1':'in chapter 1');
+  if(L.lettura_facile)r('Aa',t('Lettura facile'),t('nel capitolo 1'));
   if(Ac.gradino_ingresso_cm!=null)r('⌐',t('Gradino all’ingresso'),Ac.gradino_ingresso_cm+' cm');
   if(Ac.rampa!=null)r('↗',t('Rampa'),'<span class="tre '+(Ac.rampa?'si':'no')+'"><i></i>'+t(Ac.rampa?'sì':'no')+'</span>');
   if(Ac.bagno_accessibile!=null)r('wc',t('Bagno accessibile'),'<span class="tre '+(Ac.bagno_accessibile?'si':'no')+'"><i></i>'+t(Ac.bagno_accessibile?'sì':'no')+'</span>');
@@ -1212,12 +1375,11 @@ function renderBarriere(){
 var Orari=(function(){
   var C=L.calendario||null, t0=Date.now(), base=null, visti={}, ultimoStato='';
   if(ORA_URL){var m=/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)/.exec(ORA_URL);if(m)base={y:+m[1],mo:+m[2],d:+m[3],h:+m[4],mi:+m[5]};}
-  var GIORNI={it:['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'],en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']};
   function it(){return S.lang==='it';}
-  function gn(i){return (it()?GIORNI.it:GIORNI.en)[i];}
-  function hm(x){var h=Math.floor(x/60)%24,mi=x%60;return it()?h+':'+(mi<10?'0':'')+mi:(h%12||12)+(mi?':'+(mi<10?'0':'')+mi:'')+(h<12?' am':' pm');}
+  function gn(i){return nomeGiorno(i);}
+  function hm(x){return oraLoc(Math.floor(x/60)%24,x%60);}
   function min(s){var a=s.split(':');return +a[0]*60+ +a[1];}
-  function dataBella(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||'');if(!m)return s||'';var mesi=it()?['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre']:['January','February','March','April','May','June','July','August','September','October','November','December'];return it()?(+m[3])+' '+mesi[+m[2]-1]+' '+m[1]:mesi[+m[2]-1]+' '+(+m[3])+', '+m[1];}
+  function dataBella(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||'');if(!m)return s||'';return dataLoc(+m[3],+m[2],m[1]);}
   function chiaveData(d){return d.y+'-'+(d.mo<10?'0':'')+d.mo+'-'+(d.d<10?'0':'')+d.d;}
   /* «adesso» a Roma: dal fuso del telefono non dipende */
   function adesso(){
@@ -1238,7 +1400,7 @@ var Orari=(function(){
     var iv=ap.map(function(r){var a=r.split('-');var z=min(a[1]);var s0=min(a[0]);if(z<=s0)z+=1440;return [s0,z];});
     messe.forEach(function(m){iv.push([m-pr,m+dm]);});
     iv.sort(function(a,b){return a[0]-b[0];});var u=[];iv.forEach(function(x){var l=u[u.length-1];if(l&&x[0]<=l[1])l[1]=Math.max(l[1],x[1]);else u.push(x.slice());});
-    return {aperto:u,messe:messe,dm:dm,nota:ecc&&ecc.nota,festa:festa(d),estate:estate(d)};
+    return {aperto:u,messe:messe,dm:dm,nota:ecc&&tf(ecc,'nota'),festa:festa(d),estate:estate(d)};
   }
   function stato(){
     if(!C)return null;var n=adesso(),g=giorno(n),x=n.t,r={g:g,n:n};
@@ -1251,15 +1413,15 @@ var Orari=(function(){
     if(r.messa!=null)r.cls='messa';else if(r.presto!=null)r.cls='presto';else r.cls=r.chiude!=null?'aperto':'chiuso';
     return r;
   }
-  function quando(rp){if(!rp)return '';if(rp.k===0)return (it()?'oggi alle ':'today at ')+hm(rp.t);if(rp.k===1)return (it()?'domani alle ':'tomorrow at ')+hm(rp.t);return (it()?gn(rp.dow)+' alle ':gn(rp.dow)+' at ')+hm(rp.t);}
+  function quando(rp){if(!rp)return '';if(rp.k===0)return t('oggi alle {h}',{h:hm(rp.t)});if(rp.k===1)return t('domani alle {h}',{h:hm(rp.t)});return t('{g} alle {h}',{g:gn(rp.dow),h:hm(rp.t)});}
   function testo(r){
-    if(r.messa!=null)return (it()?'Messa in corso · fino alle '+hm(r.messa+r.g.dm)+' circa':'Mass in progress · until about '+hm(r.messa+r.g.dm));
-    if(r.presto!=null){var mm=r.presto-r.n.t;return (it()?'Aperto · messa alle '+hm(r.presto)+', fra '+mm+' min':'Open · Mass at '+hm(r.presto)+', in '+mm+' min');}
-    if(r.chiude!=null)return (it()?'Aperto ora · chiude alle ':'Open now · closes at ')+hm(r.chiude);
-    return (it()?'Chiuso ora · riapre ':'Closed now · reopens ')+quando(r.riapre);
+    if(r.messa!=null)return t('Messa in corso · fino alle {h} circa',{h:hm(r.messa+r.g.dm)});
+    if(r.presto!=null){var mm=r.presto-r.n.t;return t('Aperto · messa alle {h}, fra {m} min',{h:hm(r.presto),m:mm});}
+    if(r.chiude!=null)return t('Aperto ora · chiude alle ')+hm(r.chiude);
+    return t('Chiuso ora · riapre ')+quando(r.riapre);
   }
   function mostra(){
-    var r=stato();if(!r)return;var tx=testo(r)+(r.g.festa?(it()?' · giorni della festa: orari speciali':' · feast days: special times'):'')+(r.g.nota?' · '+r.g.nota:'');
+    var r=stato();if(!r)return;var tx=testo(r)+(r.g.festa?t(' · giorni della festa: orari speciali'):'')+(r.g.nota?' · '+r.g.nota:'');
     ['adessoSoglia','adessoQui'].forEach(function(id){var e=$(id);if(!e)return;e.className='adesso '+r.cls;e.innerHTML='<i aria-hidden="true"></i><span>'+esc(tx)+'</span>';});
     var w=$('settimanaCard');if(w)w.querySelector('.stato-ora').innerHTML='<span class="adesso '+r.cls+'"><i aria-hidden="true"></i><span>'+esc(tx)+'</span></span>';
     avviso(r);ultimoStato=r.cls;
@@ -1274,10 +1436,10 @@ var Orari=(function(){
     var chiave=chiaveData(r.n)+'@'+m+(r.messa!=null?'c':'p');if(visti[chiave])return;visti[chiave]=1;
     var inCorso=r.messa!=null;
     if(inCorso&&!A.paused)Lettore.pausa();     /* la voce non parte sopra la messa */
-    box.innerHTML='<div class="kicker">'+(inCorso?(it()?'Messa in corso':'Mass in progress'):(it()?'Fra '+(m-r.n.t)+' minuti la messa':'Mass in '+(m-r.n.t)+' minutes'))+'</div>'+
-      '<h3 id="amTit">'+(inCorso?(it()?'Adesso si celebra: la visita è sospesa':'A service is on: the visit is suspended'):(it()?'Alle '+hm(m)+' comincia la messa':'Mass begins at '+hm(m)))+'</h3>'+
-      '<p id="amTxt">'+(it()?'Puoi restare in silenzio in fondo alla chiesa. Se vuoi continuare, usa le cuffie oppure leggi i testi al posto della voce.':'You can stay quietly at the back of the church. To go on, use headphones or read the texts instead of the voice.')+'</p>'+
-      '<div class="azioni"><button class="btn pieno" id="amTesto">'+(it()?'Solo testo, niente audio':'Text only, no audio')+'</button><button class="btn" id="amCuffie">'+(it()?'Ho le cuffie, continuo':'I have headphones')+'</button></div>';
+    box.innerHTML='<div class="kicker">'+(inCorso?t('Messa in corso'):t('Fra {m} minuti la messa',{m:m-r.n.t}))+'</div>'+
+      '<h3 id="amTit">'+(inCorso?t('Adesso si celebra: la visita è sospesa'):t('Alle {h} comincia la messa',{h:hm(m)}))+'</h3>'+
+      '<p id="amTxt">'+t('Puoi restare in silenzio in fondo alla chiesa. Se vuoi continuare, usa le cuffie oppure leggi i testi al posto della voce.')+'</p>'+
+      '<div class="azioni"><button class="btn pieno" id="amTesto">'+t('Solo testo, niente audio')+'</button><button class="btn" id="amCuffie">'+t('Ho le cuffie, continuo')+'</button></div>';
     box.hidden=false;
     $('amTesto').onclick=function(){SILENZIO=true;document.body.classList.add('silenzio');Lettore.pausa();if(Lettore.cur)Lettore.sheet(true);box.hidden=true;};
     $('amCuffie').onclick=function(){box.hidden=true;};
@@ -1289,12 +1451,12 @@ var Orari=(function(){
     ordine.forEach(function(dw){var off=(dw-n.dow+7)%7,dd=giornoDopo(n,off),g=giorno(dd);
       var ap=(((C.eccezioni||{})[chiaveData(dd)]||{}).apertura||C.apertura[dw]||[]).map(function(r){var a=r.split('-');return hm(min(a[0]))+'–'+hm(min(a[1]));}).join(', ');
       var ms=g.messe.map(hm).join(', ');
-      rows+='<tr'+(off===0?' class="oggi"':'')+'><td>'+esc(gn(dw).charAt(0).toUpperCase()+gn(dw).slice(1))+(off===0?' <span class="nota">· '+(it()?'oggi':'today')+'</span>':'')+'</td><td>'+(ap||'—')+'</td><td class="messa-ora">'+(ms||'—')+'</td></tr>';});
-    return '<div class="card" id="settimanaCard"><h3>'+(it()?'Orari della settimana':'This week’s times')+'</h3><div class="stato-ora"></div>'+
-      '<div style="overflow-x:auto"><table class="settimana"><thead><tr><th>'+(it()?'Giorno':'Day')+'</th><th>'+(it()?'Aperto':'Open')+'</th><th>'+(it()?'Messe':'Mass')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
-      '<p class="nota">'+(gOggi.estate?(it()?'Orario estivo delle messe (giugno–settembre).':'Summer Mass times (June–September).'):(it()?'Orario invernale delle messe (d’estate, giugno–settembre, cambia).':'Winter Mass times (they change in summer, June–September).'))+' '+t('Durante le funzioni la visita è sospesa')+'. '+
-      (it()?'Nei giorni della festa (fine agosto) gli orari cambiano. ':'On the feast days (late August) times change. ')+
-      (it()?'Fonti: ':'Sources: ')+esc(C.fonte_messe)+' · '+esc(C.fonte_apertura)+' · '+(it()?'controllate il ':'checked on ')+esc(dataBella(C.verificato))+'.</p></div>';
+      rows+='<tr'+(off===0?' class="oggi"':'')+'><td>'+esc(gn(dw).charAt(0).toUpperCase()+gn(dw).slice(1))+(off===0?' <span class="nota">· '+t('oggi')+'</span>':'')+'</td><td>'+(ap||'—')+'</td><td class="messa-ora">'+(ms||'—')+'</td></tr>';});
+    return '<div class="card" id="settimanaCard"><h3>'+t('Orari della settimana')+'</h3><div class="stato-ora"></div>'+
+      '<div style="overflow-x:auto"><table class="settimana"><thead><tr><th>'+t('Giorno')+'</th><th>'+t('Aperto')+'</th><th>'+t('Messe')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+      '<p class="nota">'+(gOggi.estate?t('Orario estivo delle messe (giugno–settembre).'):t('Orario invernale delle messe (d’estate, giugno–settembre, cambia).'))+' '+t('Durante le funzioni la visita è sospesa')+'. '+
+      t('Nei giorni della festa (fine agosto) gli orari cambiano. ')+
+      t('Fonti: ')+esc(C.fonte_messe)+' · '+esc(C.fonte_apertura)+' · '+t('controllate il ')+esc(dataBella(C.verificato))+'.</p></div>';
   }
   setInterval(mostra,30000);
   document.addEventListener('visibilitychange',function(){if(!document.hidden)mostra();});
@@ -1302,10 +1464,10 @@ var Orari=(function(){
   function riassunto(){
     var r=stato();if(!r)return '';var n=r.n,ap=(((C.eccezioni||{})[chiaveData(n)]||{}).apertura||C.apertura[n.dow]||[]).map(function(x){var a=x.split('-');return hm(min(a[0]))+'–'+hm(min(a[1]));});
     var ms=r.g.messe.map(hm),dm=giornoDopo(n,1),gd=giorno(dm),msd=gd.messe.map(hm);
-    var s=testo(r)+'. '+(it()?'Oggi, '+gn(n.dow)+', sono aperta '+(ap.join(' e ')||'su richiesta')+'; ':'Today, '+gn(n.dow)+', I am open '+(ap.join(' and ')||'on request')+'; ')+
-      (ms.length?(it()?'messa alle '+ms.join(' e '):'Mass at '+ms.join(' and ')):(it()?'oggi non c’è messa':'no Mass today'))+'. '+
-      (msd.length?(it()?'Domani, '+gn(dm.dow)+', messa alle '+msd.join(' e ')+'.':'Tomorrow, '+gn(dm.dow)+', Mass at '+msd.join(' and ')+'.'):'')+
-      (r.g.festa?(it()?' Sono i giorni della festa: gli orari possono cambiare.':' These are the feast days: times may change.'):'');
+    var s=testo(r)+'. '+t('Oggi, {g}, sono aperta {o}; ',{g:gn(n.dow),o:elenco(ap)||t('su richiesta')})+
+      (ms.length?t('messa alle {h}',{h:elenco(ms)}):t('oggi non c’è messa'))+'. '+
+      (msd.length?t('Domani, {g}, messa alle {h}.',{g:gn(dm.dow),h:elenco(msd)}):'')+
+      (r.g.festa?t(' Sono i giorni della festa: gli orari possono cambiare.'):'');
     return s;
   }
   return {stato:stato,mostra:mostra,settimana:settimana,adesso:adesso,giorno:giorno,riassunto:riassunto,testoStato:function(){var r=stato();return r?testo(r):'';}};
@@ -1365,14 +1527,14 @@ var Live=(function(){
     var b=$('avvisoChiesa');if(!b)return;var g=oggi(),it=S.lang==='it';
     var a=((ultimo&&ultimo.avvisi)||[]).filter(function(x){return (!x.da||x.da<=g)&&(!x.a||x.a>=g);});
     b.classList.toggle('on',a.length>0);
-    b.innerHTML=a.length?'<span aria-hidden="true">⚠</span><div>'+a.map(function(x){return '<div><b>'+(it?'Avviso del Santuario':'Notice from the Sanctuary')+':</b> '+esc((!it&&x.testo_en)||x.testo)+'</div>';}).join('')+'</div>':'';
+    b.innerHTML=a.length?'<span aria-hidden="true">⚠</span><div>'+a.map(function(x){return '<div><b>'+t('Avviso del Santuario')+':</b> '+esc(tf(x,'testo'))+'</div>';}).join('')+'</div>':'';
   }
   function applica(c,salva){
     if(!c||typeof c!=='object')return;ultimo=c;
     if(salva)try{localStorage.setItem(CHIAVE,JSON.stringify(c));}catch(e){}
     if(c.eccezioni&&L.calendario){L.calendario.eccezioni=Object.assign({},L.calendario._eccezioniBase||(L.calendario._eccezioniBase=Object.assign({},L.calendario.eccezioni||{})),c.eccezioni);}
     if(c.festa&&L.festa){var m=c.festa.momenti||{};L.festa.momenti.forEach(function(x){if(m[x.id]&&m[x.id].ora)x.ora=m[x.id].ora;});if(c.festa.programma_anno)L.festa.programma_anno=c.festa.programma_anno;}
-    if(c.sostieni&&L.sostieni){Object.keys(c.sostieni).forEach(function(k){if(c.sostieni[k]!==null&&c.sostieni[k]!==undefined)L.sostieni[k]=c.sostieni[k];});L.sostieni.esempio=false;}
+    if(c.sostieni&&L.sostieni){Object.keys(c.sostieni).forEach(function(k){var v=c.sostieni[k];if(v===null||v===undefined)return;if(L.sostieni[k]!==v&&typeof v==='string'&&!/_[a-z]{2}$/.test(k))['en','fr','es'].forEach(function(lg){if(c.sostieni[k+'_'+lg]==null)delete L.sostieni[k+'_'+lg];});L.sostieni[k]=v;});L.sostieni.esempio=false;}
     avvisi();
     if(window.Orari&&L.calendario){Orari.mostra();}
     try{renderInfo();}catch(e){}
@@ -1394,23 +1556,23 @@ window.Live=Live;
    ==================================================================== */
 var Sostieni=(function(){
   function it(){return S.lang==='it';}
-  function T(o,k){return (!it()&&o[k+'_en'])||o[k];}
+  function T(o,k){return tf(o,k);}
   function euro(n){return '€ '+String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
   function render(){
     var box=$('sostieni'),SO=L.sostieni;if(!box)return;
     if(!SO||!SO.attivo){box.hidden=true;return;}box.hidden=false;
-    $('hSostieni').textContent=it()?'Sostieni il Santuario':'Support the Sanctuary';
+    $('hSostieni').textContent=t('Sostieni il Santuario');
     var pct=SO.traguardo?Math.min(100,Math.round(100*(SO.raccolti||0)/SO.traguardo)):0,az='';
-    if(SO.satispay)az+='<a class="btn pieno" data-sost="satispay" href="'+esc(SO.satispay)+'" target="_blank" rel="noopener">'+(it()?'Offri con Satispay':'Give with Satispay')+'</a>';
-    if(SO.paypal)az+='<a class="btn'+(SO.satispay?'':' pieno')+'" data-sost="paypal" href="'+esc(SO.paypal)+'" target="_blank" rel="noopener">'+(it()?'Offri con PayPal o carta':'Give with PayPal or card')+'</a>';
-    if(SO.iban)az+='<div><div class="nota" style="margin-bottom:4px">'+(it()?'Bonifico':'Bank transfer')+(SO.intestatario?' · '+esc(SO.intestatario):'')+'</div><div class="sost-iban" id="sostIban">'+esc(SO.iban)+'</div><button class="btn sm ghost" type="button" data-sost="iban" id="sostCopia" style="margin-top:8px">'+(it()?'Copia IBAN':'Copy IBAN')+'</button></div>';
+    if(SO.satispay)az+='<a class="btn pieno" data-sost="satispay" href="'+esc(SO.satispay)+'" target="_blank" rel="noopener">'+t('Offri con Satispay')+'</a>';
+    if(SO.paypal)az+='<a class="btn'+(SO.satispay?'':' pieno')+'" data-sost="paypal" href="'+esc(SO.paypal)+'" target="_blank" rel="noopener">'+t('Offri con PayPal o carta')+'</a>';
+    if(SO.iban)az+='<div><div class="nota" style="margin-bottom:4px">'+t('Bonifico')+(SO.intestatario?' · '+esc(SO.intestatario):'')+'</div><div class="sost-iban" id="sostIban">'+esc(SO.iban)+'</div><button class="btn sm ghost" type="button" data-sost="iban" id="sostCopia" style="margin-top:8px">'+t('Copia IBAN')+'</button></div>';
     var wa=L.contatti&&L.contatti.whatsapp;
-    if(!az)az='<a class="btn pieno" data-sost="whatsapp" href="https://wa.me/39'+esc(wa||'')+'?text='+encodeURIComponent((it()?'Vorrei fare un’offerta per: ':'I would like to donate to: ')+T(SO,'obiettivo'))+'" target="_blank" rel="noopener">'+(it()?'Chiedi come fare un’offerta':'Ask how to donate')+'</a><p class="nota" style="margin:0">'+(it()?'Puoi anche lasciare la tua offerta nella cassetta in chiesa.':'You can also leave your offering in the box in the church.')+'</p>';
-    $('sostieniCorpo').innerHTML='<div class="sostieni"><div>'+(SO.esempio?'<span class="prova">'+(it()?'esempio · obiettivo e cifre da decidere con la Chiesa':'example · goal and figures to be agreed with the Church')+'</span>':'')+
+    if(!az)az='<a class="btn pieno" data-sost="whatsapp" href="https://wa.me/39'+esc(wa||'')+'?text='+encodeURIComponent(t('Vorrei fare un’offerta per: ')+T(SO,'obiettivo'))+'" target="_blank" rel="noopener">'+t('Chiedi come fare un’offerta')+'</a><p class="nota" style="margin:0">'+t('Puoi anche lasciare la tua offerta nella cassetta in chiesa.')+'</p>';
+    $('sostieniCorpo').innerHTML='<div class="sostieni"><div>'+(SO.esempio?'<span class="prova">'+t('esempio · obiettivo e cifre da decidere con la Chiesa')+'</span>':'')+
       '<h4>'+esc(T(SO,'obiettivo'))+'</h4><p>'+esc(T(SO,'descrizione')||'')+'</p>'+
-      (SO.traguardo?'<div class="sost-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'" aria-label="'+(it()?'Raccolti':'Raised')+'"><i style="width:'+pct+'%"></i></div><div class="sost-cifre"><span><b>'+euro(SO.raccolti||0)+'</b> '+(it()?'raccolti':'raised')+'</span><span>'+(it()?'su ':'of ')+euro(SO.traguardo)+' · '+pct+'%</span></div>':'')+
+      (SO.traguardo?'<div class="sost-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'" aria-label="'+t('Raccolti')+'"><i style="width:'+pct+'%"></i></div><div class="sost-cifre"><span><b>'+euro(SO.raccolti||0)+'</b> '+t('raccolti')+'</span><span>'+t('su ')+euro(SO.traguardo)+' · '+pct+'%</span></div>':'')+
       '</div><div class="sost-azioni">'+az+'</div></div>';
-    if($('sostCopia'))$('sostCopia').onclick=function(){var b=this,f=function(){b.textContent=it()?'IBAN copiato ✓':'IBAN copied ✓';};
+    if($('sostCopia'))$('sostCopia').onclick=function(){var b=this,f=function(){b.textContent=t('IBAN copiato ✓');};
       try{navigator.clipboard.writeText(SO.iban).then(f,function(){sel();});}catch(e){sel();}
       function sel(){var r=document.createRange();r.selectNodeContents($('sostIban'));var s=window.getSelection();s.removeAllRanges();s.addRange(r);}};
   }
@@ -1432,11 +1594,11 @@ var Rete=(function(){
   }
   function render(){
     if(!L.rete||!$('passCorpo'))return;var p=leggi(),fatti=L.rete.filter(function(r){return p[r.id];}).length,tot=L.rete.length;
-    $('hPass').textContent=it()?'Il passaporto dei luoghi':'The places passport';
-    $('passCorpo').innerHTML='<p class="pass-conto">'+(it()?'Hai visitato <b>'+fatti+' '+(fatti===1?'luogo':'luoghi')+' su '+tot+'</b> della rete Esplora Trapani.':'You have visited <b>'+fatti+' of '+tot+' places</b> in the Esplora Trapani network.')+'</p>'+
-      '<p class="nota">'+(it()?'Il timbro del Santuario arriva quando entri da un QR in chiesa o completi tre tappe del racconto. I timbri restano solo su questo telefono.':'The Sanctuary stamp comes when you enter from a QR code in the church or complete three steps of the story. Stamps stay on this phone only.')+'</p>'+
+    $('hPass').textContent=t('Il passaporto dei luoghi');
+    $('passCorpo').innerHTML='<p class="pass-conto">'+t(fatti===1?'Hai visitato <b>{n} luogo su {tot}</b> della rete Esplora Trapani.':'Hai visitato <b>{n} luoghi su {tot}</b> della rete Esplora Trapani.',{n:fatti,tot:tot})+'</p>'+
+      '<p class="nota">'+t('Il timbro del Santuario arriva quando entri da un QR in chiesa o completi tre tappe del racconto. I timbri restano solo su questo telefono.')+'</p>'+
       '<div class="passaporto">'+L.rete.map(function(r){var preso=!!p[r.id],qui=r.id===L.slug,tag=r.url&&!qui?'a':'div';
-        return '<'+tag+' class="timbro'+(preso?' preso':'')+(r.stato==='in_arrivo'?' arrivo':'')+'" data-id="'+esc(r.id)+'"'+(tag==='a'?' href="'+esc(r.url)+'" target="_blank" rel="noopener"':'')+'><span class="sigillo" aria-hidden="true">'+(preso?'✓':esc(r.nome.charAt(0)))+'</span><b>'+esc(r.nome)+'</b><small>'+esc(r.comune)+'</small><span class="stato">'+(preso?(it()?'visitato':'visited'):qui?(it()?'sei qui':'you are here'):r.stato==='in_arrivo'?(it()?'in arrivo':'coming soon'):(it()?'da visitare ↗':'to visit ↗'))+'</span></'+tag+'>';}).join('')+'</div>';
+        return '<'+tag+' class="timbro'+(preso?' preso':'')+(r.stato==='in_arrivo'?' arrivo':'')+'" data-id="'+esc(r.id)+'"'+(tag==='a'?' href="'+esc(r.url)+'" target="_blank" rel="noopener"':'')+'><span class="sigillo" aria-hidden="true">'+(preso?'✓':esc(r.nome.charAt(0)))+'</span><b>'+esc(tf(r,'nome'))+'</b><small>'+esc(r.comune)+'</small><span class="stato">'+(preso?t('visitato'):qui?t('sei qui'):r.stato==='in_arrivo'?t('in arrivo'):t('da visitare ↗'))+'</span></'+tag+'>';}).join('')+'</div>';
   }
   return {render:render,controlla:controlla,leggi:leggi};
 })();
@@ -1447,13 +1609,13 @@ window.Rete=Rete;
    ==================================================================== */
 function renderCarte(){
   var C=L.carte;if(!C||!$('carteCorpo'))return;var it=S.lang==='it';
-  $('hCarte').textContent=it?'Privacy, crediti e accessibilità':'Privacy, credits and accessibility';
-  var li=function(a){return '<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';};
-  $('carteCorpo').innerHTML=(C.bozza?'<p><span class="prova">'+(it?'bozza da approvare prima del lancio':'draft to be approved before launch')+'</span></p>':'')+
-    '<details id="cartePrivacy"><summary>'+(it?'Informativa privacy':'Privacy notice')+'</summary>'+li(C.privacy)+'<p class="nota">'+(it?'Titolare: ':'Controller: ')+esc(C.titolare)+' · '+esc(C.contatto)+'</p></details>'+
-    '<details><summary>'+(it?'Crediti di foto, video e testi':'Credits for photos, videos and texts')+'</summary>'+li(C.crediti)+'</details>'+
-    '<details><summary>'+(it?'Dichiarazione di accessibilità':'Accessibility statement')+'</summary>'+li(C.accessibilita)+'</details>'+
-    '<details><summary>'+(it?'Narratori e diritti':'Narrators and rights')+'</summary><ul><li>'+esc(C.narratori)+'</li></ul></details>';
+  $('hCarte').textContent=t('Privacy, crediti e accessibilità');
+  var li=function(a){a=tf(C,a)||[];return '<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';};
+  $('carteCorpo').innerHTML=(C.bozza?'<p><span class="prova">'+t('bozza da approvare prima del lancio')+'</span></p>':'')+
+    '<details id="cartePrivacy"><summary>'+t('Informativa privacy')+'</summary>'+li('privacy')+'<p class="nota">'+t('Titolare: ')+esc(C.titolare)+' · '+esc(C.contatto)+'</p></details>'+
+    '<details><summary>'+t('Crediti di foto, video e testi')+'</summary>'+li('crediti')+'</details>'+
+    '<details><summary>'+t('Dichiarazione di accessibilità')+'</summary>'+li('accessibilita')+'</details>'+
+    '<details><summary>'+t('Narratori e diritti')+'</summary><ul><li>'+esc(tf(C,'narratori'))+'</li></ul></details>';
 }
 
 /* ====================================================================
@@ -1461,10 +1623,8 @@ function renderCarte(){
    ==================================================================== */
 var Festa=(function(){
   var F=L.festa;if(!F||!$('festaCorpo'))return {render:function(){},evento:function(){}};
-  var GG={it:['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'],en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']};
-  var MM={it:['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],en:['January','February','March','April','May','June','July','August','September','October','November','December']};
   function it(){return S.lang==='it';}
-  function T(o,k){return (!it()&&o[k+'_en'])||o[k];}
+  function T(o,k){return tf(o,k);}
   function z(n){return (n<10?'0':'')+n;}
   function mercoledi(y){var d=new Date(Date.UTC(y,7,31));while(d.getUTCDay()!==3)d.setUTCDate(d.getUTCDate()-1);return d.getUTCDate();}
   function oggi(){var n=window.Orari&&L.calendario?Orari.adesso():null;if(!n){var d=new Date();n={y:d.getFullYear(),mo:d.getMonth()+1,d:d.getDate(),t:d.getHours()*60+d.getMinutes()};}return n;}
@@ -1475,16 +1635,16 @@ var Festa=(function(){
   function quando(m,y){var a=m.ora.split(':'),h=+a[0],mi=+a[1],off=m.giorno;if(h>=24){h-=24;off++;}var g=giorno(y,off);
     var ini=Date.UTC(g.y,g.mo-1,g.d,h,mi),fin=ini+m.durata*60000;return {g:g,ini:ini,fin:fin,h:h,mi:mi};}
   function locale(ms){var d=new Date(ms);return d.getUTCFullYear()+z(d.getUTCMonth()+1)+z(d.getUTCDate())+'T'+z(d.getUTCHours())+z(d.getUTCMinutes())+'00';}
-  function giornoTxt(g,breve){var nome=(it()?GG.it:GG.en)[g.dow],mese=(it()?MM.it:MM.en)[g.mo-1];if(breve){nome=nome.slice(0,3);mese=mese.slice(0,3);}return it()?nome+' '+g.d+' '+mese:nome+', '+mese+' '+g.d;}
-  function oraTxt(q){return it()?q.h+':'+z(q.mi):((q.h%12)||12)+(q.mi?':'+z(q.mi):'')+(q.h<12?' am':' pm');}
+  function giornoTxt(g){return dataLoc(g.d,g.mo,null,true,g.dow);}
+  function oraTxt(q){return oraLoc(q.h,q.mi);}
   function punto(id){return ((L.dove&&L.dove.punti)||[]).filter(function(p){return p.id===id;})[0];}
   function luogoCal(m){var p=m.punto?punto(m.punto):null;return (T(m,'luogo')||'')+', Custonaci (TP)'+(p?' · '+p.lat+','+p.lng:'');}
-  function dettagli(m){return T(m,'desc')+'\n\n'+(it()?'Orari dal programma 2026: controlla quello ufficiale dell’anno.':'Times from the 2026 programme: check the official one for the year.')+'\n'+location.href.split('#')[0].split('?')[0]+'#festa';}
+  function dettagli(m){return T(m,'desc')+'\n\n'+t('Orari dal programma 2026: controlla quello ufficiale dell’anno.')+'\n'+location.href.split('#')[0].split('?')[0]+'#festa';}
   /* link «aggiungi a Google Calendar» */
   function google(m,y){var q=quando(m,y);
     return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(T(m,'titolo')+' · '+T(F,'nome'))+'&dates='+locale(q.ini)+'/'+locale(q.fin)+'&ctz=Europe/Rome&details='+encodeURIComponent(dettagli(m))+'&location='+encodeURIComponent(luogoCal(m));}
   function googleTutta(y){var a=giorno(y,F.inizio_novena||-9),b=giorno(y,1),d=function(g){return g.y+z(g.mo)+z(g.d);};
-    return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(T(F,'nome')+' '+y)+'&dates='+d(a)+'/'+d(b)+'&details='+encodeURIComponent((it()?'Novena e festa. Clou: lo sbarco a Cala Buguto e la processione.':'Novena and feast. Highlights: the landing at Cala Buguto and the procession.')+'\n'+location.href.split('#')[0].split('?')[0]+'#festa')+'&location='+encodeURIComponent('Santuario di Maria SS. di Custonaci, Piazza Santuario 1, Custonaci (TP)');}
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(T(F,'nome')+' '+y)+'&dates='+d(a)+'/'+d(b)+'&details='+encodeURIComponent(t('Novena e festa. Clou: lo sbarco a Cala Buguto e la processione.')+'\n'+location.href.split('#')[0].split('?')[0]+'#festa')+'&location='+encodeURIComponent('Santuario di Maria SS. di Custonaci, Piazza Santuario 1, Custonaci (TP)');}
   /* file .ics (iPhone, Outlook): ad agosto Roma è a UTC+2 */
   function ics(lista,y){
     var utc=function(ms){return locale(ms-2*3600000)+'Z';},esc2=function(s){return String(s).replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/([,;])/g,'\\$1');};
@@ -1499,13 +1659,13 @@ var Festa=(function(){
   }
   function reel(){
     var R=F.reel;if(!R)return '';var url='https://youtube.com/shorts/'+R.youtube,img=ARTEFATTO?(R.copertina_locale||'media/cap4.jpg'):'https://i.ytimg.com/vi/'+R.youtube+'/hq2.jpg';
-    var cap='<span class="didascalia">'+esc(R.titolo)+'<small>'+(it()?'Il reel della festa':'The feast reel')+' · '+esc(R.autore)+'</small></span>';
+    var cap='<span class="didascalia">'+esc(R.titolo)+'<small>'+t('Il reel della festa')+' · '+esc(R.autore)+'</small></span>';
     if(ARTEFATTO)return '<div class="reel-box"><a class="reel-link" href="'+url+'" target="_blank" rel="noopener" style="background-image:url('+img+')" aria-label="'+esc(R.titolo)+'"><span class="play"></span>'+cap+'</a></div>';
-    return '<div class="reel-box" id="reelBox"><button type="button" id="reelPlay" style="background-image:url('+img+')" aria-label="'+(it()?'Guarda il reel: ':'Watch the reel: ')+esc(R.titolo)+'"><span class="play"></span>'+cap+'</button></div>';
+    return '<div class="reel-box" id="reelBox"><button type="button" id="reelPlay" style="background-image:url('+img+')" aria-label="'+t('Guarda il reel: ')+esc(R.titolo)+'"><span class="play"></span>'+cap+'</button></div>';
   }
   function avviaReel(){
     var R=F.reel,box=$('reelBox');if(!box)return;
-    if(!navigator.onLine){var d=box.querySelector('.didascalia');if(d)d.innerHTML=esc(it()?'Per vedere il reel serve la rete.':'You need a connection to watch the reel.');return;}
+    if(!navigator.onLine){var d=box.querySelector('.didascalia');if(d)d.innerHTML=esc(t('Per vedere il reel serve la rete.'));return;}
     Lettore.pausa();document.querySelectorAll('video').forEach(function(v){if(!v.paused)v.pause();});
     box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+R.youtube+'?autoplay=1&playsinline=1&rel=0&modestbranding=1" title="'+esc(R.titolo)+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
   }
@@ -1513,26 +1673,26 @@ var Festa=(function(){
     var y=anno(),n=oggi(),a=giorno(y,F.inizio_novena||-9),w=giorno(y,0),oggiMs=Date.UTC(n.y,n.mo-1,n.d);
     var sb=F.momenti.filter(function(m){return m.id==='sbarco';})[0]||F.momenti[0],qs=quando(sb,y);
     var mancano=Math.round((Date.UTC(qs.g.y,qs.g.mo-1,qs.g.d)-oggiMs)/864e5),ed=F.edizione?F.edizione.numero+(y-F.edizione.anno):null;
-    var conto=mancano>1?(it()?'Mancano <b>'+mancano+' giorni</b> allo sbarco':'<b>'+mancano+' days</b> to the landing'):mancano===1?(it()?'<b>Domani</b> lo sbarco a Cala Buguto':'The landing is <b>tomorrow</b>'):mancano===0?(it()?'<b>Oggi</b> lo sbarco, alle '+oraTxt(qs):'The landing is <b>today</b>, at '+oraTxt(qs)):(it()?'<b>È festa</b>: la processione è '+(Date.UTC(w.y,w.mo-1,w.d)===oggiMs?'oggi':'mercoledì'):'<b>The feast is on</b>: the procession is on Wednesday');
-    var mese=(it()?MM.it:MM.en)[w.mo-1];
-    var h='<div class="festa-top">'+reel()+'<div class="festa-info"><div class="kicker">'+(ed?(it()?ed+'ª edizione':'Edition '+ed):'')+'</div>'+
-      '<p class="festa-data">'+(it()?a.d+'–'+w.d+' '+mese+' '+y:mese+' '+a.d+'–'+w.d+', '+y)+'</p>'+
+    var conto=mancano>1?t('Mancano <b>{n} giorni</b> allo sbarco',{n:mancano}):mancano===1?t('<b>Domani</b> lo sbarco a Cala Buguto'):mancano===0?t('<b>Oggi</b> lo sbarco, alle {h}',{h:oraTxt(qs)}):t(Date.UTC(w.y,w.mo-1,w.d)===oggiMs?'<b>È festa</b>: la processione è oggi':'<b>È festa</b>: la processione è mercoledì');
+    
+    var h='<div class="festa-top">'+reel()+'<div class="festa-info"><div class="kicker">'+(ed?t('{n}ª edizione',{n:ed}):'')+'</div>'+
+      '<p class="festa-data">'+intervalloLoc(a.d,w.d,w.mo,y)+'</p>'+
       '<p class="festa-conto">'+conto+'</p>'+
-      '<p>'+(it()?'Nove sere di novena, poi quattro giorni di festa: le chiavi della città, i carretti, lo sbarco dal mare, la processione di cinque ore e i fuochi di mezzanotte.':'Nine evenings of novena, then four days of feast: the keys of the town, the painted carts, the landing from the sea, the five-hour procession and the midnight fireworks.')+'</p>'+
-      '<div class="festa-azioni"><a class="btn pieno" href="'+googleTutta(y)+'" target="_blank" rel="noopener" id="festaGoogle">📅 '+(it()?'Aggiungi la festa a Google Calendar':'Add the feast to Google Calendar')+'</a>'+
-      (ARTEFATTO?'':'<button class="btn" type="button" id="festaIcs">⤓ '+(it()?'Tutti gli appuntamenti (iPhone, Outlook)':'All events (iPhone, Outlook)')+'</button>')+'</div>'+
-      '<p class="nota">'+(F.programma_anno===y?(it()?'Orari del programma ufficiale '+y+'.':'Times from the official '+y+' programme.'):y>F.edizione.anno?(it()?'Le date del '+y+' sono calcolate dalla regola (ultimo mercoledì di agosto); gli orari vengono dal programma '+F.edizione.anno+', il programma ufficiale esce d’estate.':'The '+y+' dates follow the rule (last Wednesday of August); the times come from the '+F.edizione.anno+' programme, the official one comes out in summer.'):'')+
+      '<p>'+t('Nove sere di novena, poi quattro giorni di festa: le chiavi della città, i carretti, lo sbarco dal mare, la processione di cinque ore e i fuochi di mezzanotte.')+'</p>'+
+      '<div class="festa-azioni"><a class="btn pieno" href="'+googleTutta(y)+'" target="_blank" rel="noopener" id="festaGoogle">📅 '+t('Aggiungi la festa a Google Calendar')+'</a>'+
+      (ARTEFATTO?'':'<button class="btn" type="button" id="festaIcs">⤓ '+t('Tutti gli appuntamenti (iPhone, Outlook)')+'</button>')+'</div>'+
+      '<p class="nota">'+(F.programma_anno===y?t('Orari del programma ufficiale {y}.',{y:y}):y>F.edizione.anno?t('Le date del {y} sono calcolate dalla regola (ultimo mercoledì di agosto); gli orari vengono dal programma {p}, il programma ufficiale esce d’estate.',{y:y,p:F.edizione.anno}):'')+
       (F.fonte_programma?' <a href="'+esc(F.fonte_programma.url)+'" target="_blank" rel="noopener">'+esc(F.fonte_programma.nome)+' ↗</a>':'')+'</p></div></div>';
-    h+='<h3>'+(it()?'I giorni della festa':'The feast days')+'</h3><ol class="festa-giorni">'+F.momenti.map(function(m){
+    h+='<h3>'+t('I giorni della festa')+'</h3><ol class="festa-giorni">'+F.momenti.map(function(m){
       var q=quando(m,y),ogg=Date.UTC(q.g.y,q.g.mo-1,q.g.d)===oggiMs;
-      return '<li class="'+(m.clou?'clou ':'')+(ogg?'oggi':'')+'" data-m="'+m.id+'"><div class="quando"><b>'+esc(giornoTxt(q.g,false))+'</b><span>'+oraTxt(q)+'</span>'+(ogg?'<em>'+(it()?'oggi':'today')+'</em>':(m.clou?'<em>'+(it()?'da non perdere':'unmissable')+'</em>':''))+'</div>'+
+      return '<li class="'+(m.clou?'clou ':'')+(ogg?'oggi':'')+'" data-m="'+m.id+'"><div class="quando"><b>'+esc(giornoTxt(q.g,false))+'</b><span>'+oraTxt(q)+'</span>'+(ogg?'<em>'+t('oggi')+'</em>':(m.clou?'<em>'+t('da non perdere')+'</em>':''))+'</div>'+
         '<div class="cosa"><h4>'+esc(T(m,'titolo'))+'</h4><p class="dove">📍 '+esc(T(m,'luogo'))+'</p><p>'+esc(T(m,'desc'))+'</p><div class="azioni">'+
         '<a class="btn sm" href="'+google(m,y)+'" target="_blank" rel="noopener" data-cal="'+m.id+'">📅 Google Calendar</a>'+
         (ARTEFATTO?'':'<button class="btn sm ghost" type="button" data-ics="'+m.id+'">⤓ .ics</button>')+
-        (m.punto&&punto(m.punto)?'<button class="btn sm ghost" type="button" data-mappa="'+m.punto+'">◎ '+(it()?'Sulla mappa':'On the map')+'</button>':'')+'</div></div></li>';}).join('')+'</ol>';
-    if(F.storia&&F.storia.length)h+='<h3>'+(it()?'Quattro secoli e mezzo di festa':'Four and a half centuries of feast')+'</h3><ol class="festa-storia" tabindex="0" aria-label="'+(it()?'Storia della festa, scorri di lato':'History of the feast, scroll sideways')+'">'+F.storia.map(function(s){return '<li><b>'+esc(s.anno)+'</b><p>'+esc(T(s,'testo'))+'</p></li>';}).join('')+'</ol>';
+        (m.punto&&punto(m.punto)?'<button class="btn sm ghost" type="button" data-mappa="'+m.punto+'">◎ '+t('Sulla mappa')+'</button>':'')+'</div></div></li>';}).join('')+'</ol>';
+    if(F.storia&&F.storia.length)h+='<h3>'+t('Quattro secoli e mezzo di festa')+'</h3><ol class="festa-storia" tabindex="0" aria-label="'+t('Storia della festa, scorri di lato')+'">'+F.storia.map(function(s){return '<li><b>'+esc(s.anno)+'</b><p>'+esc(T(s,'testo'))+'</p></li>';}).join('')+'</ol>';
     var c=$('festaCorpo');c.innerHTML=h;
-    $('kFesta').textContent=it()?'La festa · ultimo mercoledì di agosto':'The feast · last Wednesday of August';$('hFesta').textContent=it()?'La festa di agosto':'The August feast';
+    $('kFesta').textContent=t('La festa · ultimo mercoledì di agosto');$('hFesta').textContent=t('La festa di agosto');
     if($('reelPlay'))$('reelPlay').onclick=avviaReel;
     if($('festaIcs'))$('festaIcs').onclick=function(){scarica(F.momenti,y,'festa-madonna-custonaci-'+y);};
     c.querySelectorAll('[data-ics]').forEach(function(b){b.onclick=function(){var m=F.momenti.filter(function(x){return x.id===b.dataset.ics;});scarica(m,y,'custonaci-'+b.dataset.ics+'-'+y);};});
@@ -1548,19 +1708,19 @@ var Dove=(function(){
   var DV=L.dove;if(!DV||!$('dove'))return {render:function(){},mostra:function(){}};
   var mappa=null,marcatori={},carico=null,attivo=null;
   function it(){return S.lang==='it';}
-  function T(o,k){return (!it()&&o[k+'_en'])||o[k];}
+  function T(o,k){return tf(o,k);}
   var S0=DV.punti.filter(function(p){return p.tipo==='santuario';})[0]||DV.punti[0];
   function metri(a,b){var R=6371000,r=Math.PI/180,dl=(b.lat-a.lat)*r,dg=(b.lng-a.lng)*r,x=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dg/2)*Math.sin(dg/2);return 2*R*Math.asin(Math.sqrt(x));}
   function distanza(p){if(p===S0)return '';var m=metri(S0,p);
-    if(m<1200){var a=Math.round(m*1.3/10)*10,min=Math.max(1,Math.round(m*1.3/75));return (it()?'circa '+a+' m a piedi · '+min+' min':'about '+a+' m on foot · '+min+' min');}
-    return (it()?Math.round(m/100)/10+' km in linea d’aria dal santuario':Math.round(m/100)/10+' km from the sanctuary as the crow flies');}
+    if(m<1200){var a=Math.round(m*1.3/10)*10,min=Math.max(1,Math.round(m*1.3/75));return t('circa {m} m a piedi · {min} min',{m:a,min:min});}
+    return t('{km} km in linea d’aria dal santuario',{km:String(Math.round(m/100)/10).replace('.',S.lang==='en'?'.':',')});}
   function indicazioni(p){return 'https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng;}
   function render(){
-    $('hDove').textContent=it()?'Dove siamo':'Where we are';
-    $('punti').innerHTML=DV.punti.map(function(p,i){return '<li data-p="'+p.id+'" tabindex="0"><span class="n '+p.tipo+'">'+(i+1)+'</span><div><b>'+esc(T(p,'nome'))+'</b><small>'+esc(p.indirizzo)+(distanza(p)?' · '+esc(distanza(p)):'')+'</small><p>'+esc(T(p,'nota'))+'</p><a href="'+indicazioni(p)+'" target="_blank" rel="noopener">'+(it()?'Indicazioni stradali ↗':'Directions ↗')+'</a></div></li>';}).join('');
+    $('hDove').textContent=t('Dove siamo');
+    $('punti').innerHTML=DV.punti.map(function(p,i){return '<li data-p="'+p.id+'" tabindex="0"><span class="n '+p.tipo+'">'+(i+1)+'</span><div><b>'+esc(T(p,'nome'))+'</b><small>'+esc(p.indirizzo)+(distanza(p)?' · '+esc(distanza(p)):'')+'</small><p>'+esc(T(p,'nota'))+'</p><a href="'+indicazioni(p)+'" target="_blank" rel="noopener">'+t('Indicazioni stradali ↗')+'</a></div></li>';}).join('');
     $('punti').querySelectorAll('li').forEach(function(li){var vai=function(e){if(e.target.tagName==='A')return;mostra(li.dataset.p,true);};li.onclick=vai;li.onkeydown=function(e){if(e.key==='Enter')vai(e);};});
     $('arrivare').innerHTML=(DV.arrivare||[]).map(function(a){return '<div class="card"><h4>'+esc(T(a,'come'))+(a.km?' · '+a.km+' km':'')+'</h4><p>'+esc(T(a,'testo'))+'</p></div>';}).join('');
-    $('mappaVuota').textContent=ARTEFATTO?(it()?'La mappa interattiva è sulla pagina pubblicata: qui sotto i punti con le indicazioni.':'The interactive map is on the published page: below, the places with directions.'):(it()?'La mappa si apre quando ci arrivi.':'The map opens when you get here.');
+    $('mappaVuota').textContent=ARTEFATTO?t('La mappa interattiva è sulla pagina pubblicata: qui sotto i punti con le indicazioni.'):t('La mappa si apre quando ci arrivi.');
     if(mappa)popup();
   }
   function caricaLeaflet(){
@@ -1573,10 +1733,10 @@ var Dove=(function(){
     });
     return carico;
   }
-  function popup(){DV.punti.forEach(function(p){var m=marcatori[p.id];if(m)m.bindPopup('<b>'+esc(T(p,'nome'))+'</b>'+esc(p.indirizzo)+'<br><a href="'+indicazioni(p)+'" target="_blank" rel="noopener">'+(it()?'Indicazioni ↗':'Directions ↗')+'</a>');});}
+  function popup(){DV.punti.forEach(function(p){var m=marcatori[p.id];if(m)m.bindPopup('<b>'+esc(T(p,'nome'))+'</b>'+esc(p.indirizzo)+'<br><a href="'+indicazioni(p)+'" target="_blank" rel="noopener">'+t('Indicazioni ↗')+'</a>');});}
   function crea(){
     if(mappa||ARTEFATTO)return Promise.resolve(mappa);
-    if(!navigator.onLine){$('mappaVuota').textContent=it()?'Senza rete la mappa non si vede: i punti qui accanto hanno comunque le indicazioni.':'Offline the map is not shown: the places alongside still have directions.';return Promise.resolve(null);}
+    if(!navigator.onLine){$('mappaVuota').textContent=t('Senza rete la mappa non si vede: i punti qui accanto hanno comunque le indicazioni.');return Promise.resolve(null);}
     return caricaLeaflet().then(function(Lf){
       if(mappa)return mappa;
       $('mappaVuota').remove();
@@ -1589,7 +1749,7 @@ var Dove=(function(){
       });
       popup();mappa.fitBounds(vicini,{padding:[40,40],maxZoom:17});
       return mappa;
-    }).catch(function(){var v=$('mappaVuota');if(v)v.textContent=it()?'La mappa non si è caricata: usa le indicazioni dei punti.':'The map did not load: use the directions of each place.';return null;});
+    }).catch(function(){var v=$('mappaVuota');if(v)v.textContent=t('La mappa non si è caricata: usa le indicazioni dei punti.');return null;});
   }
   function evidenzia(id){attivo=id;$('punti').querySelectorAll('li').forEach(function(li){li.classList.toggle('attivo',li.dataset.p===id);});}
   function mostra(id,soloMappa){
@@ -1619,7 +1779,7 @@ var Chiedi=(function(){
   function titoloFonte(f){
     if(f.tipo==='scena'&&bySlug[f.ref]){var s=bySlug[f.ref];return '◎ '+tr('scene',s.id,'titolo',s.titolo);}
     if(f.tipo==='opera'){var o=OP.filter(function(z){return z.slug===f.ref;})[0];if(o)return '★ '+tr('opere',o.id,'titolo',o.titolo);}
-    if(f.tipo==='capitolo')return '▶ '+(f.titolo||'');
+    if(f.tipo==='capitolo'){var cc=D.capitoli.filter(function(z){return z.id===f.ref;})[0];return '▶ '+(cc?t('Capitolo')+' '+cc.n+' · '+tr('capitoli',cc.id,'titolo',cc.titolo):(f.titolo||''));}
     return 'ⓘ '+(f.titolo||'');
   }
   function bottoniFonti(fonti){
@@ -1641,7 +1801,7 @@ var Chiedi=(function(){
   }
   function contatto(){
     var c=L.contatti||{};if(!c.whatsapp)return '';
-    return '<div class="fonti"><a href="https://wa.me/39'+esc(c.whatsapp)+'?text='+encodeURIComponent(L.nome+': ')+'" rel="noopener" target="_blank">'+(it()?'Scrivi su WhatsApp':'Write on WhatsApp')+' · '+esc(c.whatsapp)+'</a></div>';
+    return '<div class="fonti"><a href="https://wa.me/39'+esc(c.whatsapp)+'?text='+encodeURIComponent(L.nome+': ')+'" rel="noopener" target="_blank">'+t('Scrivi su WhatsApp')+' · '+esc(c.whatsapp)+'</a></div>';
   }
   /* le frasi del passaggio che c'entrano di più con la domanda */
   function estratto(p,domanda){
@@ -1652,18 +1812,18 @@ var Chiedi=(function(){
   }
   function locale(domanda,motivo){
     var r=KB.cerca(idx,domanda,3).filter(function(x){return x.s>=2;}).slice(0,2);
-    var intro=motivo==='rete'?(it()?'Senza rete non posso ragionare sulla domanda, ma ecco cosa dicono i miei testi:':'Without a connection I can’t think it through, but here is what my texts say:')
-      :(it()?'Ora non riesco a rispondere a parole, ma ecco cosa dicono i miei testi:':'I can’t answer in words right now, but here is what my texts say:');
-    if(!r.length){var b0=bolla('lei',esc(it()?'Questo non lo trovo nei miei testi. Chiedi in sacrestia, oppure scrivi:':'I can’t find this in my texts. Ask in the sacristy, or write:')+contatto());return;}
-    var html=esc(intro)+r.map(function(x){return '<div class="estratto"><b>'+esc(titoloFonte(x.p))+'</b>'+esc(estratto(x.p,domanda))+'</div>';}).join('');
+    var intro=motivo==='rete'?t('Senza rete non posso ragionare sulla domanda, ma ecco cosa dicono i miei testi:')
+      :t('Ora non riesco a rispondere a parole, ma ecco cosa dicono i miei testi:');
+    if(!r.length){var b0=bolla('lei',esc(t('Questo non lo trovo nei miei testi. Chiedi in sacrestia, oppure scrivi:'))+contatto());return;}
+    var html=esc(intro)+(S.lang!=='it'?' <span class="segno">'+t('i miei testi sono in italiano')+'</span>':'')+r.map(function(x){return '<div class="estratto"><b>'+esc(titoloFonte(x.p))+'</b>'+esc(estratto(x.p,domanda))+'</div>';}).join('');
     var fonti=r.map(function(x){return x.p;});
-    var b=bolla('lei',html+bottoniFonti(fonti)+(r.some(function(x){return x.p.stato==='da_validare';})?'<span class="segno">'+(it()?'testi in attesa di revisione':'texts awaiting review')+'</span>':''));collega(b,fonti);
+    var b=bolla('lei',html+bottoniFonti(fonti)+(r.some(function(x){return x.p.stato==='da_validare';})?'<span class="segno">'+t('testi in attesa di revisione')+'</span>':''));collega(b,fonti);
   }
   function chiedi(domanda){
     domanda=String(domanda||'').trim().slice(0,300);if(domanda.length<3||occupato)return;
     bolla('io',esc(domanda));$('chiediInput').value='';
     if(RE_ORARI.test(domanda)&&window.Orari&&L.calendario){
-      var b=bolla('lei',esc(Orari.riassunto())+bottoniFonti([{tipo:'info',ref:'info',titolo:it()?'Orari della settimana':'This week’s times'}]));
+      var b=bolla('lei',esc(Orari.riassunto())+bottoniFonti([{tipo:'info',ref:'info',titolo:t('Orari della settimana')}]));
       collega(b,[{tipo:'info',ref:'info',titolo:''}]);return;
     }
     if(!navigator.onLine||ARTEFATTO||!CF.api){locale(domanda,'rete');return;}
@@ -1675,7 +1835,7 @@ var Chiedi=(function(){
     .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
     .then(function(j){
       att.remove();if(!j||!j.risposta)throw new Error('vuota');
-      var b=bolla('lei',esc(j.risposta)+bottoniFonti(j.fonti||[])+(j.trovata===false?contatto():'')+(j.da_validare?'<span class="segno">'+(it()?'dai testi in attesa di revisione del santuario':'from texts awaiting the sanctuary’s review')+'</span>':''));
+      var b=bolla('lei',esc(j.risposta)+bottoniFonti(j.fonti||[])+(j.trovata===false?contatto():'')+(j.da_validare?'<span class="segno">'+t('dai testi in attesa di revisione del santuario')+'</span>':''));
       collega(b,j.fonti||[]);storia.push({d:domanda,r:j.risposta});
     })
     .catch(function(){att.remove();locale(domanda,navigator.onLine?'servizio':'rete');})
@@ -1688,10 +1848,10 @@ var Chiedi=(function(){
   }
   function apri(){
     aperto=true;$('chiedi').classList.add('on');document.body.classList.add('chiedi-on');
-    $('chiediTit').textContent=it()?'Chiedi alla chiesa':'Ask the church';
-    $('chiediSub').textContent=(it()?'Rispondo solo con i miei testi':'I only answer from my own texts')+(attiva?' · '+(it()?'sei in ':'you are in ')+tr('scene',attiva.id,'titolo',attiva.titolo):'');
-    $('chiediInput').placeholder=it()?'Scrivi una domanda…':'Type a question…';
-    if(!$('chiediFlusso').children.length)bolla('lei',esc(it()?'Ciao, sono '+voce().replace(/^Il /,'il ')+'. Chiedimi della mia storia, delle opere, della festa o degli orari.':'Hello, I am '+(L.voce&&L.voce.nome?'the Sanctuary':L.nome)+'. Ask me about my story, the works of art, the feast or the opening times.'));
+    $('chiediTit').textContent=t('Chiedi alla chiesa');
+    $('chiediSub').textContent=t('Rispondo solo con i miei testi')+(attiva?' · '+t('sei in ')+tr('scene',attiva.id,'titolo',attiva.titolo):'');
+    $('chiediInput').placeholder=t('Scrivi una domanda…');
+    if(!$('chiediFlusso').children.length)bolla('lei',esc(t('Ciao, sono {voce}. Chiedimi della mia storia, delle opere, della festa o degli orari.',{voce:S.lang==='it'?voce().replace(/^Il /,'il '):tr('luogo',0,'voce.nome',voce())})));
     proposte();setTimeout(function(){try{$('chiediInput').focus({preventScroll:true});}catch(e){}},60);
   }
   function chiudi(){aperto=false;$('chiedi').classList.remove('on');document.body.classList.remove('chiedi-on');if(rec&&ascolta)try{rec.stop();}catch(e){}}
@@ -1703,12 +1863,12 @@ var Chiedi=(function(){
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,ascolta=false;
   if(SR){$('chiediMic').hidden=false;$('chiediMic').onclick=function(){
     if(ascolta){try{rec.stop();}catch(e){}return;}
-    rec=new SR();rec.lang=it()?'it-IT':'en-GB';rec.interimResults=false;rec.maxAlternatives=1;
+    rec=new SR();rec.lang={it:'it-IT',en:'en-GB',fr:'fr-FR',es:'es-ES'}[S.lang]||'it-IT';rec.interimResults=false;rec.maxAlternatives=1;
     rec.onresult=function(ev){var t=ev.results[0][0].transcript;$('chiediInput').value=t;chiedi(t);};
     rec.onend=function(){ascolta=false;$('chiediMic').classList.remove('on');};rec.onerror=rec.onend;
     try{rec.start();ascolta=true;$('chiediMic').classList.add('on');}catch(e){}
   };}
-  function etichette(){$('chiediFabTxt').textContent=it()?'Chiedi alla chiesa':'Ask the church';}
+  function etichette(){$('chiediFabTxt').textContent=t('Chiedi alla chiesa');}
   etichette();
   return {apri:apri,chiudi:chiudi,chiedi:chiedi,etichette:etichette,kb:kb};
 })();
@@ -1717,27 +1877,218 @@ function renderInfo(){
   var g=$('infoGriglia'),h='';
   var settimanaHtml=L.calendario?Orari.settimana():'';
   h+=settimanaHtml+'<div class="card"><dl>';
-  if(L.orari_celebrazioni&&!L.calendario)h+='<dt>'+t('Orari delle celebrazioni')+'</dt><dd>'+esc(tr('luogo',0,'orari_celebrazioni',L.orari_celebrazioni))+' <span class="prova">'+(S.lang==='it'?'prova':'test')+'</span><br><span class="nota">'+t('Durante le funzioni la visita è sospesa')+'</span></dd>';
+  if(L.orari_celebrazioni&&!L.calendario)h+='<dt>'+t('Orari delle celebrazioni')+'</dt><dd>'+esc(tr('luogo',0,'orari_celebrazioni',L.orari_celebrazioni))+' <span class="prova">'+t('prova')+'</span><br><span class="nota">'+t('Durante le funzioni la visita è sospesa')+'</span></dd>';
   if(L.orari_visita&&!L.calendario)h+='<dt>'+t('Orari di visita')+'</dt><dd>'+esc(tr('luogo',0,'orari_visita',L.orari_visita))+'</dd>';
-  if(L.festa_patronale)h+='<dt>'+t('Festa patronale')+'</dt><dd>'+(L.festa?(S.lang==='it'?'Ultimo mercoledì di agosto · ':'Last Wednesday of August · ')+'<a href="#festa">'+(S.lang==='it'?'date, programma e reel':'dates, programme and reel')+'</a>':esc(L.festa_patronale))+'</dd>';
-  if(L.epoca_costruzione)h+='<dt>'+t('Epoca')+'</dt><dd>'+esc(L.epoca_costruzione)+'</dd>';
+  if(L.festa_patronale)h+='<dt>'+t('Festa patronale')+'</dt><dd>'+(L.festa?t('Ultimo mercoledì di agosto · ')+'<a href="#festa">'+t('date, programma e reel')+'</a>':esc(L.festa_patronale))+'</dd>';
+  if(L.epoca_costruzione)h+='<dt>'+t('Epoca')+'</dt><dd>'+esc(tr('luogo',0,'epoca_costruzione',L.epoca_costruzione))+'</dd>';
   h+='</dl></div>';
   h+='<div class="card"><dl>'+(L.come_arrivare&&!L.dove?'<dt>'+t('Come arrivare')+'</dt><dd>'+esc(tr('luogo',0,'come_arrivare',L.come_arrivare))+'</dd>':'')+'<dt>'+t('Contatti')+'</dt><dd>'+(L.contatti&&L.contatti.whatsapp?'<a class="btn wa sm" href="https://wa.me/39'+esc(L.contatti.whatsapp)+'?text='+encodeURIComponent(L.nome)+'" rel="noopener">'+t('Scrivi su WhatsApp')+'</a>':'')+'</dd></dl></div>';
   g.innerHTML=h;
   if(L.calendario)Orari.mostra();
   var p=$('proseguiCard');
-  if(L.prosegui&&L.prosegui.length){p.hidden=false;p.innerHTML='<h3>'+t('Prosegui la visita')+'</h3><div class="prosegui">'+L.prosegui.map(function(x){return '<a href="'+esc(x.url)+'" rel="noopener"><b>'+esc(x.nome)+'</b><small>'+esc(x.dist)+' · '+esc(x.desc)+'</small></a>';}).join('')+'</div>';}else p.hidden=true;
-  if(L.sostieni_url&&!L.sostieni){var s=document.createElement('div');s.className='card';s.style.marginTop='14px';s.innerHTML='<h3>'+(S.lang==='it'?'Sostieni il restauro':'Support the restoration')+'</h3><p>'+esc(L.sostieni_obiettivo||'')+'</p><a class="btn" href="'+esc(L.sostieni_url)+'" rel="noopener">→</a>';p.after(s);}
+  if(L.prosegui&&L.prosegui.length){p.hidden=false;p.innerHTML='<h3>'+t('Prosegui la visita')+'</h3><div class="prosegui">'+L.prosegui.map(function(x){return '<a href="'+esc(x.url)+'" rel="noopener"><b>'+esc(tf(x,'nome'))+'</b><small>'+esc(tf(x,'dist'))+' · '+esc(tf(x,'desc'))+'</small></a>';}).join('')+'</div>';}else p.hidden=true;
+  if(L.sostieni_url&&!L.sostieni){var s=document.createElement('div');s.className='card';s.style.marginTop='14px';s.innerHTML='<h3>'+t('Sostieni il restauro')+'</h3><p>'+esc(L.sostieni_obiettivo||'')+'</p><a class="btn" href="'+esc(L.sostieni_url)+'" rel="noopener">→</a>';p.after(s);}
 }
+
+/* ====================================================================
+   IN CLASSE · la versione per la LIM: il 360 a tutto schermo, testi grandi da lontano,
+   la penna per disegnare sul panorama, le opere, il racconto in video e il quiz per la classe.
+   Si apre dal bottone «In classe», oppure con l'indirizzo …chiesa-sim1.html#classe (da salvare sul computer della classe).
+   ==================================================================== */
+var Lim=(function(){
+  var on=false,VL=null,cur=null,tab='scena',penna=false,colore='#f2c572',qi=0,caricateL={},hqL={},tracciando=false,ultimo=null,timerAiuto=0,carica=false,attesa=null;
+  /* Pannellum non sopporta un cambio di scena mentre ne sta ancora caricando un'altra: i cambi si mettono in fila */
+  function carSc(id,pi,ya,hf){if(carica){attesa=[id,pi,ya,hf];return;}carica=true;try{VL.loadScene(id,pi,ya,hf);}catch(e){carica=false;}}
+  function fatto(){carica=false;if(attesa){var a=attesa;attesa=null;if(a[0]==='HQ'){a[1]();return;}carSc(a[0],a[1],a[2],a[3]);}}
+  function aiuto(txt){var a=$('limAiuto');a.textContent=txt;a.style.opacity=1;clearTimeout(timerAiuto);timerAiuto=setTimeout(function(){a.style.opacity=0;},4200);}
+  function etichette(){
+    $('limLuogo').textContent=L.nome;$('limModo').textContent=t('In classe')+' · LIM';
+    $('limPenna').innerHTML='✎ <span class="tx">'+t('Penna')+'</span>';$('limPenna').setAttribute('aria-label',t('Penna'));
+    $('limChiedi').innerHTML='? <span class="tx">'+t('Chiedi')+'</span>';$('limChiedi').setAttribute('aria-label',t('Chiedi alla chiesa'));$('limChiedi').hidden=!L.chiedi;
+    $('limPannello').innerHTML='☰ <span class="tx">'+t('Pannello')+'</span>';$('limPannello').setAttribute('aria-label',t('Pannello'));
+    $('limSchermo').innerHTML='⛶ <span class="tx">'+t('Schermo intero')+'</span>';$('limSchermo').setAttribute('aria-label',t('Schermo intero'));
+    $('limSchermo').hidden=!(document.fullscreenEnabled||document.webkitFullscreenEnabled);
+    $('limEsci').innerHTML='✕ <span class="tx">'+t('Esci')+'</span>';$('limEsci').setAttribute('aria-label',t('Esci dalla modalità classe'));
+    $('limCancella').textContent=t('Cancella');$('limPennaNota').textContent=t('Il panorama resta fermo mentre disegni. Il disegno si cancella quando cambi scena.');
+    $('limPrev').setAttribute('aria-label',t('Scena precedente'));$('limNext').setAttribute('aria-label',t('Scena successiva'));
+    document.querySelectorAll('#limPenne .col').forEach(function(b,i){b.setAttribute('aria-label',t(['Penna oro','Penna rossa','Penna azzurra','Penna bianca'][i]));b.setAttribute('aria-pressed',b.dataset.c===colore);});
+    var T4=[['scena','Scena'],['opere','Opere'],['racconto','Racconto'],['quiz','Quiz']];
+    $('limTab').innerHTML=T4.map(function(x){return '<button type="button" role="tab" data-tab="'+x[0]+'" aria-selected="'+(tab===x[0])+'">'+t(x[1])+'</button>';}).join('');
+    $('limTab').querySelectorAll('button').forEach(function(b){b.onclick=function(){tab=b.dataset.tab;etichette();corpo();};});
+    audioUi();
+  }
+  /* ---- il panorama grande ---- */
+  function cfg(s,u){
+    var hs=opereInScena(s.id).map(function(x){return {pitch:x.p.pitch,yaw:x.p.yaw,cssClass:'opera-hs lim-hs',createTooltipFunc:cornice,createTooltipArgs:x};});
+    return {type:'equirectangular',panorama:u,yaw:s.yaw_avanti||0,pitch:s.pitch_avanti||0,hfov:100,hotSpots:hs,title:''};
+  }
+  function cornice(div,x){
+    var o=x.o,tit=tr('opere',o.id,'titolo',o.titolo);div.setAttribute('tabindex','0');div.setAttribute('role','button');div.setAttribute('aria-label',tit);
+    div.innerHTML='<div class="cornice"></div><div class="lab">'+esc(tit)+'</div>';
+    var c=div.querySelector('.cornice');var px=Math.max(70,Math.min(innerWidth*.4,(o.ampiezza||40)/100*innerWidth*.6));c.style.width=px+'px';c.style.height=(px*1.15)+'px';div.querySelector('.lab').style.top='calc(50% + '+(px*1.15/2+10)+'px)';
+    div.addEventListener('click',function(e){e.stopPropagation();if(!penna)scheda(o);});
+    div.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();scheda(o);}});
+  }
+  function mostraPano(s){
+    var id='L'+s.id+(hqL[s.id]?'h':'');
+    risolviPano(s,hqL[s.id]?'hq':'lq').then(function(u){
+      if(cur!==s||!on)return;
+      if(!VL){var c={default:{firstScene:id,sceneFadeDuration:700,autoLoad:true,showControls:false,compass:false,friction:.7,hfov:100,minHfov:30,maxHfov:120,keyboardZoom:true,mouseZoom:true,doubleClickZoom:false},scenes:{}};c.scenes[id]=cfg(s,u);
+        carica=true;VL=pannellum.viewer('limPano',c);caricateL[id]=1;altFade($('limPano'));VL.on('load',fatto);VL.on('error',fatto);}
+      else{if(!caricateL[id]){VL.addScene(id,cfg(s,u));caricateL[id]=1;}carSc(id,s.pitch_avanti||0,s.yaw_avanti||0,100);}
+      if(!hqL[s.id])risolviPano(s,'hq').then(function(uh){ /* sulla LIM serve il panorama nitido */
+        function cambia(){if(cur!==s||!on||!VL)return;hqL[s.id]=1;var ih='L'+s.id+'h';if(!caricateL[ih]){VL.addScene(ih,cfg(s,uh));caricateL[ih]=1;}carSc(ih,VL.getPitch(),VL.getYaw(),VL.getHfov());}
+        if(carica){if(!attesa)attesa=['HQ',cambia];}else cambia();}).catch(function(){});
+    }).catch(function(){aiuto(t('Vista piatta: il 360 non si è caricato'));});
+  }
+  function vaiL(s,guarda){
+    if(!s)return;cur=s;pennaOff();chiudiScheda();
+    var k=MAIN.indexOf(s),dev=s.ordine>=100;
+    $('limTit').textContent=(dev?'↳ ':'')+tr('scene',s.id,'titolo',s.titolo);
+    $('limPrev').disabled=k===0;$('limNext').disabled=k===MAIN.length-1;
+    $('limScene').innerHTML=SC.map(function(x){var d=x.ordine>=100;return '<button type="button" data-id="'+x.id+'" class="'+(d?'dev':'')+'" aria-current="'+(x.id===s.id)+'"><i>'+(d?'↳':(MAIN.indexOf(x)+1))+'</i><span>'+esc(tr('scene',x.id,'titolo',x.titolo))+'</span></button>';}).join('');
+    $('limScene').querySelectorAll('button').forEach(function(b){b.onclick=function(){vaiL(byId[+b.dataset.id]);};});
+    var att=$('limScene').querySelector('[aria-current=true]');if(att)try{att.scrollIntoView({inline:'center',block:'nearest'});}catch(e){}
+    mostraPano(s);if(tab==='scena'||tab==='opere')corpo();
+    if(guarda){var n=0;(function g(){if(VL&&cur===s&&caricateL['L'+s.id]){setTimeout(function(){try{VL.lookAt(guarda.pitch,guarda.yaw,60,900);}catch(e){}},700);}else if(n++<60)setTimeout(g,100);})();}
+    if(A&&!A.paused&&Lettore.cur&&/^s\d/.test(Lettore.cur.id))Lettore.pausa();
+    if(window.Stat)Stat.ev('classe',s.slug,true);
+  }
+  function passo(d){var i=MAIN.indexOf(cur);if(i<0){var p=byId[cur.da]||MAIN[0];i=MAIN.indexOf(p);if(d<0){vaiL(p);return;}}var n=MAIN[i+d];if(n)vaiL(n);}
+  /* ---- il pannello: scena, opere, racconto, quiz ---- */
+  function corpo(){
+    var c=$('limCorpo'),s=cur,h='';if(!s)return;
+    if(tab==='scena'){
+      var k=MAIN.indexOf(s),testo=tr('scene',s.id,'testo',s.testo),alt=tr('scene',s.id,'descrizione_scena',s.descrizione_scena),verso=tr('scene',s.id,'verso',s.verso);
+      h+='<div class="kicker">'+(s.ordine>=100?t('Deviazione'):t('Scena')+' '+(k+1)+' '+t('di')+' '+MAIN.length)+'</div><h3>'+esc(tr('scene',s.id,'titolo',s.titolo))+'</h3>';
+      if(testo)h+='<p>'+esc(testo)+'</p>';
+      if(alt)h+='<div class="kicker" style="margin-top:.6em">'+t('Cosa hai davanti')+'</div><p>'+esc(alt)+'</p>';
+      if(s.deviazioni&&s.deviazioni.length)h+='<div class="lim-lista">'+s.deviazioni.map(function(d){var ds=byId[d.a];return ds?'<button type="button" data-sc="'+ds.id+'"><span class="n">↳</span><span>'+esc(tr('scene',ds.id,'titolo',ds.titolo))+'</span></button>':'';}).join('')+'</div>';
+      if(s.ordine>=100){var p=byId[s.da]||MAIN[MAIN.length-1];h+='<div class="lim-lista"><button type="button" data-sc="'+p.id+'"><span class="n">↩</span><span>'+t('Torno al cammino')+'</span></button></div>';}
+      if(verso)h+='<p class="nota">'+t('Prosegui verso').replace(' verso','')+': '+esc(verso)+'</p>';
+      if(s.stato_testo==='da_validare'||D.capitoli.some(function(x){return x.stato_testo==='da_validare';}))h+='<p><span class="prova">'+t('testo di prova · da validare')+'</span></p>';
+    }else if(tab==='opere'){
+      var qui=opereInScena(s.id),visti={};qui=qui.filter(function(x){if(visti[x.o.id])return false;visti[x.o.id]=1;return true;});
+      h+='<div class="kicker">'+t('In questa scena vedi')+'</div>';
+      h+=qui.length?'<div class="lim-lista">'+qui.map(function(x){return '<button type="button" data-op="'+x.o.id+'"><span class="n">'+(x.o.capolavoro?'★':'◎')+'</span><span>'+esc(tr('opere',x.o.id,'titolo',x.o.titolo))+'<small>'+esc(tr('opere',x.o.id,'tipo',x.o.tipo))+'</small></span></button>';}).join('')+'</div>':'<p class="nota">'+t('In questa scena non ci sono opere schedate: guarda le altre qui sotto.')+'</p>';
+      h+='<div class="kicker" style="margin-top:1em">'+t('Tutte le opere')+'</div><div class="lim-lista">'+OP.filter(function(o){return !visti[o.id];}).map(function(o){var sp=scenaPrincipale(o);return '<button type="button" data-tutte="'+o.id+'"><span class="n">'+(o.capolavoro?'★':'◎')+'</span><span>'+esc(tr('opere',o.id,'titolo',o.titolo))+'<small>'+(sp?esc(tr('scene',sp.id,'titolo',sp.titolo)):'')+'</small></span></button>';}).join('')+'</div>';
+    }else if(tab==='racconto'){
+      h+='<div class="kicker">'+t('Il racconto')+'</div><h3>'+t('Quattro capitoli in video')+'</h3><p class="nota">'+t('Si guardano a tutto schermo; alla fine di ogni capitolo c’è una domanda per la classe.')+(S.lang!=='it'?' '+t('La voce del video è in italiano.'):'')+'</p>';
+      h+='<div class="lim-lista">'+D.capitoli.map(function(x){return '<button type="button" data-cap="'+x.id+'"><span class="n">'+x.n+'</span><span>'+esc(tr('capitoli',x.id,'titolo',x.titolo))+'<small>'+esc(tr('capitoli',x.id,'sottotitolo',x.sottotitolo))+' · '+mmss(x.durata)+'</small></span></button>';}).join('')+'</div>';
+    }else if(tab==='quiz'){
+      var Q=D.capitoli.filter(function(x){return x.quiz;});if(!Q.length){c.innerHTML='';return;}
+      qi=(qi+Q.length)%Q.length;var x=Q[qi];c.innerHTML='<div class="lim-quiz">'+quizHtml(x,qi+1,Q.length)+'</div>';legaQuiz(c,x,Q.length);return;
+    }
+    c.innerHTML=h;
+    c.querySelectorAll('[data-sc]').forEach(function(b){b.onclick=function(){vaiL(byId[+b.dataset.sc]);};});
+    c.querySelectorAll('[data-op]').forEach(function(b){b.onclick=function(){var o=opera(+b.dataset.op),p=o.scene.filter(function(z){return z.scena===cur.id;})[0];if(p&&VL)try{VL.lookAt(p.pitch,p.yaw,Math.max(40,o.ampiezza||40),900);}catch(e){}setTimeout(function(){scheda(o);},RIDOTTO?0:950);};});
+    c.querySelectorAll('[data-tutte]').forEach(function(b){b.onclick=function(){var o=opera(+b.dataset.tutte),sp=scenaPrincipale(o),p=o.scene.filter(function(z){return z.principale;})[0]||o.scene[0];vaiL(sp,p);};});
+    c.querySelectorAll('[data-cap]').forEach(function(b){b.onclick=function(){video(D.capitoli.filter(function(z){return z.id===b.dataset.cap;})[0]);};});
+  }
+  function opera(id){return OP.filter(function(z){return z.id===id;})[0];}
+  function quizHtml(x,n,tot){
+    var q=x.quiz,o=tr('capitoli',x.id,'quiz.o',q.o);
+    return '<div class="kicker">'+t('Domanda per la classe')+(tot?' · '+n+' / '+tot:'')+' · '+esc(tr('capitoli',x.id,'titolo',x.titolo))+'</div><p class="d">'+esc(tr('capitoli',x.id,'quiz.d',q.d))+'</p>'+
+      '<div class="opz">'+o.map(function(v,k){return '<button type="button" data-k="'+k+'"><b>'+'ABC'.charAt(k)+'</b><span>'+esc(v)+'</span></button>';}).join('')+'</div><p class="fb" aria-live="assertive"></p>'+
+      '<div class="giu">'+(tot?'<button class="lim-b" type="button" data-q="-1">‹ '+t('Precedente')+'</button>':'')+'<button class="lim-b" type="button" data-mostra="1">'+t('Mostra la risposta')+'</button>'+(tot?'<button class="lim-b pieno" type="button" data-q="1">'+t('Successiva')+' ›</button>':'')+'</div>';
+  }
+  function legaQuiz(box,x,tot){
+    var q=x.quiz,fb=box.querySelector('.fb');
+    function giusta(){box.querySelectorAll('.opz button').forEach(function(b){if(+b.dataset.k===q.ok)b.className='ok';});fb.textContent=t('Esatto!');timbra('quiz:'+x.id);}
+    box.querySelectorAll('.opz button').forEach(function(b){b.onclick=function(){if(+b.dataset.k===q.ok)giusta();else{b.className='ko';fb.style.color='var(--att)';fb.textContent=t('Non proprio… riprova');setTimeout(function(){fb.style.color='';},1200);}};});
+    var m=box.querySelector('[data-mostra]');if(m)m.onclick=giusta;
+    box.querySelectorAll('[data-q]').forEach(function(b){b.onclick=function(){qi+=+b.dataset.q;corpo();};});
+  }
+  /* ---- schede grandi: opera, video del capitolo ---- */
+  function scheda(o){
+    if(window.Stat)Stat.ev('opera',o.slug,true);
+    var tit=tr('opere',o.id,'titolo',o.titolo),meta=[tr('opere',o.id,'tipo',o.tipo),o.autore?tr('opere',o.id,'autore',o.autore):t('in studio'),o.datazione?tr('opere',o.id,'datazione',o.datazione):''].filter(Boolean).join(' · ');
+    var cur_=tr('opere',o.id,'curiosita',o.curiosita);
+    $('limScheda').innerHTML='<button class="lim-b esci lim-chiudi" type="button" id="limSchedaChiudi">✕ '+t('Chiudi')+'</button><div class="in'+(o.foto_hd?'':' solo')+'">'+(o.foto_hd?'<div class="foto"><img src="'+esc(o.foto_hd)+'" alt="'+esc(tit)+'"></div>':'')+
+      '<div><div class="kicker">'+(o.capolavoro?'★ '+t('capolavoro'):esc(tr('opere',o.id,'tipo',o.tipo)))+'</div><h3>'+esc(tit)+'</h3><div class="meta">'+esc(meta)+'</div><p>'+esc(tr('opere',o.id,'breve',o.breve))+'</p>'+(cur_?'<p class="nota">'+esc(cur_)+'</p>':'')+
+      '<div class="az">'+(o.audio?'<button class="lim-b pieno" type="button" id="limOpAudio">▶ '+t('ascolta')+' · '+mmss(o.durata)+'</button>':'')+'</div></div></div>';
+    $('limScheda').hidden=false;$('limSchedaChiudi').onclick=chiudiScheda;try{$('limSchedaChiudi').focus({preventScroll:true});}catch(e){}
+    if($('limOpAudio'))$('limOpAudio').onclick=function(){Lettore.suona({id:'o'+o.id,titolo:tit,sub:t('La guida'),src:o.audio,durata:o.durata,testo:tr('opere',o.id,'trascrizione',o.trascrizione)||tr('opere',o.id,'breve',o.breve)});};
+  }
+  function video(c){
+    if(!c)return;if(window.Stat)Stat.ev('video',c.id,true);Lettore.pausa();
+    var tit=tr('capitoli',c.id,'titolo',c.titolo);
+    $('limScheda').innerHTML='<button class="lim-b esci lim-chiudi" type="button" id="limSchedaChiudi">✕ '+t('Chiudi')+'</button><div class="in solo"><div><div class="kicker">'+t('Capitolo')+' '+c.n+'</div><h3>'+esc(tit)+'</h3>'+
+      '<video id="limVideo" controls playsinline preload="metadata" poster="'+esc(c.poster)+'" aria-label="'+esc(tit)+'"><source src="'+esc(c.video)+'" type="video/mp4">'+(c.sottotitoli?'<track kind="subtitles" srclang="it" label="Italiano" src="'+esc(c.sottotitoli)+'"'+(S.lang==='it'?'':' default')+'>':'')+'</video>'+
+      '<div class="lim-quiz" id="limVideoQuiz" hidden></div></div></div>';
+    $('limScheda').hidden=false;$('limSchedaChiudi').onclick=chiudiScheda;
+    var v=$('limVideo');var p=v.play();if(p&&p.catch)p.catch(function(){});
+    v.addEventListener('ended',function(){timbra('cap:'+c.id);if(c.quiz){var b=$('limVideoQuiz');b.hidden=false;b.innerHTML=quizHtml(c);legaQuiz(b,c,0);b.scrollIntoView({block:'nearest'});}});
+  }
+  function chiudiScheda(){var s=$('limScheda');if(s.hidden)return;s.querySelectorAll('video').forEach(function(v){v.pause();});s.hidden=true;s.innerHTML='';}
+  /* ---- la penna: si disegna sopra il panorama fermo ---- */
+  function tela(){var c=$('limTela'),r=$('lim').getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);c.width=r.width*dpr;c.height=r.height*dpr;c.style.width=r.width+'px';c.style.height=r.height+'px';var x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);x.lineCap='round';x.lineJoin='round';return x;}
+  var cx=null;
+  function pennaOn(){penna=true;$('limTela').hidden=false;$('limPenne').hidden=false;$('limPenna').setAttribute('aria-pressed','true');cx=tela();aiuto(t('Disegna sul panorama con il dito o la penna della LIM'));}
+  function pennaOff(){if(!penna)return;penna=false;$('limTela').hidden=true;$('limPenne').hidden=true;$('limPenna').setAttribute('aria-pressed','false');if(cx)cx.clearRect(0,0,9999,9999);}
+  (function(){var c=$('limTela');
+    c.addEventListener('pointerdown',function(e){if(!penna)return;tracciando=true;ultimo=[e.clientX,e.clientY];try{c.setPointerCapture(e.pointerId);}catch(x){}e.preventDefault();});
+    c.addEventListener('pointermove',function(e){if(!tracciando||!cx)return;var r=c.getBoundingClientRect();cx.strokeStyle=colore;cx.lineWidth=Math.max(4,innerWidth/320);cx.beginPath();cx.moveTo(ultimo[0]-r.left,ultimo[1]-r.top);cx.lineTo(e.clientX-r.left,e.clientY-r.top);cx.stroke();ultimo=[e.clientX,e.clientY];});
+    ['pointerup','pointercancel','pointerleave'].forEach(function(ev){c.addEventListener(ev,function(){tracciando=false;});});
+  })();
+  /* ---- audio della scena ---- */
+  function audioUi(){
+    var b=$('limAudio');if(!b)return;var s=cur,mio=Lettore.cur&&s&&Lettore.cur.id==='s'+s.id&&!A.paused;
+    b.hidden=!(s&&s.audio);b.innerHTML=(mio?'❚❚ ':'▶ ')+'<span class="tx">'+(mio?t('Pausa'):t('Ascolta il racconto'))+'</span>';b.setAttribute('aria-label',mio?t('Pausa'):t('Ascolta il racconto'));
+  }
+  function suonaScena(){var s=cur;if(!s||!s.audio)return;Lettore.suona({id:'s'+s.id,titolo:tr('scene',s.id,'titolo',s.titolo),sub:t('La guida'),src:s.audio,durata:s.durata,testo:tr('scene',s.id,'trascrizione',s.trascrizione)||tr('scene',s.id,'testo',s.testo),fine:function(){timbra('sc:'+s.id);}});audioUi();}
+  ['play','pause','ended'].forEach(function(ev){A.addEventListener(ev,function(){if(on)audioUi();});});
+  /* ---- apri e chiudi ---- */
+  function apri(){
+    if(!window.pannellum){aiuto(t('Vista piatta: il 360 non si è caricato'));}
+    on=true;S.modo='classe';save();document.body.classList.add('lim-on');$('lim').hidden=false;
+    Guida.ferma();Lettore.pausa();chiudiOpera();
+    try{history.replaceState(null,'',location.pathname+location.search+'#classe');}catch(e){}
+    etichette();var s=cur||attiva||MAIN[0];cur=null;vaiL(s);corpo();
+    if(VL)setTimeout(function(){try{VL.resize();}catch(e){}},60);
+    try{$('limPano').focus({preventScroll:true});}catch(e){}
+    aiuto(t('Trascina per guardarti intorno')+' · '+t('tocca le cornici dorate per aprire le opere'));
+    if(window.Stat)Stat.ev('classe','apertura',true);
+    applicaStatici();
+  }
+  function chiudi(){
+    if(!on)return;on=false;pennaOff();chiudiScheda();Lettore.pausa();S.modo='visita';save();
+    document.body.classList.remove('lim-on');$('lim').hidden=true;
+    try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}
+    try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
+    applicaStatici();if(cur&&cur!==attiva)vai(cur,false);
+  }
+  $('limEsci').onclick=chiudi;
+  $('limPrev').onclick=function(){passo(-1);};$('limNext').onclick=function(){passo(1);};
+  $('limAudio').onclick=function(){if(Lettore.cur&&cur&&Lettore.cur.id==='s'+cur.id){if(A.paused)A.play();else A.pause();audioUi();}else suonaScena();};
+  $('limPenna').onclick=function(){if(penna)pennaOff();else pennaOn();};
+  $('limCancella').onclick=function(){if(cx)cx.clearRect(0,0,9999,9999);};
+  document.querySelectorAll('#limPenne .col').forEach(function(b){b.onclick=function(){colore=b.dataset.c;etichette();};});
+  $('limPannello').onclick=function(){var l=$('limLato');l.hidden=!l.hidden;this.setAttribute('aria-pressed',!l.hidden);setTimeout(function(){if(VL)try{VL.resize();}catch(e){}},50);};
+  $('limChiedi').onclick=function(){if(window.Chiedi)Chiedi.apri();};
+  $('limSchermo').onclick=function(){var el=$('lim');try{if(document.fullscreenElement)document.exitFullscreen();else (el.requestFullscreen||el.webkitRequestFullscreen).call(el);}catch(e){}};
+  document.addEventListener('fullscreenchange',function(){setTimeout(function(){if(VL)try{VL.resize();}catch(e){}if(penna)cx=tela();},120);});
+  window.addEventListener('resize',function(){if(on&&penna)cx=tela();});
+  /* telecomandi da presentazione (PagGiù/PagSu), frecce, Esc */
+  document.addEventListener('keydown',function(e){
+    if(!on)return;if(document.body.classList.contains('chiedi-on'))return;
+    if(e.key==='Escape'){if(!$('limScheda').hidden){chiudiScheda();e.preventDefault();}else if(penna){pennaOff();e.preventDefault();}return;}
+    if(/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||''))return;
+    if(e.key==='PageDown'||(e.key==='ArrowRight'&&e.shiftKey)){e.preventDefault();passo(1);}
+    else if(e.key==='PageUp'||(e.key==='ArrowLeft'&&e.shiftKey)){e.preventDefault();passo(-1);}
+  });
+  return {apri:apri,chiudi:chiudi,vai:vaiL,get on(){return on;},get V(){return VL;},get cur(){return cur;},etichette:etichette,corpo:corpo,scheda:scheda,video:video,pennaOn:pennaOn,pennaOff:pennaOff};
+})();
+window.Lim=Lim;
 
 /* ====================================================================
    NAV (ancore attive), avvio
    ==================================================================== */
 var sio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var id=e.target.id;$('nav').querySelectorAll('a').forEach(function(a){a.classList.toggle('attiva',a.dataset.s===id);});});},{rootMargin:'-35% 0px -55% 0px'});
 ['racconto','cammino','opere','festa','ascolta','info'].forEach(function(id){if($(id))sio.observe($(id));});
-function renderTutto(){if(window.Chiedi&&Chiedi.etichette)Chiedi.etichette();Festa.render();Dove.render();Sostieni.render();Rete.render();renderCarte();Live.avvisi();applicaStatici();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();if(attiva){renderCassetto(attiva);renderElenco();renderPins();$('panoTag').textContent=tr('scene',attiva.id,'titolo',attiva.titolo);}if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);}
+function renderTutto(){if(Chiedi.etichette)Chiedi.etichette();notaCammino();$('panoHint').textContent=t('Trascina per guardarti intorno');if(window.Lim&&Lim.on){Lim.etichette();Lim.corpo();if(Lim.cur)Lim.vai(Lim.cur);}Festa.render();Dove.render();Sostieni.render();Rete.render();renderCarte();Live.avvisi();applicaStatici();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();if(attiva){renderCassetto(attiva);renderElenco();renderPins();$('panoTag').textContent=tr('scene',attiva.id,'titolo',attiva.titolo);}if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);}
 function notaCammino(){
-  $('camminoNota').textContent=QUI?(S.lang==='it'?'Sei sul posto: ascolta, guarda le opere di questa scena e prosegui con i pulsanti.':'You are on site: listen, look at the works in this scene and go on with the buttons.'):(MOBILE||RIDOTTO?(S.lang==='it'?'Tocca i punti sulla pianta o le frecce: il panorama cambia scena. Le cornici dorate nel 360 sono le opere.':'Tap the points on the plan or the arrows: the panorama changes scene. The golden frames in the 360 are the works.'):(S.lang==='it'?'Scorri: il punto cammina lungo la navata e il panorama cambia scena. Il cono sulla pianta segue il tuo sguardo. Le cornici dorate nel 360 sono le opere.':'Scroll: the point walks along the nave and the panorama changes scene. The cone on the plan follows your gaze. The golden frames in the 360 are the works.'));
+  $('camminoNota').textContent=QUI?t('Sei sul posto: ascolta, guarda le opere di questa scena e prosegui con i pulsanti.'):(MOBILE||RIDOTTO?t('Tocca i punti sulla pianta o le frecce: il panorama cambia scena. Le cornici dorate nel 360 sono le opere.'):t('Scorri: il punto cammina lungo la navata e il panorama cambia scena. Il cono sulla pianta segue il tuo sguardo. Le cornici dorate nel 360 sono le opere.'));
 }
 /* ingresso «sono qui» senza ricaricare la pagina (il QR usa ?qui=, il bottone usa questo) */
 function impostaQui(slug){
@@ -1779,8 +2130,9 @@ function avvio(){
   window.addEventListener('resize',function(){montaHotspot();if(V)V.resize();});
   if(GS)setTimeout(function(){ScrollTrigger.refresh();},300);
   swAvvia();statoRete();
+  if(location.hash==='#classe'||qs.has('classe'))setTimeout(function(){Lim.apri();},80);
 }
-window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera,Orari:Orari,Chiedi:Chiedi,Festa:Festa,Dove:Dove,Stat:Stat,Live:Live,Rete:Rete,get SILENZIO(){return SILENZIO;}};
+window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera,Orari:Orari,Chiedi:Chiedi,Festa:Festa,Dove:Dove,Stat:Stat,Live:Live,Rete:Rete,Lim:Lim,get SILENZIO(){return SILENZIO;}};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',avvio);else avvio();
 })();
 </script>

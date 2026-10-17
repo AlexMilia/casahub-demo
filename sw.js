@@ -3,7 +3,7 @@
    - panorami, audio, video, foto: cache prima (una volta scaricati non si riscaricano)
    - richieste «Range» (audio e video) servite dalla cache con risposta 206, come vuole Safari
    - messaggi dalla pagina: 'shell' (salva l'involucro), 'stato' (quanti file sono già in cache), 'scarica' (scarica una lista con avanzamento) */
-var VERSIONE = 'chiesa-v3';   /* cambiala a ogni pubblicazione importante: i vecchi salvataggi si cancellano da soli */
+var VERSIONE = 'chiesa-v4';   /* cambiala a ogni pubblicazione importante: i vecchi salvataggi si cancellano da soli */
 var SHELL = VERSIONE + '-shell', MEDIA = VERSIONE + '-media';
 var RE_MEDIA = /\.(jpe?g|png|webp|mp3|mp4|webm|vtt|woff2?|ttf)(\?|$)/i;
 var RE_LIB = /^https:\/\/(cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net|fonts\.googleapis\.com|fonts\.gstatic\.com|unpkg\.com)\//;
