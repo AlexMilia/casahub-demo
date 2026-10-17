@@ -31,6 +31,14 @@ frasi dei testi più vicine alla domanda; se non trova nulla lo dice e offre Wha
 minuti per persona, 1500 al giorno. Quando il parroco valida i testi: nel pacchetto «politica.solo_validati: true». Test: test/test-chiedi.js
 (pagina) e ask-trapani-api/test_chiese.py (server). Nell'anteprima su Claude il servizio non è raggiungibile: risponde coi testi locali.
 
+LA FESTA: sezione «Festa» (anche nel menu in basso). Le date si calcolano da sole ogni anno (ultimo mercoledì di agosto, novena da 9
+giorni prima); gli orari dei momenti sono quelli del programma 2026 (275ª edizione, custonaciweb.it) e stanno in dati/santuario.js,
+luogo.festa.momenti: quando esce il programma nuovo si cambiano lì. Il reel è il video YouTube AP5k_qGSROM (si apre al tocco, senza
+cookie). Ogni momento ha «Google Calendar» (link che apre l'evento già compilato) e «.ics» (iPhone/Outlook); in alto «tutta la festa».
+DOVE SIAMO: dentro Info, mappa OpenStreetMap (si carica solo quando ci si arriva) con 6 punti: santuario, parcheggio multipiano, fermata
+AST, sosta pullman, Pozzo della Madonna, Cala Buguto; distanze a piedi e «Indicazioni stradali» su Google Maps. I punti sono in
+luogo.dove.punti. Da verificare con il Comune: piano gratuito del parcheggio, punto esatto della sosta pullman. Test: test/test-festa.js.
+
 I DUE INGRESSI: chiesa-sim1.html (da casa: soglia + racconto + cammino) · chiesa-sim1.html?qui=altare (dal QR in cappella: audio per
 primo, «sei qui», niente soglia). Slug dei punti: dal-cielo, ingresso, navata, verso-altare, crociera, presbiterio, altare; deviazioni
 cantoria, rosone, tetto (100-102), museo, museo-2, museo-dipinti, museo-tesoro, museo-vara (200-204), porta-laterale (300), battistero,

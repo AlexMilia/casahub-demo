@@ -26,6 +26,25 @@
         L.patrono ? 'Patrona: ' + L.patrono + '.' : ''] ) });
     if (L.festa_patronale) add({ id: 'info:festa', tipo: 'info', ref: null, titolo: 'La festa', stato: 'fonte_web',
       testo: 'Festa patronale: ' + L.festa_patronale + '.' });
+    /* la festa: programma con le date della prossima edizione, calcolate dalla regola */
+    if (L.festa) {
+      var F = L.festa, oggi = new Date(), y = oggi.getFullYear();
+      var mer = function (yy) { var d = new Date(Date.UTC(yy, 7, 31)); while (d.getUTCDay() !== 3) d.setUTCDate(d.getUTCDate() - 1); return d; };
+      if (oggi.getTime() > mer(y).getTime() + 2 * 864e5) y++;
+      var GG = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
+      var data = function (off) { var d = mer(y); d.setUTCDate(d.getUTCDate() + off); return GG[d.getUTCDay()] + ' ' + d.getUTCDate() + ' agosto ' + y; };
+      add({ id: 'festa:programma', tipo: 'festa', ref: 'festa', titolo: 'La festa ' + y + ': i giorni', stato: 'fonte_web', fonte: F.fonte_programma ? F.fonte_programma.url : null,
+        testo: unisci(['La festa di Maria SS. di Custonaci è l’ultimo mercoledì di agosto: nel ' + y + ' cade ' + data(0) + ', con la novena che comincia ' + data(F.inizio_novena || -9) + '.',
+          F.momenti.map(function (m) { return data(m.ora >= '24' ? m.giorno + 1 : m.giorno) + (m.ora >= '24' ? ' a mezzanotte' : ' alle ' + m.ora) + ': ' + m.titolo + ' (' + m.luogo + '). ' + m.desc; }).join(' '),
+          'Gli orari sono quelli del programma ' + F.edizione.anno + ' (' + F.edizione.numero + 'ª edizione, tema «' + F.edizione.tema + '»); il programma ufficiale di ogni anno esce in estate.']) });
+      if (F.storia) add({ id: 'festa:storia', tipo: 'festa', ref: 'festa', titolo: 'La storia della festa', stato: 'da_validare',
+        testo: F.storia.map(function (x) { return x.anno + ': ' + x.testo; }).join(' ') });
+    }
+    /* dove siamo: parcheggi, autobus, luoghi della storia */
+    if (L.dove) L.dove.punti.forEach(function (p) {
+      if (p.tipo === 'santuario') return;
+      add({ id: 'dove:' + p.id, tipo: 'info', ref: 'dove', titolo: p.nome, stato: 'fonte_web', testo: p.nome + ', ' + p.indirizzo + ' (Custonaci). ' + p.nota });
+    });
     if (L.orari_visita || L.orari_celebrazioni) add({ id: 'info:orari', tipo: 'info', ref: 'info', titolo: 'Orari', stato: 'fonte_web',
       fonte: L.calendario ? (L.calendario.fonte_messe + ' · ' + L.calendario.fonte_apertura) : null,
       testo: unisci(['Apertura: ' + (L.orari_visita || 'non indicata') + '.', 'Messe: ' + (L.orari_celebrazioni || 'non indicate') + '.',

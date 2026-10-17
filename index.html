@@ -344,6 +344,62 @@ body.qui .cassetto .btn.ascolta-btn{min-height:64px;font-size:1.1em;width:100%}
 .avviso-messa .azioni{display:flex;gap:8px;flex-wrap:wrap} .avviso-messa .btn{flex:1 1 180px;justify-content:center}
 body.silenzio #lettore .l-silenzio{display:inline}
 .l-silenzio{display:none;font:600 .75em var(--sans);color:var(--oro);margin-left:6px}
+.festa{padding-top:clamp(40px,7vw,90px);padding-bottom:10px}
+.festa-top{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center;margin-top:22px}
+@media (max-width:760px){.festa-top{grid-template-columns:1fr}}
+.reel-box{position:relative;width:100%;max-width:300px;aspect-ratio:9/16;border-radius:22px;overflow:hidden;border:1px solid var(--oro);background:#0d1117;box-shadow:0 18px 50px #000a;margin:0 auto}
+.reel-box button,.reel-box a.reel-link{all:unset;cursor:pointer;position:absolute;inset:0;display:block;background-size:cover;background-position:center}
+.reel-box .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:rgba(201,162,74,.92);display:grid;place-items:center;box-shadow:0 8px 30px #000b}
+.reel-box .play::after{content:'';margin-left:6px;border-left:22px solid #1b1408;border-top:14px solid transparent;border-bottom:14px solid transparent}
+.reel-box .didascalia{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 16px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font:600 .9em var(--sans)}
+.reel-box .didascalia small{display:block;font-weight:400;opacity:.8}
+.reel-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.festa-data{font:600 clamp(30px,5vw,54px)/1.05 var(--serif);color:var(--candela);margin:6px 0 10px;text-wrap:balance}
+.festa-conto{font:600 1.05em var(--sans);color:var(--pietra);margin:0 0 6px}
+.festa-conto b{color:var(--oro2)}
+.festa-azioni{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 10px}
+.festa h3{margin-top:clamp(30px,5vw,54px);font-size:1.6em}
+.festa-giorni{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:12px}
+.festa-giorni li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:16px 18px;border:1px solid var(--linea);border-radius:var(--r);background:var(--carta)}
+.festa-giorni li.clou{border-color:var(--oro);background:linear-gradient(90deg,rgba(201,162,74,.12),transparent 60%),var(--carta)}
+.festa-giorni li.oggi{box-shadow:inset 4px 0 0 var(--oro)}
+.festa-giorni .quando b{display:block;font:600 .95em var(--sans);color:var(--pietra)}
+.festa-giorni .quando b::first-letter{text-transform:uppercase}
+.festa-giorni .quando span{display:block;font:600 1.7em/1.1 var(--serif);color:var(--oro2);margin-top:2px}
+.festa-giorni .quando em{display:inline-block;margin-top:6px;font:600 .7em var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#1b1408;background:var(--oro);border-radius:999px;padding:3px 8px;font-style:normal}
+.festa-giorni h4{margin:0 0 4px;font:600 1.25em/1.2 var(--serif);color:var(--pietra)}
+.festa-giorni .dove{margin:0 0 6px;color:var(--muto);font-size:.88em}
+.festa-giorni p{margin:0 0 10px}
+.festa-giorni .azioni{display:flex;flex-wrap:wrap;gap:8px}
+@media (max-width:560px){.festa-giorni li{grid-template-columns:1fr;gap:6px}.festa-giorni .quando{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}.festa-giorni .quando span{font-size:1.3em;margin:0}}
+.festa-storia{list-style:none;margin:16px 0 0;padding:0 0 8px;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,1fr);gap:0;overflow-x:auto;scroll-snap-type:x mandatory}
+.festa-storia li{position:relative;padding:28px 18px 0 0;scroll-snap-align:start;border-top:2px solid var(--linea)}
+.festa-storia li::before{content:'';position:absolute;left:0;top:-7px;width:12px;height:12px;border-radius:50%;background:var(--oro)}
+.festa-storia b{display:block;font:600 1.5em var(--serif);color:var(--candela);margin-bottom:4px}
+.festa-storia p{margin:0;font-size:.93em;color:var(--pietra)}
+.dove{margin-top:clamp(28px,4vw,44px)}
+.dove h3{font-size:1.6em}
+.dove-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;margin-top:14px}
+@media (max-width:860px){.dove-grid{grid-template-columns:1fr}}
+.mappa{position:relative;min-height:380px;border-radius:var(--r);overflow:hidden;border:1px solid var(--linea);background:#151b23}
+.mappa .vuota{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;color:var(--muto);font-size:.92em}
+.mappa .leaflet-container{background:#151b23;font:inherit}
+.pin-num{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--oro);color:#1b1408;font:700 14px var(--sans);border:2px solid #fff;box-shadow:0 3px 10px #0008}
+.pin-num.santuario{width:38px;height:38px;font-size:16px;background:var(--candela)}
+.pin-num.storia{background:#9fb8d8}
+.leaflet-popup-content{font:14px/1.4 var(--sans);color:#1b1f26;margin:12px 14px}
+.leaflet-popup-content b{display:block;margin-bottom:2px}
+.leaflet-popup-content a{color:#7a5a12;font-weight:600}
+.punti{list-style:none;margin:0;padding:0;display:grid;gap:8px;align-content:start}
+.punti li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;padding:12px 14px;border:1px solid var(--linea);border-radius:12px;background:var(--carta);cursor:pointer}
+.punti li.attivo{border-color:var(--oro)}
+.punti .n{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--oro);color:#1b1408;font:700 14px var(--sans)}
+.punti .n.storia{background:#9fb8d8}.punti .n.santuario{background:var(--candela)}
+.punti b{display:block;color:var(--pietra)} .punti small{display:block;color:var(--muto)} .punti p{margin:4px 0 6px;font-size:.9em}
+.punti a{font:600 .85em var(--sans);color:var(--oro2)}
+.arrivare{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
+.arrivare .card h4{margin:0 0 6px;font:600 1.1em var(--serif);color:var(--candela)}
+.arrivare .card p{margin:0;font-size:.93em}
 .chiedi-fab{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom,0px));z-index:68;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--oro);background:rgba(27,33,43,.96);color:var(--candela);border-radius:999px;padding:10px 16px 10px 12px;font:600 .9em var(--sans);box-shadow:0 8px 24px #0008;cursor:pointer}
 .chiedi-fab b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--oro);color:#1b1408;font:700 15px var(--serif,serif)}
 .lettore.on ~ .chiedi-fab{bottom:calc(var(--nav-h) + 84px + env(safe-area-inset-bottom,0px))}
@@ -481,6 +537,13 @@ body.chiedi-on .chiedi-fab{display:none}
   </div>
 </section>
 
+<!-- ================= LA FESTA ================= -->
+<section class="festa cont" id="festa" aria-labelledby="hFesta">
+  <div class="kicker" id="kFesta">La festa · ultimo mercoledì di agosto</div>
+  <h2 id="hFesta">La festa di agosto</h2>
+  <div id="festaCorpo"></div>
+</section>
+
 <!-- ================= SENZA BARRIERE ================= -->
 <section class="barriere cont" id="barriere" aria-labelledby="hBarriere" hidden>
   <div class="kicker" id="kBarriere">Per tutti</div>
@@ -493,6 +556,11 @@ body.chiedi-on .chiedi-fab{display:none}
 <section class="info cont" id="info" aria-labelledby="hInfo">
   <div class="kicker" id="kInfo">Prima di venire</div>
   <h2 id="hInfo">Informazioni</h2>
+  <div class="dove" id="dove" aria-labelledby="hDove">
+    <h3 id="hDove">Dove siamo</h3>
+    <div class="dove-grid"><div class="mappa" id="mappa" role="region" aria-label="Mappa"><div class="vuota" id="mappaVuota">La mappa si apre quando ci arrivi.</div></div><ol class="punti" id="punti"></ol></div>
+    <div class="arrivare" id="arrivare"></div>
+  </div>
   <div class="griglia" id="infoGriglia"></div>
   <div class="card" style="margin-top:14px" id="proseguiCard"></div>
   <p class="nota" style="margin-top:20px" id="credito"></p>
@@ -527,6 +595,7 @@ body.chiedi-on .chiedi-fab{display:none}
   <a href="#racconto" data-s="racconto"><i>📖</i><span>Racconto</span></a>
   <a href="#cammino" data-s="cammino"><i>🗺</i><span>Cammino</span></a>
   <a href="#opere" data-s="opere"><i>🖼</i><span>Opere</span></a>
+  <a href="#festa" data-s="festa"><i>🕯</i><span>Festa</span></a>
   <a href="#ascolta" data-s="ascolta"><i>🎧</i><span>Ascolta</span></a>
   <a href="#info" data-s="info"><i>ℹ️</i><span>Info</span></a>
 </nav>
@@ -644,7 +713,7 @@ function applicaStatici(){
   $('kAscolta').textContent=t('Audioguida');$('hAscolta').textContent=t('Ascolta');
   $('kBarriere').textContent=t('Per tutti');$('hBarriere').textContent=t('Visita senza barriere');
   $('kInfo').textContent=t('Prima di venire');$('hInfo').textContent=t('Informazioni');
-  var nav=$('nav').querySelectorAll('a span');['Racconto','Cammino','Opere','Ascolta','Info'].forEach(function(k,i){nav[i].textContent=t(k);});
+  var nav=$('nav').querySelectorAll('a span');['Racconto','Cammino','Opere','Festa','Ascolta','Info'].forEach(function(k,i){if(nav[i])nav[i].textContent=k==='Festa'&&S.lang!=='it'?(S.lang==='fr'?'Fête':S.lang==='es'?'Fiesta':'Feast'):t(k);});
   $('segModo').querySelectorAll('button').forEach(function(b){b.textContent=t(b.dataset.modo==='visita'?'Visita':'In classe');b.setAttribute('aria-pressed',b.dataset.modo===S.modo);});
   $('lMeno').setAttribute('aria-label',S.lang==='it'?'Indietro di 15 secondi':'Back 15 seconds');$('lTesto').textContent=t('Testo').slice(0,2);$('lTesto').setAttribute('aria-label',t('Testo'));
   $('opChiudi').setAttribute('aria-label',t('Chiudi'));$('lChiudi').setAttribute('aria-label',t('Chiudi'));
@@ -1199,6 +1268,153 @@ var Orari=(function(){
 })();
 window.Orari=Orari;
 /* ====================================================================
+   LA FESTA: date calcolate ogni anno (ultimo mercoledì di agosto), reel, giorni con «aggiungi al calendario», storia
+   ==================================================================== */
+var Festa=(function(){
+  var F=L.festa;if(!F||!$('festaCorpo'))return {render:function(){},evento:function(){}};
+  var GG={it:['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'],en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']};
+  var MM={it:['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],en:['January','February','March','April','May','June','July','August','September','October','November','December']};
+  function it(){return S.lang==='it';}
+  function T(o,k){return (!it()&&o[k+'_en'])||o[k];}
+  function z(n){return (n<10?'0':'')+n;}
+  function mercoledi(y){var d=new Date(Date.UTC(y,7,31));while(d.getUTCDay()!==3)d.setUTCDate(d.getUTCDate()-1);return d.getUTCDate();}
+  function oggi(){var n=window.Orari&&L.calendario?Orari.adesso():null;if(!n){var d=new Date();n={y:d.getFullYear(),mo:d.getMonth()+1,d:d.getDate(),t:d.getHours()*60+d.getMinutes()};}return n;}
+  /* l'anno della prossima festa: quest'anno fino al giorno dopo la processione, poi l'anno dopo */
+  function anno(){var n=oggi(),y=n.y,w=mercoledi(y);return Date.UTC(n.y,n.mo-1,n.d)>Date.UTC(y,7,w+1)?y+1:y;}
+  function giorno(y,off){var dt=new Date(Date.UTC(y,7,mercoledi(y)+off));return {y:dt.getUTCFullYear(),mo:dt.getUTCMonth()+1,d:dt.getUTCDate(),dow:dt.getUTCDay()};}
+  /* inizio e fine di un momento, ora di Roma */
+  function quando(m,y){var a=m.ora.split(':'),h=+a[0],mi=+a[1],off=m.giorno;if(h>=24){h-=24;off++;}var g=giorno(y,off);
+    var ini=Date.UTC(g.y,g.mo-1,g.d,h,mi),fin=ini+m.durata*60000;return {g:g,ini:ini,fin:fin,h:h,mi:mi};}
+  function locale(ms){var d=new Date(ms);return d.getUTCFullYear()+z(d.getUTCMonth()+1)+z(d.getUTCDate())+'T'+z(d.getUTCHours())+z(d.getUTCMinutes())+'00';}
+  function giornoTxt(g,breve){var nome=(it()?GG.it:GG.en)[g.dow],mese=(it()?MM.it:MM.en)[g.mo-1];if(breve){nome=nome.slice(0,3);mese=mese.slice(0,3);}return it()?nome+' '+g.d+' '+mese:nome+', '+mese+' '+g.d;}
+  function oraTxt(q){return it()?q.h+':'+z(q.mi):((q.h%12)||12)+(q.mi?':'+z(q.mi):'')+(q.h<12?' am':' pm');}
+  function punto(id){return ((L.dove&&L.dove.punti)||[]).filter(function(p){return p.id===id;})[0];}
+  function luogoCal(m){var p=m.punto?punto(m.punto):null;return (T(m,'luogo')||'')+', Custonaci (TP)'+(p?' · '+p.lat+','+p.lng:'');}
+  function dettagli(m){return T(m,'desc')+'\n\n'+(it()?'Orari dal programma 2026: controlla quello ufficiale dell’anno.':'Times from the 2026 programme: check the official one for the year.')+'\n'+location.href.split('#')[0].split('?')[0]+'#festa';}
+  /* link «aggiungi a Google Calendar» */
+  function google(m,y){var q=quando(m,y);
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(T(m,'titolo')+' · '+T(F,'nome'))+'&dates='+locale(q.ini)+'/'+locale(q.fin)+'&ctz=Europe/Rome&details='+encodeURIComponent(dettagli(m))+'&location='+encodeURIComponent(luogoCal(m));}
+  function googleTutta(y){var a=giorno(y,F.inizio_novena||-9),b=giorno(y,1),d=function(g){return g.y+z(g.mo)+z(g.d);};
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(T(F,'nome')+' '+y)+'&dates='+d(a)+'/'+d(b)+'&details='+encodeURIComponent((it()?'Novena e festa. Clou: lo sbarco a Cala Buguto e la processione.':'Novena and feast. Highlights: the landing at Cala Buguto and the procession.')+'\n'+location.href.split('#')[0].split('?')[0]+'#festa')+'&location='+encodeURIComponent('Santuario di Maria SS. di Custonaci, Piazza Santuario 1, Custonaci (TP)');}
+  /* file .ics (iPhone, Outlook): ad agosto Roma è a UTC+2 */
+  function ics(lista,y){
+    var utc=function(ms){return locale(ms-2*3600000)+'Z';},esc2=function(s){return String(s).replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/([,;])/g,'\\$1');};
+    var righe=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Esplora Trapani//Visita raccontata//IT','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+    lista.forEach(function(m){var q=quando(m,y);righe.push('BEGIN:VEVENT','UID:'+m.id+'-'+y+'@custonaci.esploratrapani.it','DTSTAMP:'+utc(Date.now()+2*3600000),'DTSTART:'+utc(q.ini),'DTEND:'+utc(q.fin),
+      'SUMMARY:'+esc2(T(m,'titolo')+' · '+T(F,'nome')),'LOCATION:'+esc2(luogoCal(m)),'DESCRIPTION:'+esc2(dettagli(m)),'END:VEVENT');});
+    righe.push('END:VCALENDAR');return righe.join('\r\n')+'\r\n';
+  }
+  function scarica(lista,y,nome){
+    var b=new Blob([ics(lista,y)],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');
+    a.href=u;a.download=nome+'.ics';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove();},1500);
+  }
+  function reel(){
+    var R=F.reel;if(!R)return '';var url='https://youtube.com/shorts/'+R.youtube,img=ARTEFATTO?(R.copertina_locale||'media/cap4.jpg'):'https://i.ytimg.com/vi/'+R.youtube+'/hq2.jpg';
+    var cap='<span class="didascalia">'+esc(R.titolo)+'<small>'+(it()?'Il reel della festa':'The feast reel')+' · '+esc(R.autore)+'</small></span>';
+    if(ARTEFATTO)return '<div class="reel-box"><a class="reel-link" href="'+url+'" target="_blank" rel="noopener" style="background-image:url('+img+')" aria-label="'+esc(R.titolo)+'"><span class="play"></span>'+cap+'</a></div>';
+    return '<div class="reel-box" id="reelBox"><button type="button" id="reelPlay" style="background-image:url('+img+')" aria-label="'+(it()?'Guarda il reel: ':'Watch the reel: ')+esc(R.titolo)+'"><span class="play"></span>'+cap+'</button></div>';
+  }
+  function avviaReel(){
+    var R=F.reel,box=$('reelBox');if(!box)return;
+    if(!navigator.onLine){var d=box.querySelector('.didascalia');if(d)d.innerHTML=esc(it()?'Per vedere il reel serve la rete.':'You need a connection to watch the reel.');return;}
+    Lettore.pausa();document.querySelectorAll('video').forEach(function(v){if(!v.paused)v.pause();});
+    box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+R.youtube+'?autoplay=1&playsinline=1&rel=0&modestbranding=1" title="'+esc(R.titolo)+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+  }
+  function render(){
+    var y=anno(),n=oggi(),a=giorno(y,F.inizio_novena||-9),w=giorno(y,0),oggiMs=Date.UTC(n.y,n.mo-1,n.d);
+    var sb=F.momenti.filter(function(m){return m.id==='sbarco';})[0]||F.momenti[0],qs=quando(sb,y);
+    var mancano=Math.round((Date.UTC(qs.g.y,qs.g.mo-1,qs.g.d)-oggiMs)/864e5),ed=F.edizione?F.edizione.numero+(y-F.edizione.anno):null;
+    var conto=mancano>1?(it()?'Mancano <b>'+mancano+' giorni</b> allo sbarco':'<b>'+mancano+' days</b> to the landing'):mancano===1?(it()?'<b>Domani</b> lo sbarco a Cala Buguto':'The landing is <b>tomorrow</b>'):mancano===0?(it()?'<b>Oggi</b> lo sbarco, alle '+oraTxt(qs):'The landing is <b>today</b>, at '+oraTxt(qs)):(it()?'<b>È festa</b>: la processione è '+(Date.UTC(w.y,w.mo-1,w.d)===oggiMs?'oggi':'mercoledì'):'<b>The feast is on</b>: the procession is on Wednesday');
+    var mese=(it()?MM.it:MM.en)[w.mo-1];
+    var h='<div class="festa-top">'+reel()+'<div class="festa-info"><div class="kicker">'+(ed?(it()?ed+'ª edizione':'Edition '+ed):'')+'</div>'+
+      '<p class="festa-data">'+(it()?a.d+'–'+w.d+' '+mese+' '+y:mese+' '+a.d+'–'+w.d+', '+y)+'</p>'+
+      '<p class="festa-conto">'+conto+'</p>'+
+      '<p>'+(it()?'Nove sere di novena, poi quattro giorni di festa: le chiavi della città, i carretti, lo sbarco dal mare, la processione di cinque ore e i fuochi di mezzanotte.':'Nine evenings of novena, then four days of feast: the keys of the town, the painted carts, the landing from the sea, the five-hour procession and the midnight fireworks.')+'</p>'+
+      '<div class="festa-azioni"><a class="btn pieno" href="'+googleTutta(y)+'" target="_blank" rel="noopener" id="festaGoogle">📅 '+(it()?'Aggiungi la festa a Google Calendar':'Add the feast to Google Calendar')+'</a>'+
+      (ARTEFATTO?'':'<button class="btn" type="button" id="festaIcs">⤓ '+(it()?'Tutti gli appuntamenti (iPhone, Outlook)':'All events (iPhone, Outlook)')+'</button>')+'</div>'+
+      '<p class="nota">'+(y>F.edizione.anno?(it()?'Le date del '+y+' sono calcolate dalla regola (ultimo mercoledì di agosto); gli orari vengono dal programma '+F.edizione.anno+', il programma ufficiale esce d’estate.':'The '+y+' dates follow the rule (last Wednesday of August); the times come from the '+F.edizione.anno+' programme, the official one comes out in summer.'):'')+
+      (F.fonte_programma?' <a href="'+esc(F.fonte_programma.url)+'" target="_blank" rel="noopener">'+esc(F.fonte_programma.nome)+' ↗</a>':'')+'</p></div></div>';
+    h+='<h3>'+(it()?'I giorni della festa':'The feast days')+'</h3><ol class="festa-giorni">'+F.momenti.map(function(m){
+      var q=quando(m,y),ogg=Date.UTC(q.g.y,q.g.mo-1,q.g.d)===oggiMs;
+      return '<li class="'+(m.clou?'clou ':'')+(ogg?'oggi':'')+'" data-m="'+m.id+'"><div class="quando"><b>'+esc(giornoTxt(q.g,false))+'</b><span>'+oraTxt(q)+'</span>'+(ogg?'<em>'+(it()?'oggi':'today')+'</em>':(m.clou?'<em>'+(it()?'da non perdere':'unmissable')+'</em>':''))+'</div>'+
+        '<div class="cosa"><h4>'+esc(T(m,'titolo'))+'</h4><p class="dove">📍 '+esc(T(m,'luogo'))+'</p><p>'+esc(T(m,'desc'))+'</p><div class="azioni">'+
+        '<a class="btn sm" href="'+google(m,y)+'" target="_blank" rel="noopener" data-cal="'+m.id+'">📅 Google Calendar</a>'+
+        (ARTEFATTO?'':'<button class="btn sm ghost" type="button" data-ics="'+m.id+'">⤓ .ics</button>')+
+        (m.punto&&punto(m.punto)?'<button class="btn sm ghost" type="button" data-mappa="'+m.punto+'">◎ '+(it()?'Sulla mappa':'On the map')+'</button>':'')+'</div></div></li>';}).join('')+'</ol>';
+    if(F.storia&&F.storia.length)h+='<h3>'+(it()?'Quattro secoli e mezzo di festa':'Four and a half centuries of feast')+'</h3><ol class="festa-storia" tabindex="0" aria-label="'+(it()?'Storia della festa, scorri di lato':'History of the feast, scroll sideways')+'">'+F.storia.map(function(s){return '<li><b>'+esc(s.anno)+'</b><p>'+esc(T(s,'testo'))+'</p></li>';}).join('')+'</ol>';
+    var c=$('festaCorpo');c.innerHTML=h;
+    $('kFesta').textContent=it()?'La festa · ultimo mercoledì di agosto':'The feast · last Wednesday of August';$('hFesta').textContent=it()?'La festa di agosto':'The August feast';
+    if($('reelPlay'))$('reelPlay').onclick=avviaReel;
+    if($('festaIcs'))$('festaIcs').onclick=function(){scarica(F.momenti,y,'festa-madonna-custonaci-'+y);};
+    c.querySelectorAll('[data-ics]').forEach(function(b){b.onclick=function(){var m=F.momenti.filter(function(x){return x.id===b.dataset.ics;});scarica(m,y,'custonaci-'+b.dataset.ics+'-'+y);};});
+    c.querySelectorAll('[data-mappa]').forEach(function(b){b.onclick=function(){Dove.mostra(b.dataset.mappa);};});
+  }
+  return {render:render,anno:anno,google:google,googleTutta:googleTutta,ics:ics,quando:quando};
+})();
+
+/* ====================================================================
+   DOVE SIAMO: mappa (Leaflet, caricata solo quando serve), punti con distanza a piedi, indicazioni, come arrivare
+   ==================================================================== */
+var Dove=(function(){
+  var DV=L.dove;if(!DV||!$('dove'))return {render:function(){},mostra:function(){}};
+  var mappa=null,marcatori={},carico=null,attivo=null;
+  function it(){return S.lang==='it';}
+  function T(o,k){return (!it()&&o[k+'_en'])||o[k];}
+  var S0=DV.punti.filter(function(p){return p.tipo==='santuario';})[0]||DV.punti[0];
+  function metri(a,b){var R=6371000,r=Math.PI/180,dl=(b.lat-a.lat)*r,dg=(b.lng-a.lng)*r,x=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dg/2)*Math.sin(dg/2);return 2*R*Math.asin(Math.sqrt(x));}
+  function distanza(p){if(p===S0)return '';var m=metri(S0,p);
+    if(m<1200){var a=Math.round(m*1.3/10)*10,min=Math.max(1,Math.round(m*1.3/75));return (it()?'circa '+a+' m a piedi · '+min+' min':'about '+a+' m on foot · '+min+' min');}
+    return (it()?Math.round(m/100)/10+' km in linea d’aria dal santuario':Math.round(m/100)/10+' km from the sanctuary as the crow flies');}
+  function indicazioni(p){return 'https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng;}
+  function render(){
+    $('hDove').textContent=it()?'Dove siamo':'Where we are';
+    $('punti').innerHTML=DV.punti.map(function(p,i){return '<li data-p="'+p.id+'" tabindex="0"><span class="n '+p.tipo+'">'+(i+1)+'</span><div><b>'+esc(T(p,'nome'))+'</b><small>'+esc(p.indirizzo)+(distanza(p)?' · '+esc(distanza(p)):'')+'</small><p>'+esc(T(p,'nota'))+'</p><a href="'+indicazioni(p)+'" target="_blank" rel="noopener">'+(it()?'Indicazioni stradali ↗':'Directions ↗')+'</a></div></li>';}).join('');
+    $('punti').querySelectorAll('li').forEach(function(li){var vai=function(e){if(e.target.tagName==='A')return;mostra(li.dataset.p,true);};li.onclick=vai;li.onkeydown=function(e){if(e.key==='Enter')vai(e);};});
+    $('arrivare').innerHTML=(DV.arrivare||[]).map(function(a){return '<div class="card"><h4>'+esc(T(a,'come'))+(a.km?' · '+a.km+' km':'')+'</h4><p>'+esc(T(a,'testo'))+'</p></div>';}).join('');
+    $('mappaVuota').textContent=ARTEFATTO?(it()?'La mappa interattiva è sulla pagina pubblicata: qui sotto i punti con le indicazioni.':'The interactive map is on the published page: below, the places with directions.'):(it()?'La mappa si apre quando ci arrivi.':'The map opens when you get here.');
+    if(mappa)popup();
+  }
+  function caricaLeaflet(){
+    if(carico)return carico;
+    carico=new Promise(function(ok,ko){
+      if(window.L_&&window.L_.map)return ok(window.L_);
+      var css=document.createElement('link');css.rel='stylesheet';css.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';document.head.appendChild(css);
+      var prima=window.L,s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+      s.onload=function(){window.L_=window.L;if(prima!==undefined)window.L=prima;ok(window.L_);};s.onerror=ko;document.head.appendChild(s);
+    });
+    return carico;
+  }
+  function popup(){DV.punti.forEach(function(p){var m=marcatori[p.id];if(m)m.bindPopup('<b>'+esc(T(p,'nome'))+'</b>'+esc(p.indirizzo)+'<br><a href="'+indicazioni(p)+'" target="_blank" rel="noopener">'+(it()?'Indicazioni ↗':'Directions ↗')+'</a>');});}
+  function crea(){
+    if(mappa||ARTEFATTO)return Promise.resolve(mappa);
+    if(!navigator.onLine){$('mappaVuota').textContent=it()?'Senza rete la mappa non si vede: i punti qui accanto hanno comunque le indicazioni.':'Offline the map is not shown: the places alongside still have directions.';return Promise.resolve(null);}
+    return caricaLeaflet().then(function(Lf){
+      if(mappa)return mappa;
+      $('mappaVuota').remove();
+      mappa=Lf.map('mappa',{scrollWheelZoom:false,tap:true,zoomControl:true});
+      Lf.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}).addTo(mappa);
+      var vicini=[];DV.punti.forEach(function(p,i){
+        var ic=Lf.divIcon({className:'',html:'<span class="pin-num '+p.tipo+'">'+(i+1)+'</span>',iconSize:p.tipo==='santuario'?[38,38]:[30,30],iconAnchor:p.tipo==='santuario'?[19,19]:[15,15]});
+        marcatori[p.id]=Lf.marker([p.lat,p.lng],{icon:ic,title:T(p,'nome'),keyboard:true}).addTo(mappa).on('click',function(){evidenzia(p.id);});
+        if(metri(S0,p)<1500)vicini.push([p.lat,p.lng]);
+      });
+      popup();mappa.fitBounds(vicini,{padding:[40,40],maxZoom:17});
+      return mappa;
+    }).catch(function(){var v=$('mappaVuota');if(v)v.textContent=it()?'La mappa non si è caricata: usa le indicazioni dei punti.':'The map did not load: use the directions of each place.';return null;});
+  }
+  function evidenzia(id){attivo=id;$('punti').querySelectorAll('li').forEach(function(li){li.classList.toggle('attivo',li.dataset.p===id);});}
+  function mostra(id,soloMappa){
+    if(!soloMappa)$('dove').scrollIntoView({behavior:RIDOTTO?'auto':'smooth',block:'start'});
+    evidenzia(id);
+    crea().then(function(m){var p=DV.punti.filter(function(x){return x.id===id;})[0];if(m&&p){m.setView([p.lat,p.lng],metri(S0,p)>1500?15:17);marcatori[id].openPopup();}});
+  }
+  /* la mappa si carica solo quando ci si avvicina: la pagina resta leggera */
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){io.disconnect();crea();}},{rootMargin:'400px'});io.observe($('mappa'));}
+  window.addEventListener('online',function(){if(!mappa&&$('mappaVuota'))crea();});
+  return {render:render,mostra:mostra,crea:crea,get mappa(){return mappa;},marcatori:marcatori};
+})();
+
+/* ====================================================================
    «CHIEDI ALLA CHIESA»: con la rete risponde ASK Trapani (solo dai testi di questa pagina);
    senza rete, o se il servizio non risponde, mostra i passaggi più vicini alla domanda.
    Le domande sugli orari si calcolano qui, dal calendario, sempre.
@@ -1314,10 +1530,10 @@ function renderInfo(){
   h+=settimanaHtml+'<div class="card"><dl>';
   if(L.orari_celebrazioni&&!L.calendario)h+='<dt>'+t('Orari delle celebrazioni')+'</dt><dd>'+esc(tr('luogo',0,'orari_celebrazioni',L.orari_celebrazioni))+' <span class="prova">'+(S.lang==='it'?'prova':'test')+'</span><br><span class="nota">'+t('Durante le funzioni la visita è sospesa')+'</span></dd>';
   if(L.orari_visita&&!L.calendario)h+='<dt>'+t('Orari di visita')+'</dt><dd>'+esc(tr('luogo',0,'orari_visita',L.orari_visita))+'</dd>';
-  if(L.festa_patronale)h+='<dt>'+t('Festa patronale')+'</dt><dd>'+esc(L.festa_patronale)+'</dd>';
+  if(L.festa_patronale)h+='<dt>'+t('Festa patronale')+'</dt><dd>'+(L.festa?(S.lang==='it'?'Ultimo mercoledì di agosto · ':'Last Wednesday of August · ')+'<a href="#festa">'+(S.lang==='it'?'date, programma e reel':'dates, programme and reel')+'</a>':esc(L.festa_patronale))+'</dd>';
   if(L.epoca_costruzione)h+='<dt>'+t('Epoca')+'</dt><dd>'+esc(L.epoca_costruzione)+'</dd>';
   h+='</dl></div>';
-  h+='<div class="card"><dl>'+(L.come_arrivare?'<dt>'+t('Come arrivare')+'</dt><dd>'+esc(tr('luogo',0,'come_arrivare',L.come_arrivare))+'</dd>':'')+'<dt>'+t('Contatti')+'</dt><dd>'+(L.contatti&&L.contatti.whatsapp?'<a class="btn wa sm" href="https://wa.me/39'+esc(L.contatti.whatsapp)+'?text='+encodeURIComponent(L.nome)+'" rel="noopener">'+t('Scrivi su WhatsApp')+'</a>':'')+'</dd></dl></div>';
+  h+='<div class="card"><dl>'+(L.come_arrivare&&!L.dove?'<dt>'+t('Come arrivare')+'</dt><dd>'+esc(tr('luogo',0,'come_arrivare',L.come_arrivare))+'</dd>':'')+'<dt>'+t('Contatti')+'</dt><dd>'+(L.contatti&&L.contatti.whatsapp?'<a class="btn wa sm" href="https://wa.me/39'+esc(L.contatti.whatsapp)+'?text='+encodeURIComponent(L.nome)+'" rel="noopener">'+t('Scrivi su WhatsApp')+'</a>':'')+'</dd></dl></div>';
   g.innerHTML=h;
   if(L.calendario)Orari.mostra();
   var p=$('proseguiCard');
@@ -1329,8 +1545,8 @@ function renderInfo(){
    NAV (ancore attive), avvio
    ==================================================================== */
 var sio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var id=e.target.id;$('nav').querySelectorAll('a').forEach(function(a){a.classList.toggle('attiva',a.dataset.s===id);});});},{rootMargin:'-35% 0px -55% 0px'});
-['racconto','cammino','opere','ascolta','info'].forEach(function(id){sio.observe($(id));});
-function renderTutto(){if(window.Chiedi&&Chiedi.etichette)Chiedi.etichette();applicaStatici();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();if(attiva){renderCassetto(attiva);renderElenco();renderPins();$('panoTag').textContent=tr('scene',attiva.id,'titolo',attiva.titolo);}if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);}
+['racconto','cammino','opere','festa','ascolta','info'].forEach(function(id){if($(id))sio.observe($(id));});
+function renderTutto(){if(window.Chiedi&&Chiedi.etichette)Chiedi.etichette();Festa.render();Dove.render();applicaStatici();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();if(attiva){renderCassetto(attiva);renderElenco();renderPins();$('panoTag').textContent=tr('scene',attiva.id,'titolo',attiva.titolo);}if(GS)setTimeout(function(){ScrollTrigger.refresh();},50);}
 function notaCammino(){
   $('camminoNota').textContent=QUI?(S.lang==='it'?'Sei sul posto: ascolta, guarda le opere di questa scena e prosegui con i pulsanti.':'You are on site: listen, look at the works in this scene and go on with the buttons.'):(MOBILE||RIDOTTO?(S.lang==='it'?'Tocca i punti sulla pianta o le frecce: il panorama cambia scena. Le cornici dorate nel 360 sono le opere.':'Tap the points on the plan or the arrows: the panorama changes scene. The golden frames in the 360 are the works.'):(S.lang==='it'?'Scorri: il punto cammina lungo la navata e il panorama cambia scena. Il cono sulla pianta segue il tuo sguardo. Le cornici dorate nel 360 sono le opere.':'Scroll: the point walks along the nave and the panorama changes scene. The cone on the plan follows your gaze. The golden frames in the 360 are the works.'));
 }
@@ -1350,7 +1566,7 @@ function esciQui(){
 }
 function avvio(){
   document.documentElement.style.setProperty('--top-h',$('top').offsetHeight+'px');
-  applicaStatici();soglia();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();
+  applicaStatici();soglia();renderRacconto();renderOpere();renderAscolta();renderBarriere();renderInfo();Festa.render();Dove.render();
   notaCammino();
   disegnaPianta();
   var prima=QUI&&bySlug[QUI]?bySlug[QUI]:MAIN[0];
@@ -1363,7 +1579,7 @@ function avvio(){
   if(GS)setTimeout(function(){ScrollTrigger.refresh();},300);
   swAvvia();statoRete();
 }
-window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera,Orari:Orari,Chiedi:Chiedi,get SILENZIO(){return SILENZIO;}};
+window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera,Orari:Orari,Chiedi:Chiedi,Festa:Festa,Dove:Dove,get SILENZIO(){return SILENZIO;}};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',avvio);else avvio();
 })();
 </script>

@@ -54,12 +54,72 @@ var CHIESA = {
       eccezioni: {}   /* es. '2026-12-24': { apertura: ['09:00-12:00','22:00-01:00'], messe: ['23:30'], nota: 'Messa della notte' } */
     },
     contatti: { whatsapp: '3490627997', telefono: '0923 971113', mail: 'info@santuariocustonaci.it' },
+    /* ---------- LA FESTA (ultimo mercoledì di agosto) ----------
+       Le date si calcolano da sole ogni anno. Gli orari sono quelli del programma 2026 (275ª edizione,
+       fonte custonaciweb.it): per l'anno nuovo restano come guida finché non esce il programma ufficiale. */
+    festa: {
+      nome: 'Festa di Maria SS. di Custonaci', nome_en: 'Feast of Our Lady of Custonaci',
+      reel: { youtube: 'AP5k_qGSROM', titolo: 'Festa per la Santissima Madonna di Custonaci', autore: 'Esplora Trapani' },
+      edizione: { anno: 2026, numero: 275, tema: 'Madre di Cristo' },
+      fonte_programma: { nome: 'Programma 2026 · custonaciweb.it', url: 'https://custonaciweb.it/events/festa-madonna-custonaci-2026-programma/' },
+      inizio_novena: -9,   /* giorni prima dell'ultimo mercoledì di agosto */
+      momenti: [   /* giorno = giorni rispetto al mercoledì della festa · durata in minuti */
+        { id: 'novena', giorno: -9, ora: '18:00', durata: 90, titolo: 'Comincia la novena', titolo_en: 'The novena begins', luogo: 'Santuario', punto: 'santuario',
+          desc: 'Ogni sera alle 18 il Rosario e alle 19 la messa, fino al giorno della festa.', desc_en: 'Every evening: Rosary at 6 pm and Mass at 7 pm, until the feast day.' },
+        { id: 'chiavi', giorno: -4, ora: '19:00', durata: 90, titolo: 'Le chiavi della città alla Madonna', titolo_en: 'The keys of the town to Our Lady', luogo: 'Santuario', punto: 'santuario',
+          desc: 'Si accende il cero e il sindaco consegna alla Vergine le chiavi di Custonaci.', desc_en: 'The great candle is lit and the mayor hands the keys of Custonaci to the Virgin.' },
+        { id: 'carretti', giorno: -3, ora: '20:30', durata: 120, titolo: 'Carretti siciliani e gruppi folk', titolo_en: 'Sicilian carts and folk groups', luogo: 'Da piazza Europa (Sperone) al centro storico', punto: null,
+          desc: 'La sfilata dei carretti e dei gruppi folkloristici, con miliddi e vino per tutti. Al mattino, alle 6:30, il pellegrinaggio a piedi verso il santuario.', desc_en: 'The parade of painted carts and folk groups, with local sweets and wine for everyone. At 6:30 am, the pilgrimage on foot to the sanctuary.' },
+        { id: 'sbarco', giorno: -2, ora: '19:00', durata: 180, clou: true, titolo: 'Lo sbarco a Cala Buguto', titolo_en: 'The landing at Cala Buguto', luogo: 'Cala Buguto, baia di Cornino', punto: 'cala-buguto',
+          desc: 'Dal mare arriva il veliero con la copia del quadro, tra canti, preghiere e fuochi; poi la fiaccolata accompagna la Madonna fino al santuario, molti a piedi scalzi.', desc_en: 'A sailing ship brings the copy of the painting from the sea, among songs, prayers and fireworks; then a torchlight procession walks Our Lady up to the sanctuary, many barefoot.' },
+        { id: 'fontane', giorno: -1, ora: '21:30', durata: 150, titolo: 'Fontane danzanti', titolo_en: 'Dancing fountains', luogo: 'Piazza Santuario', punto: 'santuario',
+          desc: 'Due spettacoli di acqua e luce davanti al santuario, alle 21:30 e a mezzanotte.', desc_en: 'Two shows of water and light in front of the sanctuary, at 9:30 pm and midnight.' },
+        { id: 'messa', giorno: 0, ora: '11:00', durata: 90, titolo: 'La messa solenne', titolo_en: 'Solemn Mass', luogo: 'Santuario', punto: 'santuario',
+          desc: 'Al mattino scampanio e mortaretti dalle 7, poi la celebrazione solenne.', desc_en: 'Bells and firecrackers from 7 am, then the solemn celebration.' },
+        { id: 'processione', giorno: 0, ora: '18:30', durata: 300, clou: true, titolo: 'La processione', titolo_en: 'The procession', luogo: 'Per le vie del paese', punto: 'santuario',
+          desc: 'Cinque ore per le vie di Custonaci; al rientro la processione si ferma tra i banchi della navata.', desc_en: 'Five hours through the streets of Custonaci; on its return it stops among the pews of the nave.' },
+        { id: 'fuochi', giorno: 0, ora: '24:00', durata: 30, titolo: 'I fuochi del rientro', titolo_en: 'Closing fireworks', luogo: 'Contrada Tribli', punto: null,
+          desc: 'A mezzanotte i giochi pirotecnici chiudono la festa.', desc_en: 'At midnight the fireworks close the feast.' }
+      ],
+      storia: [   /* dai testi del racconto (capitoli 3 e 4) e dalla curiosità del quadro */
+        { anno: '1572', testo: 'Nasce la festa. Per quasi due secoli si celebra l’8 dicembre.', testo_en: 'The feast is born. For almost two centuries it is held on 8 December.' },
+        { anno: '1568–1858', testo: 'Il quadro va a Erice sessanta volte: per la pioggia, la peste, i terremoti, le cavallette.', testo_en: 'The painting is carried to Erice sixty times: for rain, plague, earthquakes, locusts.' },
+        { anno: '1752', testo: 'Il quadro viene incoronato e la festa passa all’estate: l’ultimo mercoledì di agosto.', testo_en: 'The painting is crowned and the feast moves to summer: the last Wednesday of August.' },
+        { anno: '1831', testo: 'La vara con i cinque angeli: durante i viaggi vi salivano i bambini malati.', testo_en: 'The carrying frame with five angels: sick children rode inside it during the journeys.' },
+        { anno: '1936', testo: 'Il quadro non esce più dal santuario: in processione va una copia.', testo_en: 'The painting no longer leaves the sanctuary: a copy goes in procession.' },
+        { anno: '2009', testo: 'Custonaci diventa «Civitas Mariae», città di Maria.', testo_en: 'Custonaci becomes «Civitas Mariae», the town of Mary.' },
+        { anno: '2026', testo: '275ª edizione, sul tema «Madre di Cristo».', testo_en: '275th edition, on the theme «Mother of Christ».' }
+      ]
+    },
+    /* ---------- DOVE SIAMO: punti sulla mappa (coordinate da Google Maps) ---------- */
+    dove: {
+      punti: [
+        { id: 'santuario', tipo: 'santuario', nome: 'Santuario di Maria SS. di Custonaci', indirizzo: 'Piazza Santuario 1', lat: 38.0783517, lng: 12.6758666,
+          nota: 'In cima al paese, sulla scalinata.', nota_en: 'At the top of the town, up the steps.' },
+        { id: 'parcheggio', tipo: 'parcheggio', nome: 'Parcheggio comunale multipiano', nome_en: 'Municipal multi-storey car park', indirizzo: 'Via Padre Francesco Randazzo', lat: 38.0774467, lng: 12.6755834,
+          nota: 'Il più vicino al santuario. Il piano superiore è gratuito; i posti sono pochi nei giorni di festa.', nota_en: 'The closest to the sanctuary. The top level is free; spaces are few on feast days.' },
+        { id: 'bus', tipo: 'bus', nome: 'Fermata autobus AST', nome_en: 'AST bus stop', indirizzo: 'Via Roma 13', lat: 38.0778072, lng: 12.6761463,
+          nota: 'Linea Trapani–Custonaci, dal capolinea alla stazione di Trapani.', nota_en: 'Trapani–Custonaci line, from the terminal at Trapani railway station.' },
+        { id: 'pullman', tipo: 'parcheggio', nome: 'Sosta pullman turistici', nome_en: 'Coach parking', indirizzo: 'Via Dante Alighieri', lat: 38.0796689, lng: 12.6744886,
+          nota: 'I bus turistici si fermano qui; poi a piedi fino al santuario.', nota_en: 'Tour coaches stop here; then on foot to the sanctuary.' },
+        { id: 'pozzo', tipo: 'storia', nome: 'Pozzo della Madonna', nome_en: 'Our Lady’s Well', indirizzo: 'Via Scurati 32', lat: 38.0755833, lng: 12.6745359,
+          nota: 'Dove, racconta la tradizione, i buoi assetati si fermarono e sgorgò l’acqua.', nota_en: 'Where, tradition says, the thirsty oxen stopped and water sprang up.' },
+        { id: 'cala-buguto', tipo: 'storia', nome: 'Cala Buguto · baia di Cornino', nome_en: 'Cala Buguto · Cornino bay', indirizzo: 'Baia di Cornino', lat: 38.0926406, lng: 12.6619939,
+          nota: 'Dove arrivò la nave con il quadro; ogni agosto la rievocazione dello sbarco.', nota_en: 'Where the ship with the painting landed; every August the landing is re-enacted.' }
+      ],
+      arrivare: [
+        { come: 'In auto da Trapani', come_en: 'By car from Trapani', km: 18, testo: 'SP20 Trapani–Bonagia, poi SP18 Bonagia–Custonaci.', testo_en: 'SP20 Trapani–Bonagia, then SP18 Bonagia–Custonaci.' },
+        { come: 'In auto da Palermo', come_en: 'By car from Palermo', km: 90, testo: 'A29 uscita Castellammare del Golfo, SS187, poi SP16 «Asse dei Marmi».', testo_en: 'A29 exit Castellammare del Golfo, SS187, then SP16 «Asse dei Marmi».' },
+        { come: 'In autobus', come_en: 'By bus', testo: 'Autobus AST Trapani–Custonaci dal capolinea alla stazione di Trapani; si scende in via Roma, a due passi dal santuario.', testo_en: 'AST bus Trapani–Custonaci from the terminal at Trapani railway station; get off in via Roma, a short walk from the sanctuary.' },
+        { come: 'In pullman', come_en: 'By coach', testo: 'Sosta dei bus turistici in via Dante Alighieri, poi a piedi.', testo_en: 'Coaches park in via Dante Alighieri, then on foot.' }
+      ]
+    },
     /* «Chiedi alla chiesa»: risponde ASK Trapani solo con i testi di questa pagina (dati/kb.js → kb/<slug>.json sul server) */
     chiedi: {
       api: 'https://ask-trapani-api-production.up.railway.app/chiesa/chiedi',
       suggerite: {
-        it: ['Chi ha dipinto il quadro?', 'Perché il quadro andava a Erice?', 'Dove è arrivata la nave?', 'Cos’è la vara?', 'C’è la messa oggi?', 'Come si arriva in auto?'],
-        en: ['Who painted the Madonna?', 'Why was the painting carried to Erice?', 'Where did the ship land?', 'What is the vara?', 'Is there Mass today?', 'How do I get here by car?']
+        it: ['Chi ha dipinto il quadro?', 'Perché il quadro andava a Erice?', 'Quando è lo sbarco della Madonna?', 'Dove posso parcheggiare?', 'C’è la messa oggi?', 'Cos’è la vara?'],
+        en: ['Who painted the Madonna?', 'Why was the painting carried to Erice?', 'When is the landing of Our Lady?', 'Where can I park?', 'Is there Mass today?', 'What is the vara?']
       }
     },
     come_arrivare: 'Piazza Santuario 1, in cima al paese. Da Trapani (18 km): SP20 Trapani–Bonagia, poi SP18 Bonagia–Custonaci. Da Palermo (90 km): A29 uscita Castellammare del Golfo, SS187, poi SP16 «Asse dei Marmi». Bus AST Trapani–Custonaci dal capolinea alla stazione di Trapani. Parcheggio multipiano comunale vicino al santuario; bus turistici in via Dante Alighieri (500 m).',
