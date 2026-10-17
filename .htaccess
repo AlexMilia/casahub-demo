@@ -1,0 +1,13 @@
+# Visita raccontata: le pagine e i dati si controllano sempre (così un aggiornamento si vede subito);
+# panorami, audio e video restano in cache a lungo (sono pesanti e non cambiano nome).
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|js|json)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <Files "sw.js">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </Files>
+  <FilesMatch "\.(jpg|jpeg|png|webp|mp3|mp4|webm|vtt)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>

@@ -3,7 +3,7 @@
    - panorami, audio, video, foto: cache prima (una volta scaricati non si riscaricano)
    - richieste «Range» (audio e video) servite dalla cache con risposta 206, come vuole Safari
    - messaggi dalla pagina: 'shell' (salva l'involucro), 'stato' (quanti file sono già in cache), 'scarica' (scarica una lista con avanzamento) */
-var VERSIONE = 'chiesa-v2';
+var VERSIONE = 'chiesa-v3';   /* cambiala a ogni pubblicazione importante: i vecchi salvataggi si cancellano da soli */
 var SHELL = VERSIONE + '-shell', MEDIA = VERSIONE + '-media';
 var RE_MEDIA = /\.(jpe?g|png|webp|mp3|mp4|webm|vtt|woff2?|ttf)(\?|$)/i;
 var RE_LIB = /^https:\/\/(cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net|fonts\.googleapis\.com|fonts\.gstatic\.com|unpkg\.com)\//;
@@ -58,7 +58,9 @@ self.addEventListener('fetch', function (e) {
   /* pagina e dati: rete prima, cache se manca la rete */
   var stessaOrigine = u.indexOf(self.location.origin) === 0;
   if (!stessaOrigine) return;
-  e.respondWith(fetch(req).then(function (net) {
+  /* rete prima, chiedendo sempre al server se c'è una versione nuova (niente copia vecchia della cache del browser) */
+  var fresca = navigazione ? fetch(u, { cache: 'no-cache', credentials: 'same-origin' }) : fetch(new Request(req, { cache: 'no-cache' }));
+  e.respondWith(fresca.then(function (net) {
     if (net.ok) { var cp = net.clone(); caches.open(SHELL).then(function (c) { c.put(navigazione ? chiave(u).split('?')[0] : chiave(u), cp); }); }
     return net;
   }).catch(function () {
