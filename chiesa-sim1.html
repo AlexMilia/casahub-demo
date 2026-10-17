@@ -275,6 +275,7 @@ body.qui .cassetto .btn.ascolta-btn{min-height:64px;font-size:1.1em;width:100%}
 /* ============ info ============ */
 .info{padding-top:clamp(40px,7vw,90px);padding-bottom:calc(var(--nav-h) + 60px)}
 .info .griglia{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px}
+#settimanaCard{grid-column:1/-1}
 .info dl{margin:0;display:grid;gap:4px}.info dt{color:var(--muto);font-size:.84em}.info dd{margin:0 0 8px;color:var(--pietra)}
 .prosegui{display:grid;gap:10px;margin-top:10px}
 .prosegui a{display:block;text-decoration:none;color:inherit;background:var(--carta2);border:1px solid var(--linea);border-radius:12px;padding:12px 14px}
@@ -321,6 +322,28 @@ body.qui .cassetto .btn.ascolta-btn{min-height:64px;font-size:1.1em;width:100%}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media (max-width:700px){.vers{display:none}}
 .rete-chip{position:fixed;left:50%;transform:translateX(-50%);top:calc(var(--top-h,58px) + 8px + env(safe-area-inset-top,0px));z-index:72;background:rgba(27,33,43,.95);border:1px solid var(--linea);color:var(--pietra);border-radius:999px;padding:6px 14px;font:600 13px var(--sans);box-shadow:0 4px 16px #0006;transition:opacity .4s;max-width:calc(100vw - 32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.adesso{display:inline-flex;align-items:center;gap:8px;font:600 .9em var(--sans);border-radius:999px;padding:6px 14px 6px 12px;background:rgba(15,19,26,.72);border:1px solid var(--linea);color:var(--pietra);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);max-width:100%}
+.adesso:empty{display:none}
+.adesso i{width:9px;height:9px;border-radius:50%;background:#8a8f99;flex:none}
+.adesso.aperto i{background:#5fb37a;box-shadow:0 0 0 4px #5fb37a33}
+.adesso.chiuso i{background:#c96a5a}
+.adesso.messa{border-color:var(--oro);color:var(--candela)} .adesso.messa i{background:var(--oro);box-shadow:0 0 0 4px #c9a24a44;animation:pulsa 2s ease-in-out infinite}
+.adesso.presto{border-color:var(--oro)} .adesso.presto i{background:var(--oro)}
+@keyframes pulsa{50%{box-shadow:0 0 0 8px #c9a24a11}}
+@media (prefers-reduced-motion:reduce){.adesso.messa i{animation:none}}
+.soglia .adesso{margin:2px 0 14px}
+.qui-banner .adesso{background:rgba(0,0,0,.22);font-size:.85em;padding:4px 12px 4px 10px}
+.settimana{width:100%;border-collapse:collapse;font-size:.92em;margin-top:6px}
+.settimana th,.settimana td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--linea);vertical-align:top}
+.settimana th{font:600 .74em var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muto)}
+.settimana tr.oggi td{background:rgba(201,162,74,.12)} .settimana tr.oggi td:first-child{font-weight:700;box-shadow:inset 3px 0 0 var(--oro)}
+.settimana .messa-ora{color:var(--oro);font-weight:600}
+.avviso-messa{position:fixed;left:50%;transform:translate(-50%,0);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:90;width:min(460px,calc(100vw - 24px));background:var(--carta);color:var(--testo,inherit);border:1px solid var(--oro);border-radius:16px;padding:18px 18px 14px;box-shadow:0 12px 40px #000a}
+.avviso-messa[hidden]{display:none}
+.avviso-messa h3{margin:0 0 6px;font-size:1.15em} .avviso-messa p{margin:0 0 12px}
+.avviso-messa .azioni{display:flex;gap:8px;flex-wrap:wrap} .avviso-messa .btn{flex:1 1 180px;justify-content:center}
+body.silenzio #lettore .l-silenzio{display:inline}
+.l-silenzio{display:none;font:600 .75em var(--sans);color:var(--oro);margin-left:6px}
 .rete-chip.ok{border-color:#5fb37a;color:#cfe9d6}
 .rete-chip.off{border-color:var(--oro);color:var(--candela)}
 .rete-riga{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-size:.95em}
@@ -342,6 +365,7 @@ body.qui .cassetto .btn.ascolta-btn{min-height:64px;font-size:1.1em;width:100%}
 </header>
 <div class="qui-banner" id="quiBanner"></div>
 <div class="rete-chip" id="reteChip" hidden role="status" aria-live="polite"></div>
+<div class="avviso-messa" id="avvisoMessa" hidden role="alertdialog" aria-labelledby="amTit" aria-describedby="amTxt"></div>
 
 <main>
 <!-- ================= SOGLIA ================= -->
@@ -354,6 +378,7 @@ body.qui .cassetto .btn.ascolta-btn{min-height:64px;font-size:1.1em;width:100%}
       <div class="kicker" id="sogliaKicker">Custonaci · la visita raccontata</div>
       <h1 class="inciso" id="titoloInciso">Santuario di Custonaci</h1>
       <p class="claim" id="claim"></p>
+      <div class="adesso" id="adessoSoglia" role="status"></div>
       <div class="azioni" id="sogliaAzioni"></div>
     </div>
     <div class="scorri" id="scorri">scorri per entrare</div>
@@ -491,7 +516,7 @@ var MOBILE=matchMedia('(max-width: 959px)').matches;
 var GS=typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined';
 if(GS)gsap.registerPlugin(ScrollTrigger);
 var qs=new URLSearchParams(location.search);
-var QUI=qs.get('qui')||null, OPERA_URL=qs.get('opera')||null, ARTEFATTO=!!window.__ARTEFATTO;
+var QUI=qs.get('qui')||null, OPERA_URL=qs.get('opera')||null, ARTEFATTO=!!window.__ARTEFATTO, ORA_URL=qs.get('ora')||null, SILENZIO=false;
 if(RIDOTTO)document.body.classList.add('ridotto');
 if(MOBILE)document.body.classList.add('mobile');
 if(QUI)document.body.classList.add('qui');
@@ -594,7 +619,8 @@ function applicaStatici(){
   var sel=$('lingua');sel.innerHTML=LINGUE.map(function(l){return '<option value="'+l[0]+'"'+(l[0]===S.lang?' selected':'')+'>'+l[1]+(l[0]!=='it'&&!(D.tr&&D.tr[l[0]])?' · IT':'')+'</option>';}).join('');
   sel.onchange=function(){S.lang=sel.value;save();renderTutto();};
   /* banner «sono qui» */
-  if(QUI){var s=bySlug[QUI];$('quiBanner').innerHTML='<b>'+t('Sei nel santuario')+'</b> · '+(s?esc(tr('scene',s.id,'titolo',s.titolo)):'')+' <span class="sp" style="flex:1"></span><a href="#racconto" id="btnEsciQui">'+t('Vedi il racconto')+' ›</a>';$('btnEsciQui').onclick=function(e){e.preventDefault();esciQui();};}
+  if(QUI){var s=bySlug[QUI];$('quiBanner').innerHTML='<b>'+t('Sei nel santuario')+'</b> · '+(s?esc(tr('scene',s.id,'titolo',s.titolo)):'')+' <span class="adesso" id="adessoQui" role="status"></span><span class="sp" style="flex:1"></span><a href="#racconto" id="btnEsciQui">'+t('Vedi il racconto')+' ›</a>';$('btnEsciQui').onclick=function(e){e.preventDefault();esciQui();};}
+  if(window.Orari)Orari.mostra();
   $('credito').innerHTML=t('Produzione')+': <a href="https://www.esploratrapani.it" rel="noopener">Esplora Trapani</a> · <span class="prova">'+(S.lang==='it'?'riprese 360 e drone di Alessandro Milia · testi da fonti pubbliche, da validare con il parroco · voci sintetiche di prova':'360 and drone footage by Alessandro Milia · texts from public sources, to be validated with the parish priest · synthetic test voices')+'</span>';
 }
 $('fsBtn').onclick=function(){S.fs=S.fs%3+1;save();document.documentElement.dataset.fs=S.fs;if(GS)ScrollTrigger.refresh();};
@@ -899,10 +925,11 @@ var A=$('audio');
 var Lettore={cur:null,
   suona:function(trk){
     if(this.cur&&this.cur.id===trk.id){if(A.paused)A.play();else A.pause();this.ui();return;}
-    this.cur=trk;A.src=trk.src;A.currentTime=0;var p=A.play();if(p&&p.catch)p.catch(function(){});
+    this.cur=trk;A.src=trk.src;A.currentTime=0;
+    if(!SILENZIO){var p=A.play();if(p&&p.catch)p.catch(function(){});}
     $('lettore').classList.add('on');$('lTit').textContent=trk.titolo;$('lSub').textContent=(trk.sub||'')+' · '+mmss(trk.durata);$('lTesto').hidden=!trk.testo;
     document.querySelectorAll('video').forEach(function(v){if(!v.paused)v.pause();});
-    this.ui();this.sheet(false);
+    this.ui();this.sheet(SILENZIO&&!!trk.testo);
   },
   pausa:function(){if(!A.paused)A.pause();this.ui();},
   chiudi:function(){A.pause();A.removeAttribute('src');A.load();this.cur=null;$('lettore').classList.remove('on');this.sheet(false);Guida.ferma();this.ui();},
@@ -1025,16 +1052,113 @@ function renderBarriere(){
   $('barriereLista').innerHTML=righe.join('');
   if($('btnAcc2'))$('btnAcc2').onclick=function(){percorsoOn=true;renderPins();$('cammino').scrollIntoView({behavior:RIDOTTO?'auto':'smooth'});};
 }
+/* ====================================================================
+   ORARI LIVE: aperto adesso, messa in corso, messa fra poco (ora di Roma)
+   ==================================================================== */
+var Orari=(function(){
+  var C=L.calendario||null, t0=Date.now(), base=null, visti={}, ultimoStato='';
+  if(ORA_URL){var m=/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)/.exec(ORA_URL);if(m)base={y:+m[1],mo:+m[2],d:+m[3],h:+m[4],mi:+m[5]};}
+  var GIORNI={it:['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'],en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']};
+  function it(){return S.lang==='it';}
+  function gn(i){return (it()?GIORNI.it:GIORNI.en)[i];}
+  function hm(x){var h=Math.floor(x/60)%24,mi=x%60;return it()?h+':'+(mi<10?'0':'')+mi:(h%12||12)+(mi?':'+(mi<10?'0':'')+mi:'')+(h<12?' am':' pm');}
+  function min(s){var a=s.split(':');return +a[0]*60+ +a[1];}
+  function dataBella(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||'');if(!m)return s||'';var mesi=it()?['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre']:['January','February','March','April','May','June','July','August','September','October','November','December'];return it()?(+m[3])+' '+mesi[+m[2]-1]+' '+m[1]:mesi[+m[2]-1]+' '+(+m[3])+', '+m[1];}
+  function chiaveData(d){return d.y+'-'+(d.mo<10?'0':'')+d.mo+'-'+(d.d<10?'0':'')+d.d;}
+  /* «adesso» a Roma: dal fuso del telefono non dipende */
+  function adesso(){
+    if(base){var dt=new Date(Date.UTC(base.y,base.mo-1,base.d,base.h,base.mi)+(Date.now()-t0));
+      return {y:dt.getUTCFullYear(),mo:dt.getUTCMonth()+1,d:dt.getUTCDate(),dow:dt.getUTCDay(),t:dt.getUTCHours()*60+dt.getUTCMinutes()};}
+    var p={};new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Rome',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',hourCycle:'h23'}).formatToParts(new Date()).forEach(function(x){p[x.type]=x.value;});
+    var y=+p.year,mo=+p.month,d=+p.day;return {y:y,mo:mo,d:d,dow:new Date(Date.UTC(y,mo-1,d)).getUTCDay(),t:(+p.hour%24)*60+ +p.minute};
+  }
+  function giornoDopo(d,n){var dt=new Date(Date.UTC(d.y,d.mo-1,d.d+n));return {y:dt.getUTCFullYear(),mo:dt.getUTCMonth()+1,d:dt.getUTCDate(),dow:dt.getUTCDay()};}
+  function estate(d){if(!C.estate)return false;var k=(d.mo<10?'0':'')+d.mo+'-'+(d.d<10?'0':'')+d.d;return k>=C.estate.da&&k<=C.estate.a;}
+  /* festa: ultimo mercoledì di agosto e i giorni prima */
+  function festa(d){if(!C.festa)return false;var ult=new Date(Date.UTC(d.y,7,31));while(ult.getUTCDay()!==3)ult.setUTCDate(ult.getUTCDate()-1);
+    var g=ult.getUTCDate();return d.mo===8&&d.d<=g&&d.d>=g-(C.festa.giorni_prima||0);}
+  function giorno(d){
+    var ecc=(C.eccezioni||{})[chiaveData(d)];
+    var ap=(ecc&&ecc.apertura)||C.apertura[d.dow]||[], ms=(ecc&&ecc.messe)||((estate(d)?C.messe.estate:C.messe.inverno)[d.dow])||[];
+    var messe=ms.map(min), dm=C.durata_messa||45, pr=C.apre_prima_messa||15;
+    var iv=ap.map(function(r){var a=r.split('-');var z=min(a[1]);var s0=min(a[0]);if(z<=s0)z+=1440;return [s0,z];});
+    messe.forEach(function(m){iv.push([m-pr,m+dm]);});
+    iv.sort(function(a,b){return a[0]-b[0];});var u=[];iv.forEach(function(x){var l=u[u.length-1];if(l&&x[0]<=l[1])l[1]=Math.max(l[1],x[1]);else u.push(x.slice());});
+    return {aperto:u,messe:messe,dm:dm,nota:ecc&&ecc.nota,festa:festa(d),estate:estate(d)};
+  }
+  function stato(){
+    if(!C)return null;var n=adesso(),g=giorno(n),x=n.t,r={g:g,n:n};
+    g.messe.forEach(function(m){if(x>=m&&x<m+g.dm)r.messa=m;else if(m>x&&m-x<=30&&r.presto==null)r.presto=m;});
+    g.aperto.forEach(function(a){if(x>=a[0]&&x<a[1])r.chiude=a[1];});
+    if(r.chiude==null){ /* prossima apertura: oggi più tardi o nei 7 giorni dopo */
+      for(var k=0;k<8&&r.riapre==null;k++){var dd=k?giornoDopo(n,k):n,gg=k?giorno(dd):g;
+        for(var j=0;j<gg.aperto.length;j++){if(k||gg.aperto[j][0]>x){r.riapre={k:k,t:gg.aperto[j][0],dow:dd.dow};break;}}}
+    }
+    if(r.messa!=null)r.cls='messa';else if(r.presto!=null)r.cls='presto';else r.cls=r.chiude!=null?'aperto':'chiuso';
+    return r;
+  }
+  function quando(rp){if(!rp)return '';if(rp.k===0)return (it()?'oggi alle ':'today at ')+hm(rp.t);if(rp.k===1)return (it()?'domani alle ':'tomorrow at ')+hm(rp.t);return (it()?gn(rp.dow)+' alle ':gn(rp.dow)+' at ')+hm(rp.t);}
+  function testo(r){
+    if(r.messa!=null)return (it()?'Messa in corso · fino alle '+hm(r.messa+r.g.dm)+' circa':'Mass in progress · until about '+hm(r.messa+r.g.dm));
+    if(r.presto!=null){var mm=r.presto-r.n.t;return (it()?'Aperto · messa alle '+hm(r.presto)+', fra '+mm+' min':'Open · Mass at '+hm(r.presto)+', in '+mm+' min');}
+    if(r.chiude!=null)return (it()?'Aperto ora · chiude alle ':'Open now · closes at ')+hm(r.chiude);
+    return (it()?'Chiuso ora · riapre ':'Closed now · reopens ')+quando(r.riapre);
+  }
+  function mostra(){
+    var r=stato();if(!r)return;var tx=testo(r)+(r.g.festa?(it()?' · giorni della festa: orari speciali':' · feast days: special times'):'')+(r.g.nota?' · '+r.g.nota:'');
+    ['adessoSoglia','adessoQui'].forEach(function(id){var e=$(id);if(!e)return;e.className='adesso '+r.cls;e.innerHTML='<i aria-hidden="true"></i><span>'+esc(tx)+'</span>';});
+    var w=$('settimanaCard');if(w)w.querySelector('.stato-ora').innerHTML='<span class="adesso '+r.cls+'"><i aria-hidden="true"></i><span>'+esc(tx)+'</span></span>';
+    avviso(r);ultimoStato=r.cls;
+  }
+  /* dal QR, dentro la chiesa: la messa sta per cominciare o è in corso */
+  function avviso(r){
+    var box=$('avvisoMessa');if(!box)return;
+    if(r.messa==null&&SILENZIO){SILENZIO=false;document.body.classList.remove('silenzio');}
+    if(!QUI){box.hidden=true;return;}
+    var m=r.messa!=null?r.messa:(r.presto!=null&&r.presto-r.n.t<=10?r.presto:null);
+    if(m==null){box.hidden=true;return;}
+    var chiave=chiaveData(r.n)+'@'+m+(r.messa!=null?'c':'p');if(visti[chiave])return;visti[chiave]=1;
+    var inCorso=r.messa!=null;
+    if(inCorso&&!A.paused)Lettore.pausa();     /* la voce non parte sopra la messa */
+    box.innerHTML='<div class="kicker">'+(inCorso?(it()?'Messa in corso':'Mass in progress'):(it()?'Fra '+(m-r.n.t)+' minuti la messa':'Mass in '+(m-r.n.t)+' minutes'))+'</div>'+
+      '<h3 id="amTit">'+(inCorso?(it()?'Adesso si celebra: la visita è sospesa':'A service is on: the visit is suspended'):(it()?'Alle '+hm(m)+' comincia la messa':'Mass begins at '+hm(m)))+'</h3>'+
+      '<p id="amTxt">'+(it()?'Puoi restare in silenzio in fondo alla chiesa. Se vuoi continuare, usa le cuffie oppure leggi i testi al posto della voce.':'You can stay quietly at the back of the church. To go on, use headphones or read the texts instead of the voice.')+'</p>'+
+      '<div class="azioni"><button class="btn pieno" id="amTesto">'+(it()?'Solo testo, niente audio':'Text only, no audio')+'</button><button class="btn" id="amCuffie">'+(it()?'Ho le cuffie, continuo':'I have headphones')+'</button></div>';
+    box.hidden=false;
+    $('amTesto').onclick=function(){SILENZIO=true;document.body.classList.add('silenzio');Lettore.pausa();if(Lettore.cur)Lettore.sheet(true);box.hidden=true;};
+    $('amCuffie').onclick=function(){box.hidden=true;};
+    setTimeout(function(){try{$('amTesto').focus({preventScroll:true});}catch(e){}},50);
+  }
+  /* settimana in Info, con oggi evidenziato */
+  function settimana(){
+    if(!C)return '';var n=adesso(),rows='',ordine=[1,2,3,4,5,6,0],gOggi=giorno(n);
+    ordine.forEach(function(dw){var off=(dw-n.dow+7)%7,dd=giornoDopo(n,off),g=giorno(dd);
+      var ap=(((C.eccezioni||{})[chiaveData(dd)]||{}).apertura||C.apertura[dw]||[]).map(function(r){var a=r.split('-');return hm(min(a[0]))+'–'+hm(min(a[1]));}).join(', ');
+      var ms=g.messe.map(hm).join(', ');
+      rows+='<tr'+(off===0?' class="oggi"':'')+'><td>'+esc(gn(dw).charAt(0).toUpperCase()+gn(dw).slice(1))+(off===0?' <span class="nota">· '+(it()?'oggi':'today')+'</span>':'')+'</td><td>'+(ap||'—')+'</td><td class="messa-ora">'+(ms||'—')+'</td></tr>';});
+    return '<div class="card" id="settimanaCard"><h3>'+(it()?'Orari della settimana':'This week’s times')+'</h3><div class="stato-ora"></div>'+
+      '<div style="overflow-x:auto"><table class="settimana"><thead><tr><th>'+(it()?'Giorno':'Day')+'</th><th>'+(it()?'Aperto':'Open')+'</th><th>'+(it()?'Messe':'Mass')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+      '<p class="nota">'+(gOggi.estate?(it()?'Orario estivo delle messe (giugno–settembre).':'Summer Mass times (June–September).'):(it()?'Orario invernale delle messe (d’estate, giugno–settembre, cambia).':'Winter Mass times (they change in summer, June–September).'))+' '+t('Durante le funzioni la visita è sospesa')+'. '+
+      (it()?'Nei giorni della festa (fine agosto) gli orari cambiano. ':'On the feast days (late August) times change. ')+
+      (it()?'Fonti: ':'Sources: ')+esc(C.fonte_messe)+' · '+esc(C.fonte_apertura)+' · '+(it()?'controllate il ':'checked on ')+esc(dataBella(C.verificato))+'.</p></div>';
+  }
+  setInterval(mostra,30000);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)mostra();});
+  return {stato:stato,mostra:mostra,settimana:settimana,adesso:adesso,giorno:giorno};
+})();
+window.Orari=Orari;
 function renderInfo(){
   var g=$('infoGriglia'),h='';
-  h+='<div class="card"><dl>';
-  if(L.orari_celebrazioni)h+='<dt>'+t('Orari delle celebrazioni')+'</dt><dd>'+esc(tr('luogo',0,'orari_celebrazioni',L.orari_celebrazioni))+' <span class="prova">'+(S.lang==='it'?'prova':'test')+'</span><br><span class="nota">'+t('Durante le funzioni la visita è sospesa')+'</span></dd>';
-  if(L.orari_visita)h+='<dt>'+t('Orari di visita')+'</dt><dd>'+esc(tr('luogo',0,'orari_visita',L.orari_visita))+'</dd>';
+  var settimanaHtml=L.calendario?Orari.settimana():'';
+  h+=settimanaHtml+'<div class="card"><dl>';
+  if(L.orari_celebrazioni&&!L.calendario)h+='<dt>'+t('Orari delle celebrazioni')+'</dt><dd>'+esc(tr('luogo',0,'orari_celebrazioni',L.orari_celebrazioni))+' <span class="prova">'+(S.lang==='it'?'prova':'test')+'</span><br><span class="nota">'+t('Durante le funzioni la visita è sospesa')+'</span></dd>';
+  if(L.orari_visita&&!L.calendario)h+='<dt>'+t('Orari di visita')+'</dt><dd>'+esc(tr('luogo',0,'orari_visita',L.orari_visita))+'</dd>';
   if(L.festa_patronale)h+='<dt>'+t('Festa patronale')+'</dt><dd>'+esc(L.festa_patronale)+'</dd>';
   if(L.epoca_costruzione)h+='<dt>'+t('Epoca')+'</dt><dd>'+esc(L.epoca_costruzione)+'</dd>';
   h+='</dl></div>';
   h+='<div class="card"><dl>'+(L.come_arrivare?'<dt>'+t('Come arrivare')+'</dt><dd>'+esc(tr('luogo',0,'come_arrivare',L.come_arrivare))+'</dd>':'')+'<dt>'+t('Contatti')+'</dt><dd>'+(L.contatti&&L.contatti.whatsapp?'<a class="btn wa sm" href="https://wa.me/39'+esc(L.contatti.whatsapp)+'?text='+encodeURIComponent(L.nome)+'" rel="noopener">'+t('Scrivi su WhatsApp')+'</a>':'')+'</dd></dl></div>';
   g.innerHTML=h;
+  if(L.calendario)Orari.mostra();
   var p=$('proseguiCard');
   if(L.prosegui&&L.prosegui.length){p.hidden=false;p.innerHTML='<h3>'+t('Prosegui la visita')+'</h3><div class="prosegui">'+L.prosegui.map(function(x){return '<a href="'+esc(x.url)+'" rel="noopener"><b>'+esc(x.nome)+'</b><small>'+esc(x.dist)+' · '+esc(x.desc)+'</small></a>';}).join('')+'</div>';}else p.hidden=true;
   if(L.sostieni_url){var s=document.createElement('div');s.className='card';s.style.marginTop='14px';s.innerHTML='<h3>'+(S.lang==='it'?'Sostieni il restauro':'Support the restoration')+'</h3><p>'+esc(L.sostieni_obiettivo||'')+'</p><a class="btn" href="'+esc(L.sostieni_url)+'" rel="noopener">→</a>';p.after(s);}
@@ -1078,7 +1202,7 @@ function avvio(){
   if(GS)setTimeout(function(){ScrollTrigger.refresh();},300);
   swAvvia();statoRete();
 }
-window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera};
+window.__chiesa={S:S,vai:vai,impostaQui:impostaQui,esciQui:esciQui,SC:SC,MAIN:MAIN,OP:OP,get V(){return V;},get attiva(){return attiva;},Guida:Guida,Lettore:Lettore,apriOpera:apriOpera,guardaOpera:guardaOpera,Orari:Orari,get SILENZIO(){return SILENZIO;}};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',avvio);else avvio();
 })();
 </script>

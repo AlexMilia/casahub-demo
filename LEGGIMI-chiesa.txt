@@ -15,6 +15,13 @@ COME SI APRE: meglio dal sito (https): così funziona «Scarica la visita». Apr
 lo stesso (i panorami sono in pano/, locali). Se un panorama manca in pano/, la pagina prova il bucket B2 Santuario-Madonna-Custonaci
 (prima via media.esploratrapani.it poi via f003.backblazeb2.com); se non si carica compare la «vista piatta» con l'avviso.
 
+ORARI LIVE: la pagina legge L.calendario in dati/santuario.js (apertura dalla scheda Google Maps, messe da cittadicustonaci.it, estate
+giugno–settembre, festa = ultimo mercoledì di agosto e i 3 giorni prima, eccezioni per date speciali) e dice «Aperto ora · chiude alle…»,
+«Chiuso · riapre…», «Messa alle 18:00, fra 20 min», «Messa in corso». Sempre con l'ora di Roma, anche se il telefono è in un altro fuso,
+e anche senza rete. Dal QR, 10 minuti prima e durante la messa compare l'avviso: «Solo testo, niente audio» o «Ho le cuffie»; se la voce
+sta suonando quando la messa comincia, si ferma da sola. Per provarlo a qualunque ora: chiesa-sim1.html?qui=altare&ora=2026-10-19T17:55
+(test: test/test-orari.js). Se cambiano gli orari si correggono solo le righe di calendario.
+
 I DUE INGRESSI: chiesa-sim1.html (da casa: soglia + racconto + cammino) · chiesa-sim1.html?qui=altare (dal QR in cappella: audio per
 primo, «sei qui», niente soglia). Slug dei punti: dal-cielo, ingresso, navata, verso-altare, crociera, presbiterio, altare; deviazioni
 cantoria, rosone, tetto (100-102), museo, museo-2, museo-dipinti, museo-tesoro, museo-vara (200-204), porta-laterale (300), battistero,
@@ -32,7 +39,7 @@ COSA È DA VALIDARE O DI PROVA: i testi dei capitoli e delle scene (stato_testo 
 narratori (Paola e Riccardo sono voci sintetiche Piper); la posizione dei pin sulla pianta (i 5 ambienti del Museo Arte e Fede li ho messi
 nell'ala destra del «doppio transetto» chiuso nel 1900: da confermare); l'abbinamento destra/sinistra delle navate laterali (battistero e
 porta laterale a sinistra, Crocifisso in fondo a destra, come dicono le fonti); la posizione dei 5 dettagli sul quadro; l'accessibilità
-(nessuna misura sul posto); gli orari di apertura (non pubblicati). L'opera «Mons. Rizzo» resta «proposta» e «Il trasporto a Erice»
+(nessuna misura sul posto). L'opera «Mons. Rizzo» resta «proposta» e «Il trasporto a Erice»
 resta «da_completare»: non compaiono, come deciso. L'affresco dell'Approdo ha autore da verificare → «in studio».
 
 ATTENZIONE, IL DB VA CORRETTO: nel DB (poi 39) l'abbinamento file↔scena era sbagliato di uno (842 è l'ingresso visto da dentro, non

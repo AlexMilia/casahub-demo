@@ -7,7 +7,7 @@
    dossier «Custonaci · materiali» (fonti pubbliche: parrocchia, censimento santuari 2023,
    catalogo beni culturali). DA VALIDARE con il parroco: i testi (stato_testo 'da_validare').
    DI PROVA: i due narratori (voci sintetiche Piper), l'accessibilità (nessuna misura sul posto),
-   la posizione dei dettagli sul quadro, gli orari di apertura (non pubblicati).
+   la posizione dei dettagli sul quadro.
    Numerazione: fila principale 0..6; deviazioni a centinaia in ordine di incontro.
    ============================================================ */
 var CHIESA = {
@@ -32,9 +32,27 @@ var CHIESA = {
     pianta_strati: null,                     /* le fasi sono già disegnate nella pianta: rosso 1575–1851, blu 1900, verde 1968 */
     voce: { nome: 'Il Santuario', ruolo: 'la voce della chiesa', sigla: 'S',
       saluto: 'Sono qui da cinque secoli, sulla collina che guarda il golfo. Dentro di me c’è un quadro arrivato dal mare: entra, ti racconto come.' },
-    /* orari e contatti — trovati sul web (cittadicustonaci.it, censimento santuari 2023); apertura della chiesa da chiedere */
+    /* orari e contatti — trovati sul web: messe da cittadicustonaci.it, apertura dalla scheda Google Maps del santuario (ott 2026) */
     orari_celebrazioni: 'Lunedì, mercoledì e venerdì 18:00 (estate 18:30) · sabato 18:30 (estate 19:00) · domenica 9:30 e 11:00 (estate 10:30)',
-    orari_visita: 'Orari di apertura non pubblicati: chiedere al santuario (0923 971113)',
+    orari_visita: 'Tutti i giorni 9:00–12:00 e 16:00–20:30 · mercoledì e venerdì pomeriggio fino alle 18:00 · domenica 9:00–13:00 e 16:00–18:00',
+    /* calendario che la pagina legge per dire «aperto adesso», «c'è la messa», «fra 10 minuti la messa».
+       giorni: 0 domenica … 6 sabato. Ora di Roma, qualunque sia il fuso del telefono. Per provarlo: ?ora=2026-10-18T10:45 */
+    calendario: {
+      fonte_apertura: 'Google Maps, scheda del santuario', fonte_messe: 'cittadicustonaci.it · Celebrazioni eucaristiche', verificato: '2026-10-17',
+      estate: { da: '06-01', a: '09-30' },          /* orario estivo delle messe: giugno–settembre */
+      durata_messa: 45, apre_prima_messa: 15,      /* minuti: la chiesa è aperta da 15 minuti prima a fine messa */
+      apertura: {
+        1: ['09:00-12:00', '16:00-20:30'], 2: ['09:00-12:00', '16:00-20:30'], 3: ['09:00-12:00', '16:00-18:00'],
+        4: ['09:00-12:00', '16:00-20:30'], 5: ['09:00-12:00', '16:00-18:00'], 6: ['09:00-12:00', '16:00-20:30'],
+        0: ['09:00-13:00', '16:00-18:00']
+      },
+      messe: {
+        inverno: { 1: ['18:00'], 3: ['18:00'], 5: ['18:00'], 6: ['18:30'], 0: ['09:30', '11:00'] },
+        estate:  { 1: ['18:30'], 3: ['18:30'], 5: ['18:30'], 6: ['19:00'], 0: ['10:30'] }
+      },
+      festa: { nome: 'Festa di Maria SS. di Custonaci', giorni_prima: 3 },   /* ultimo mercoledì di agosto e i tre giorni prima: orari speciali */
+      eccezioni: {}   /* es. '2026-12-24': { apertura: ['09:00-12:00','22:00-01:00'], messe: ['23:30'], nota: 'Messa della notte' } */
+    },
     contatti: { whatsapp: '3490627997', telefono: '0923 971113', mail: 'info@santuariocustonaci.it' },
     come_arrivare: 'Piazza Santuario 1, in cima al paese. Da Trapani (18 km): SP20 Trapani–Bonagia, poi SP18 Bonagia–Custonaci. Da Palermo (90 km): A29 uscita Castellammare del Golfo, SS187, poi SP16 «Asse dei Marmi». Bus AST Trapani–Custonaci dal capolinea alla stazione di Trapani. Parcheggio multipiano comunale vicino al santuario; bus turistici in via Dante Alighieri (500 m).',
     sostieni_url: null, sostieni_obiettivo: null,
@@ -257,7 +275,7 @@ var CHIESA = {
       luogo: { claim: 'The home of the Madonna who came from the sea', descrizione_breve: 'The Marian sanctuary on the hill of Custonaci, patroness of the town and of the Erice countryside, facing the Gulf of Cofano.',
         'voce.saluto': 'I have stood here for five centuries, on the hill that looks over the gulf. Inside me there is a painting that came from the sea: come in, I will tell you how.',
         orari_celebrazioni: 'Monday, Wednesday and Friday 6 pm (summer 6:30 pm) · Saturday 6:30 pm (summer 7 pm) · Sunday 9:30 and 11 am (summer 10:30 am)',
-        orari_visita: 'Opening hours not published: ask the sanctuary (+39 0923 971113)',
+        orari_visita: 'Every day 9 am–12 noon and 4–8:30 pm · Wednesday and Friday afternoon until 6 pm · Sunday 9 am–1 pm and 4–6 pm',
         come_arrivare: 'Piazza Santuario 1, at the top of the town. From Trapani (18 km): SP20 Trapani–Bonagia, then SP18 Bonagia–Custonaci. From Palermo (90 km): A29 exit Castellammare del Golfo, SS187, then SP16. AST bus Trapani–Custonaci from the terminal at Trapani railway station. Multi-storey municipal car park near the sanctuary; coaches park in via Dante Alighieri (500 m).',
         'accessibilita.nota': 'The 2023 census of sanctuaries lists the church and the hall as accessible, with toilets. The entrance step, the ramp, the distance from the car park and the indoor route still have to be measured on site.',
         lettura_facile: 'This is a church. It is called the Sanctuary of Custonaci. Inside there is an old painting of the Madonna with the Child. People say the painting arrived on a ship, a long time ago, after a storm. For many years the painting was carried to Erice, on foot, to ask for rain. Today it no longer moves. Every year, at the end of August, there is a big feast: in the evening, on the beach, the arrival of the ship is re-enacted.' },
